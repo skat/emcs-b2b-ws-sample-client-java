@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -29,12 +29,16 @@ import javax.security.auth.callback.UnsupportedCallbackException;
 import org.apache.wss4j.common.ext.WSPasswordCallback;
 
 /**
+ * OIOLedsageDocumentClient
+ *
+ * @author SKAT
+ * @since 1.0
  */
 public class UTPasswordCallback implements CallbackHandler {
-    
-    private Map<String, String> passwords = 
-        new HashMap<String, String>();
-    
+
+    private Map<String, String> passwords =
+            new HashMap<String, String>();
+
     public UTPasswordCallback() {
         String P12_PASSPHRASE = System.getProperty("P12_PASSPHRASE");
         passwords.put("valid", P12_PASSPHRASE);
@@ -48,7 +52,7 @@ public class UTPasswordCallback implements CallbackHandler {
      */
     public void handle(Callback[] callbacks) throws IOException, UnsupportedCallbackException {
         for (int i = 0; i < callbacks.length; i++) {
-            WSPasswordCallback pc = (WSPasswordCallback)callbacks[i];
+            WSPasswordCallback pc = (WSPasswordCallback) callbacks[i];
 
             String pass = passwords.get(pc.getIdentifier());
             if (pass != null) {
