@@ -35,3 +35,10 @@ keytool -v -importkeystore -srckeystore target/VOCES_udloebet.p12 -srcstoretype 
 
 echo "After import ..."
 keytool -list -keystore $CLIENT_KEYSTORE -storepass storepassword
+
+### Reverse imports
+### NOT ACTIVE
+# keytool -delete -alias valid -keystore src/main/resources/keystore/client-keystore.jks -storepass storepassword
+# keytool -delete -alias revoked -keystore src/main/resources/keystore/client-keystore.jks -storepass storepassword
+# keytool -delete -alias expired -keystore src/main/resources/keystore/client-keystore.jks -storepass storepassword
+
