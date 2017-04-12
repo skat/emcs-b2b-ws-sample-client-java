@@ -29,7 +29,7 @@ import javax.security.auth.callback.UnsupportedCallbackException;
 import org.apache.wss4j.common.ext.WSPasswordCallback;
 
 /**
- * OIOLedsageDocumentClient
+ * UTPasswordCallback
  *
  * @author SKAT
  * @since 1.0
@@ -40,7 +40,7 @@ public class UTPasswordCallback implements CallbackHandler {
             new HashMap<String, String>();
 
     public UTPasswordCallback() {
-        String P12_PASSPHRASE = System.getProperty("P12_PASSPHRASE");
+        String P12_PASSPHRASE = System.getProperty("dk.skat.emcs.b2b.sample.P12_PASSPHRASE");
         passwords.put("valid", P12_PASSPHRASE);
         passwords.put("revoked", P12_PASSPHRASE);
         passwords.put("expired", P12_PASSPHRASE);

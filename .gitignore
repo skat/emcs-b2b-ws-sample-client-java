@@ -9,3 +9,5 @@ buildNumber.properties
 .mvn/timing.properties
 .idea
 *.iml
+# Do not add:
+run.sh

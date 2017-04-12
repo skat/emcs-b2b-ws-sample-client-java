@@ -11,7 +11,7 @@
         <ns26:SubmittedDraftOfEAD>
             <ns26:Attributes>
                 <ns26:SubmissionMessageType>1</ns26:SubmissionMessageType>
-                <ns26:DeferredSubmissionFlag>0</ns26:DeferredSubmissionFlag>
+                <ns26:DeferredSubmissionFlag>1</ns26:DeferredSubmissionFlag>
             </ns26:Attributes>
             <ns26:ConsigneeTrader language="da">
                 <ns26:Traderid>DK99025875300</ns26:Traderid>

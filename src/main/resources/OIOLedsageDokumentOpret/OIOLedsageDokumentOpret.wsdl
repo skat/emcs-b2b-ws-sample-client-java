@@ -34,7 +34,7 @@
   </wsdl:binding>
   <wsdl:service name="OIOLedsageDokumentOpretService">
     <wsdl:port binding="struct:OIOLedsageDokumentOpretServiceBinding" name="OIOLedsageDokumentOpretServicePort">
-      <soap:address location="http://${HOST}:${PORT/EMCS_OIOLedsageDokumentOpret/OIOLedsageDokumentOpretServicePort"/>
+      <soap:address location="http://localhost:7013/EMCS_OIOLedsageDokumentOpret/OIOLedsageDokumentOpretServicePort"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

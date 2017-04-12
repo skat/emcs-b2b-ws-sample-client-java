@@ -13,14 +13,14 @@ public class TransactionIdGenerator {
     /**
      * Generate transaction id.
      *
-     * If JVM parameter -Dtxid_prefix=SOMETHING has been set generated transaction
+     * If JVM parameter -Ddk.skat.emcs.b2b.sample.TXID_PREFIX=SOMETHING has been set generated transaction
      * id will be prefix with 'SOMETHING'. This feature is designed to make
      * diagnostics server side easier when searching the logs.
      *
      * @return Transaction id (possible prefixed)
      */
     public static final String getTransactionId() {
-        final String prefix = System.getProperty("txid_prefix");
+        final String prefix = System.getProperty("dk.skat.emcs.b2b.sample.TXID_PREFIX");
         String transactionId = UUID.randomUUID().toString();
         if (prefix != null)  {
             transactionId = prefix + transactionId;
