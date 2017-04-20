@@ -28,7 +28,8 @@ The fulfillment of policies required to invoke EMCS B2B Web Services is configur
 
 Fulfillment of WS Policy requirements is achieved using CXF's in and out interceptor framework and 
 the `emcs-policy.xml` file details which parts are to be signed and encrypted, and how to present 
-certificate for authentication on the server side.
+certificate for authentication on the server side. This configuration file also demonstrates how
+secure transport (https) is enabled client side.
  
 ## Run client
 
@@ -126,7 +127,7 @@ Change as described in the file itself:
 <entry key="signatureUser" value="valid"/>
 ```
 
-### Reinstalling OCESII Certificates in client keystore
+### Installing other OCESII Certificates in the client keystore
 
 The keystore `src/main/resources/keystore/client-keystore.jks` is already prepared with the
 necessary test certificate that is authorized to access the test environment. However, in the
