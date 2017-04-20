@@ -145,4 +145,7 @@ Where `P12_PASSPHRASE` and `P12_CURRENT_ALIAS` are passphrase and alias of the O
 respectively. The three keytool command removes the pre configured certificate, changes the the alias
 of the new certificate, and finally imports it into the keystore.
 
+## References
 
+* [Apache CXF](http://cxf.apache.org/)
+* [Apache CXF Samples](https://github.com/apache/cxf/tree/master/distribution/src/main/release/samples)
