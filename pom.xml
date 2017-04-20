@@ -2,10 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>dk.skat.emcs.b2b.sample</groupId>
-    <artifactId>emcs-b2b-sample-ws-client-java</artifactId>
+    <artifactId>emcs-b2b-ws-sample-client-java</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>emcs-b2b-sample-ws-client-java</name>
+    <name>emcs-b2b-ws-sample-client-java</name>
     <url>http://www.skat.dk/emcs</url>
     <properties>
         <cxf.version>3.1.9</cxf.version>
