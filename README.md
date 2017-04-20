@@ -4,14 +4,16 @@
 
 Sample client for the EMCS B2B Web Service Gateway developed in Java and using open source libraries.
 
+**IMPORTANT NOTICE**: SKAT does not provide any kind of support for the code in this repository.
+
 ## About the client
 
 The sample client in is implemented based on the [Apache CXF](http://cxf.apache.org/) framework,
-the Spring Framework, and  and Java 8. See `pom.xml` file in this repo for details re. 
-the current version of the mentioned frameworks in use.
+the Spring Framework, and Java 8. See `pom.xml` file in this repo for details regarding 
+the current versions of the mentioned frameworks in use.
  
 The client currently implements calls to the service **OIOLedsageDocumentOpret** and the main entry
-point to the implementation is the class:
+point into the source code of implementation is the class:
 
 [OIOLedsageDocumentOpretClient.java](src/main/java/dk/skat/emcs/b2b/sample/OIOLedsageDocumentOpretClient.java)
 
@@ -24,8 +26,9 @@ The fulfillment of policies required to invoke EMCS B2B Web Services is configur
 
 [emcs-policy.xml](src/main/resources/emcs-policy.xml)
 
-This is achived using CXF's in and out interceptor framework and the `emcs-policy.xml` file details which parts
-are to be signed and encrypted, and how to present certificate for authentication server side.
+Fulfillment of WS Policy requirements is achieved using CXF's in and out interceptor framework and 
+the `emcs-policy.xml` file details which parts are to be signed and encrypted, and how to present 
+certificate for authentication on the server side.
  
 ## Run client
 
