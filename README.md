@@ -5,6 +5,18 @@
 Sample client for the EMCS B2B Web Service Gateway developed in Java and using open source libraries.
 
 **IMPORTANT NOTICE**: SKAT does not provide any kind of support for the code in this repository.
+This Java-client is just one example of how a B2B web service can be accessed. The client must not be 
+perceived as a piece of production code but more as an example one can take inspiration from and can use
+to quickly get started to test whether your company can implement a successful call to one of the B2B web 
+service using the company's digital signature. SKAT can not be held responsible if a company uses this client
+or parts of it in their own systems. 
+
+**VIGTIG MEDDELELSE**: SKAT yder ikke support på kildekoden i nærværende kodebibliotek.
+Denne Java-klient er kun et eksempel på hvordan B2B webservicene kan tilgås. Klienten skal således ikke 
+opfattes som et stykke produktionskode men mere som en eksempel man kan lade sig inspirere af og kan bruge 
+til hurtigt at komme i gang og få afprøvet om ens virksomhed kan gennemføre et succesfuldt kald til en af 
+B2B webservicene ved at bruge virksomhedens digitale signatur. SKAT kan ikke stå til ansvar hvis en virksomhed
+anvender klienten eller dele af denne i deres egne systemer. 
 
 ## About the client
 
