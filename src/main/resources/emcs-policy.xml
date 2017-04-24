@@ -43,6 +43,11 @@
 
      -->
     <http:conduit name="*.http-conduit">
+        <!-- Set timeout to 3 minutes -->
+        <http:client Connection="Keep-Alive"
+                     MaxRetransmits="1"
+                     AllowChunking="false"
+                     ConnectionTimeout="180000"/>
         <http:tlsClientParameters>
             <sec:keyManagers keyPassword="storepassword">
                 <sec:keyStore file="src/main/resources/keystore/client-truststore.jks"

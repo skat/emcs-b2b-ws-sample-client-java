@@ -87,6 +87,27 @@ INFO:
 
 In this particular output we see that the `ie815.xml` file has been sent in already.
 
+### Modifying the IE815 file to produce an ARC Id
+
+First ensure that the the following fields in the `ie815.xml` file are unique:
+
+* MessageIdentifier
+* LocalReferenceNumber
+
+Then run the client again and the EMCS System will produce an ARC Identifier.
+
+**Sample response**:
+```
+*******************************************************************
+** HovedOplysningerSvar
+**** Transaction Id: ACME_01_42166d20-65b5-4983-b7a2-9faec07abc54
+**** Transaction Time: 2017-04-24T13:43:52.146+02:00
+**** Service Identification: FS2_OIOLedsageDokumentOpret
+Ledsagedokument Valideret Dato: 2017-04-24Z
+Ledsagedokument ARC Identifikator: 17DKK1KHPMQH2W23ABI62
+*******************************************************************
+```
+
 ## Advanced Configuration
 
 ### Testing Expired and Revoked Certificates
