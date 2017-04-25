@@ -10,3 +10,5 @@ jdk:
 
 script:
   - mvn --version
+  # Skip unit test in CI
+  - mvn clean install -Dmaven.test.skip=true
