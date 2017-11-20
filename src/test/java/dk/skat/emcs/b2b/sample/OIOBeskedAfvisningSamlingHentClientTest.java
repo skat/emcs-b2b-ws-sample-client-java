@@ -8,7 +8,7 @@ import org.junit.Test;
  * @author SKAT
  * @since 1.1
  */
-public class OIOBeskedAfvisningSamlingHentClientTest {
+public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClient {
 
     @Test
     public void invoke() throws Exception {
@@ -17,9 +17,9 @@ public class OIOBeskedAfvisningSamlingHentClientTest {
 
         if (endpointURL != null) {
             // this CVR number present in the certificate.
-            String virksomhedSENummerIdentifikator = "30808460";
+            String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
             // Excise number
-            String afgiftOperatoerPunktAfgiftIdentifikator = "DK82065873300";
+            String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
 
             OIOBeskedAfvisningSamlingHentClient oioBeskedAfvisningSamlingHentClient = new OIOBeskedAfvisningSamlingHentClient(endpointURL);
             oioBeskedAfvisningSamlingHentClient.invoke(virksomhedSENummerIdentifikator,

@@ -8,7 +8,7 @@ import org.junit.Test;
  * @author SKAT
  * @since 1.1
  */
-public class OIOLedsageDokumentSamlingHentClientTest {
+public class OIOLedsageDokumentSamlingHentClientTest extends BaseClient {
 
     @Test
     public void invoke() throws Exception {
@@ -21,9 +21,9 @@ public class OIOLedsageDokumentSamlingHentClientTest {
             String ARCnumber =   System.getProperty("dk.skat.emcs.b2b.sample.ARC");
             // VAT Number of the entity sending. Rule of thumb: this number matches
             // this CVR number present in the certificate.
-            String virksomhedSENummerIdentifikator = "30808460";
+            String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
             // Excise number
-            String afgiftOperatoerPunktAfgiftIdentifikator = "DK82065873300";
+            String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
 
             OIOLedsageDokumentSamlingHentClient ledsageDokumentSamlingHentClient = new OIOLedsageDokumentSamlingHentClient(endpointURL);
             ledsageDokumentSamlingHentClient.invoke(virksomhedSENummerIdentifikator,
