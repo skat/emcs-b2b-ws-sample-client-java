@@ -10,4 +10,5 @@ buildNumber.properties
 .idea
 *.iml
 # Do not add:
-run.sh
+run-submit.sh
+run-fetch.sh

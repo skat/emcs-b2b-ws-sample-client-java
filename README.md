@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/skat/emcs-b2b-ws-sample-client-java.svg?token=pXpLRS1qCgHe3KVdbFyA&branch=master)](https://travis-ci.com/skat/emcs-b2b-ws-sample-client-java)
 
-Sample client for the EMCS B2B Web Service Gateway developed in Java and using open source libraries.
+Sample clients for the EMCS B2B Web Service Gateway developed in Java and using open source libraries.
 
 **IMPORTANT NOTICE**: SKAT does not provide any kind of support for the code in this repository.
 This Java-client is just one example of how a B2B web service can be accessed. The client must not be 
@@ -20,16 +20,21 @@ anvender klienten eller dele af denne i deres egne systemer.
 
 ## About the client
 
-The sample client in is implemented based on the [Apache CXF](http://cxf.apache.org/) framework,
+The sample clients are implemented based on the [Apache CXF](http://cxf.apache.org/) framework,
 the Spring Framework, and Java 8. See `pom.xml` file in this repo for details regarding 
 the current versions of the mentioned frameworks in use.
  
-The client currently implements calls to the service **OIOLedsageDocumentOpret** and the main entry
-point into the source code of implementation is the class:
+The sample clients currently implements calls to the services:
+ 
+* **OIOLedsageDocumentOpret**
+* **OIOLedsageDokumentSamlingHent** 
 
-[OIOLedsageDocumentOpretClient.java](src/main/java/dk/skat/emcs/b2b/sample/OIOLedsageDocumentOpretClient.java)
+The main entry point into the source code of the implementation is these classes:
 
-This class constructs the request, invokes a Apache CXF generated client, and parses the response
+* [OIOLedsageDocumentOpretClient.java](src/main/java/dk/skat/emcs/b2b/sample/OIOLedsageDocumentOpretClient.java)
+* [OIOLedsageDokumentSamlingHentClient.java](src/main/java/dk/skat/emcs/b2b/sample/OIOLedsageDokumentSamlingHentClient.java)
+
+These classes construct the request, invokes a Apache CXF generated client, and parses the response
 by printing out relevant values to the log.
 
 ## Fulfillment of WS Policy of EMCS Web Services
@@ -43,20 +48,27 @@ the `emcs-policy.xml` file details which parts are to be signed and encrypted, a
 certificate for authentication on the server side. This configuration file also demonstrates how
 secure transport (https) is enabled client side.
  
-## Run client
+## Run clients
 
-The sample client must be configured with two required parameters that are necessary for the client to run and
+The sample clients must be configured with JVM parameters that are necessary for the client to run and
 call the test environment of EMCS B2B Web Service Gateway. The two parameters can be obtained by contacting 
 SKAT Help Desk.
 
-The full list of parameters:
+The full list of parameters for running a test against the **OIOLedsageDocumentOpret** service:
 
 * **dk.skat.emcs.b2b.sample.P12_PASSPHRASE** (REQUIRED): Passphrase to the certificate used for authentication, signing (request), and encryption (response).
-* **dk.skat.emcs.b2b.sample.OIOLedsageDocumentOpret.ENDPOINT** (REQUIRED):The endpoint of the service being invoked.
+* **dk.skat.emcs.b2b.sample.OIOLedsageDocumentOpret.ENDPOINT** (REQUIRED):The endpoint of the OIOLedsageDocumentOpret service being invoked.
 * **dk.skat.emcs.b2b.sample.TXID_PREFIX** (OPTIONAL): This parameter sets a custom prefix to the generated transaction id and is very useful when asking SKAT Help Desk to trace a particular request.
 
-The client is then invoked as part of the **test phase** of the Maven build process that is run using the following
-command line:
+The full list of parameters for running a test against the **OIOLedsageDokumentSamlingHent** service:
+
+* **dk.skat.emcs.b2b.sample.P12_PASSPHRASE** (REQUIRED): Passphrase to the certificate used for authentication, signing (request), and encryption (response).
+* **dk.skat.emcs.b2b.sample.OIOLedsageDokumentSamlingHent.ENDPOINT** (REQUIRED):The endpoint of the OIOLedsageDokumentSamlingHent service being invoked.
+* **dk.skat.emcs.b2b.sample.ARCX** (REQUIRED): ARC Number
+* **dk.skat.emcs.b2b.sample.TXID_PREFIX** (OPTIONAL): This parameter sets a custom prefix to the generated transaction id and is very useful when asking SKAT Help Desk to trace a particular request.
+
+The client is then invoked as part of the **test phase** of the Maven build process using the following
+command:
 
 ```sh
 $ mvn clean install \
@@ -109,6 +121,7 @@ First ensure that the the following fields in the `ie815.xml` file are unique:
 Then run the client again and the EMCS System will produce an ARC Identifier.
 
 **Sample response**:
+
 ```
 *******************************************************************
 ** HovedOplysningerSvar
@@ -119,6 +132,59 @@ Ledsagedokument Valideret Dato: 2017-04-24Z
 Ledsagedokument ARC Identifikator: 17DKK1KHPMQH2W23ABI62
 *******************************************************************
 ```
+
+## Fetch IE801 documents using OIOLedsageDokumentSamlingHent
+
+The service **OIOLedsageDokumentSamlingHent** returns IE801 documents and in the following
+sample we call this service using as search input the ARC number received in the sample response 
+above (`Ledsagedokument ARC Identifikator: 17DKK1KHPMQH2W23ABI62`).
+
+The client for **OIOLedsageDokumentSamlingHent** is invoked as part of the **test phase** of the Maven 
+build process using the following command:
+
+
+```sh
+$ mvn clean install \
+  -Ddk.skat.emcs.b2b.sample.P12_PASSPHRASE=<CHANGE_THIS> \
+  -Ddk.skat.emcs.b2b.sample.OIOLedsageDokumentSamlingHent.ENDPOINT=<CHANGE_THIS>
+  -Ddk.skat.emcs.b2b.sample.ARC=17DKK1KHPMQH2W23ABI62 \
+  -Ddk.skat.emcs.b2b.sample.TXID_PREFIX=ACME_01_
+```
+
+This call returns a **response** similar to this output:
+
+```
+*******************************************************************
+** HovedOplysningerSvar
+**** Transaction Id: ACME_01_7586f935-6997-47d1-83a0-f70ec7a64d8f
+**** Transaction Time: 2017-11-20T12:24:39.425+01:00
+**** Service Identification: FS2_OIOLedsageDokumentSamlingHent
+*******************************************************************
+** IE 801 Messages: 
+<IE801 xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+       xmlns:client="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:IE801:V1.76"
+       xmlns="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:IE801:V1.76">
+    <ns25:Header xmlns:ns25="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:IE801:V1.76">
+        <ns19:MessageSender xmlns:ns19="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:TMS:V1.76">NDEA.DK</ns19:MessageSender>
+        <ns19:MessageRecipient xmlns:ns19="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:TMS:V1.76">NDEA.DK
+        </ns19:MessageRecipient>
+        <ns19:DateOfPreparation xmlns:ns19="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:TMS:V1.76">2011-10-26
+        </ns19:DateOfPreparation>
+        <ns19:TimeOfPreparation xmlns:ns19="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:TMS:V1.76">11:23:00.803
+        </ns19:TimeOfPreparation>
+        <ns19:MessageIdentifier xmlns:ns19="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:TMS:V1.76">DKEMCS20170000000287316
+        </ns19:MessageIdentifier>
+    </ns25:Header>
+    <ns25:Body xmlns:ns25="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:IE801:V1.76">
+    ...
+    ...
+    ...
+    ...
+    </ns25:Body>
+</IE801>
+*******************************************************************
+```
+*NOTE*: The XML above is pretty printed and the body part removed (to avoid filling up the whole README file).
 
 ## Advanced Configuration
 
