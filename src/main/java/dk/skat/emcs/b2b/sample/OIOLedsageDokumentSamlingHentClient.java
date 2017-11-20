@@ -25,6 +25,12 @@ import java.util.logging.Logger;
 /**
  * OIOLedsageDokumentSamlingHentClient
  *
+ * Input:
+ *  ARC number = from OIOLedsageDocumentOpret response
+ *
+ * Output:
+ *  IE801 document
+ *
  * @author SKAT
  * @since 1.1
  */
@@ -142,7 +148,7 @@ public class OIOLedsageDokumentSamlingHentClient {
                 }
             }
         } else {
-            sb.append("** IE 801 Messages: ").append(newLine);
+            sb.append("** IE801 Messages: ").append(newLine);
             List<String> ie801Messages = out.getLedsageDokumentStamDataSamling().getIE801BeskedTekst();
             for (String message : ie801Messages) {
                 sb.append(message).append(newLine);

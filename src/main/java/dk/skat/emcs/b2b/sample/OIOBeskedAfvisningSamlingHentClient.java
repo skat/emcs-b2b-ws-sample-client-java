@@ -26,6 +26,12 @@ import java.util.logging.Logger;
 /**
  * OIOBeskedAfvisningSamlingHentClient
  *
+ * Input:
+ *  Date time period (start, end) = the last month
+ *
+ * Output:
+ *  IE704 documents (if any)
+ *
  * @author SKAT
  * @since 1.1
  */
@@ -152,7 +158,7 @@ public class OIOBeskedAfvisningSamlingHentClient {
                 }
             }
         } else {
-            sb.append("** IE 704 Messages: ").append(newLine);
+            sb.append("** IE704 Messages: ").append(newLine);
             List<String> ie704Messages = out.getBeskedAfvisningSamling().getIE704BeskedTekst();
             if (ie704Messages != null && ie704Messages.size() > 0) {
                 for (String message : ie704Messages) {

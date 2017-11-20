@@ -8,7 +8,7 @@ import org.junit.Test;
  * @author SKAT
  * @since 1.0
  */
-public class OIOLedsageDocumentOpretClientTest {
+public class OIOLedsageDocumentOpretClientTest extends BaseClient {
 
     @Test
     public void invoke() throws Exception {
@@ -21,9 +21,9 @@ public class OIOLedsageDocumentOpretClientTest {
             String ie815 = "ie815.xml";
             // VAT Number of the entity sending. Rule of thumb: this number matches
             // this CVR number present in the certificate.
-            String virksomhedSENummerIdentifikator = "30808460";
+            String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
             // Excise number
-            String afgiftOperatoerPunktAfgiftIdentifikator = "DK82065873300";
+            String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
 
             OIOLedsageDocumentOpretClient oioLedsageDocumentClient = new OIOLedsageDocumentOpretClient(endpointURL);
             oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,

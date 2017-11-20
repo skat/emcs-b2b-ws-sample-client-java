@@ -26,9 +26,12 @@ the current versions of the mentioned frameworks in use.
  
 The sample clients currently implements calls to the services:
  
-* **OIOLedsageDocumentOpret**
-* **OIOLedsageDokumentSamlingHent** 
-* **OIOBeskedAfvisningSamlingHent** 
+* **OIOLedsageDocumentOpret** : Submit IE815 document
+* **OIOLedsageDokumentSamlingHent** : Fetch IE801 document related to ARC number
+* **OIOBeskedAfvisningSamlingHent** : Search for IE704 documents within the last month
+
+Service **OIOLedsageDocumentOpret** must invoked before invoking **OIOLedsageDokumentSamlingHent** (using the
+returned ARC number) and **OIOBeskedAfvisningSamlingHent** (if submitted IE815 was not processed by **OIOLedsageDocumentOpret**).
 
 The main entry point into the source code of the implementation is these classes:
 

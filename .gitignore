@@ -10,6 +10,4 @@ buildNumber.properties
 .idea
 *.iml
 # Do not add:
-run-submit.sh
-run-fetch.sh
-run-fetch-ie704.sh
+run-*.sh

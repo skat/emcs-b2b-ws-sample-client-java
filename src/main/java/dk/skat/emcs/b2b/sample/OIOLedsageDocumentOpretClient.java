@@ -31,6 +31,13 @@ import java.util.logging.Logger;
 /**
  * OIOLedsageDocumentOpretClient
  *
+ * Input:
+ *  IE815 document
+ *
+ * Output:
+ *  ARC number = if IE815 was accepted
+ *  Error Message stating IE704 = Instruction to call the service OIOBeskedAfvisningSamlingHentC
+ *
  * @author SKAT
  * @since 1.0
  */
