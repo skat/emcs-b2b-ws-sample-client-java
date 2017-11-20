@@ -84,6 +84,9 @@
                                 <wsdlOption>
                                     <wsdl>${basedir}/src/main/resources/OIOLedsageDokumentSamlingHent/OIOLedsageDokumentSamlingHent.wsdl</wsdl>
                                 </wsdlOption>
+                                <wsdlOption>
+                                    <wsdl>${basedir}/src/main/resources/OIOBeskedAfvisningSamlingHent/OIOBeskedAfvisningSamlingHent.wsdl</wsdl>
+                                </wsdlOption>
                             </wsdlOptions>
                         </configuration>
                         <goals>

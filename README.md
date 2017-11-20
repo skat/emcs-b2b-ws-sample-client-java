@@ -28,11 +28,13 @@ The sample clients currently implements calls to the services:
  
 * **OIOLedsageDocumentOpret**
 * **OIOLedsageDokumentSamlingHent** 
+* **OIOBeskedAfvisningSamlingHent** 
 
 The main entry point into the source code of the implementation is these classes:
 
 * [OIOLedsageDocumentOpretClient.java](src/main/java/dk/skat/emcs/b2b/sample/OIOLedsageDocumentOpretClient.java)
 * [OIOLedsageDokumentSamlingHentClient.java](src/main/java/dk/skat/emcs/b2b/sample/OIOLedsageDokumentSamlingHentClient.java)
+* [OIOBeskedAfvisningSamlingHentClient.java](src/main/java/dk/skat/emcs/b2b/sample/OIOBeskedAfvisningSamlingHentClient.java)
 
 These classes construct the request, invokes a Apache CXF generated client, and parses the response
 by printing out relevant values to the log.
@@ -65,6 +67,12 @@ The full list of parameters for running a test against the **OIOLedsageDokumentS
 * **dk.skat.emcs.b2b.sample.P12_PASSPHRASE** (REQUIRED): Passphrase to the certificate used for authentication, signing (request), and encryption (response).
 * **dk.skat.emcs.b2b.sample.OIOLedsageDokumentSamlingHent.ENDPOINT** (REQUIRED):The endpoint of the OIOLedsageDokumentSamlingHent service being invoked.
 * **dk.skat.emcs.b2b.sample.ARCX** (REQUIRED): ARC Number
+* **dk.skat.emcs.b2b.sample.TXID_PREFIX** (OPTIONAL): This parameter sets a custom prefix to the generated transaction id and is very useful when asking SKAT Help Desk to trace a particular request.
+
+The full list of parameters for running a test against the **OIOBeskedAfvisningSamlingHent** service:
+
+* **dk.skat.emcs.b2b.sample.P12_PASSPHRASE** (REQUIRED): Passphrase to the certificate used for authentication, signing (request), and encryption (response).
+* **dk.skat.emcs.b2b.sample.OIOBeskedAfvisningSamlingHent.ENDPOINT** (REQUIRED):The endpoint of the OIOBeskedAfvisningSamlingHent service being invoked.
 * **dk.skat.emcs.b2b.sample.TXID_PREFIX** (OPTIONAL): This parameter sets a custom prefix to the generated transaction id and is very useful when asking SKAT Help Desk to trace a particular request.
 
 The client is then invoked as part of the **test phase** of the Maven build process using the following
@@ -151,7 +159,7 @@ $ mvn clean install \
   -Ddk.skat.emcs.b2b.sample.TXID_PREFIX=ACME_01_
 ```
 
-This call returns a **response** similar to this output:
+This service returns a **response** similar to this output:
 
 ```
 *******************************************************************
@@ -184,7 +192,35 @@ This call returns a **response** similar to this output:
 </IE801>
 *******************************************************************
 ```
+
 *NOTE*: The XML above is pretty printed and the body part removed (to avoid filling up the whole README file).
+
+## Fetch IE704 documents using OIOBeskedAfvisningSamlingHent
+
+The client for **OIOBeskedAfvisningSamlingHent** is invoked as part of the **test phase** of the Maven 
+build process using the following command:
+
+```sh
+$ mvn clean install \
+  -Ddk.skat.emcs.b2b.sample.P12_PASSPHRASE=<CHANGE_THIS> \
+  -Ddk.skat.emcs.b2b.sample.OIOBeskedAfvisningSamlingHent.ENDPOINT=<CHANGE_THIS>
+  -Ddk.skat.emcs.b2b.sample.TXID_PREFIX=ACME_01_
+```
+
+The client is configured to search for documents within the last month. If there are no 704 messages found,  
+the service returns a **response** similar to this output:
+
+```
+*******************************************************************
+** HovedOplysningerSvar
+**** Transaction Id: ACME_01_9c0848aa-366f-4765-9e1b-ddfbdb86aed1
+**** Transaction Time: 2017-11-20T13:23:12.630+01:00
+**** Service Identification: FS2_OIOBeskedAfvisningSamlingHent
+*******************************************************************
+**** Advis
+****** Advis Code: 130
+****** Advis Text: Der blev ikke fundet nogen beskeder som matcher de indikeret søgeparametre
+```
 
 ## Advanced Configuration
 
