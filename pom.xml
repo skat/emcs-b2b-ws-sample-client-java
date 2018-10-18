@@ -87,6 +87,9 @@
                                 <wsdlOption>
                                     <wsdl>${basedir}/src/main/resources/OIOBeskedAfvisningSamlingHent/OIOBeskedAfvisningSamlingHent.wsdl</wsdl>
                                 </wsdlOption>
+                                <wsdlOption>
+                                    <wsdl>${basedir}/src/main/resources/OIOBeskedAfvisningSamlingHent.wsdl</wsdl>
+                                </wsdlOption>
                             </wsdlOptions>
                         </configuration>
                         <goals>
