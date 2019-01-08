@@ -4,7 +4,7 @@ package dk.skat.emcs.b2b.sample;
  * BaseClient - Helper methods for test clients, e.g. we're using the same VAT number for all tests.
  *
  * @author SKAT
- * @since 1.1
+ * @since 1.2
  */
 public class BaseClient {
 

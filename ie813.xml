@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ie:IE813 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:IE813:V1.92">
+    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:TMS:V1.92">
+        <tms:MessageSender>NDEA.DK</tms:MessageSender>
+        <tms:MessageRecipient>NDEA.DK</tms:MessageRecipient>
+        <tms:DateOfPreparation>2011-10-26</tms:DateOfPreparation>
+        <tms:TimeOfPreparation>11:31:23.128</tms:TimeOfPreparation>
+        <tms:MessageIdentifier>6eb01ffa-185a-4259-aa51-12147f0b3fb1</tms:MessageIdentifier>
+    </ie:Header>
+    <ie:Body>
+        <ie:ChangeOfDestination>
+            <ie:Attributes>
+                <ie:DateAndTimeOfValidationOfChangeOfDestination>2011-10-26T11:31:23.000
+                </ie:DateAndTimeOfValidationOfChangeOfDestination>
+            </ie:Attributes>
+            <ie:UpdateEad>
+                <ie:AdministrativeReferenceCode>11DKJKA05CB5I1EXW2KL9</ie:AdministrativeReferenceCode>
+                <ie:JourneyTime>D01</ie:JourneyTime>
+                <ie:ChangedTransportArrangement>1</ie:ChangedTransportArrangement>
+                <ie:SequenceNumber>2</ie:SequenceNumber>
+                <ie:InvoiceDate>2011-10-27</ie:InvoiceDate>
+                <ie:TransportModeCode>3</ie:TransportModeCode>
+            </ie:UpdateEad>
+            <ie:DestinationChanged>
+                <ie:DestinationTypeCode>2</ie:DestinationTypeCode>
+                <ie:NewConsigneeTrader language="da">
+                    <ie:Traderid>DK31174341200</ie:Traderid>
+                    <ie:TraderName>eService FKT-TEST HVID 0032</ie:TraderName>
+                    <ie:StreetName>Nyborgvej</ie:StreetName>
+                    <ie:StreetNumber>145</ie:StreetNumber>
+                    <ie:Postcode>5220</ie:Postcode>
+                    <ie:City>Odense SØ</ie:City>
+                </ie:NewConsigneeTrader>
+                <ie:DeliveryPlaceTrader language="da">
+                    <ie:TraderName>eService FKT-TEST HVID 0032</ie:TraderName>
+                    <ie:StreetName>Nyborgvej</ie:StreetName>
+                    <ie:StreetNumber>145</ie:StreetNumber>
+                    <ie:Postcode>5220</ie:Postcode>
+                    <ie:City>Odense SØ</ie:City>
+                </ie:DeliveryPlaceTrader>
+            </ie:DestinationChanged>
+            <ie:TransportDetails>
+                <ie:TransportUnitCode>2</ie:TransportUnitCode>
+                <ie:IdentityOfTransportUnits>XK15986</ie:IdentityOfTransportUnits>
+            </ie:TransportDetails>
+        </ie:ChangeOfDestination>
+    </ie:Body>
+</ie:IE813>

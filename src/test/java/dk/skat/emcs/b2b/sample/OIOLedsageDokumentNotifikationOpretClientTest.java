@@ -2,36 +2,34 @@ package dk.skat.emcs.b2b.sample;
 
 import org.junit.Test;
 
-import java.io.File;
-
 /**
- * OIOLedsageDocumentOpretClient Test
+ * OIOLedsageDokumentNotifikationOpretClient Test
  *
  * @author SKAT
  * @since 1.2
  */
-public class OIOLedsageDocumentOpretClientTest extends BaseClient {
+public class OIOLedsageDokumentNotifikationOpretClientTest extends BaseClient {
 
     @Test
     public void invoke() throws Exception {
         String endpointURL =
-                System.getProperty("dk.skat.emcs.b2b.sample.OIOLedsageDocumentOpret.ENDPOINT");
+                System.getProperty("dk.skat.emcs.b2b.sample.OIOLedsageDokumentNotifikationOpret.ENDPOINT");
 
         if (endpointURL != null) {
 
-            // Path to where the IE815 document is located
-            File ie815 = new File("ie815.xml");
+            // Path to where the IE819 document is located
+            String ie819 = "ie819.xml";
             // VAT Number of the entity sending. Rule of thumb: this number matches
             // this CVR number present in the certificate.
             String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
             // Excise number
             String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
 
-            OIOLedsageDocumentOpretClient oioLedsageDocumentClient = new OIOLedsageDocumentOpretClient(endpointURL);
+            OIOLedsageDokumentNotifikationOpretClient oioLedsageDocumentClient = new OIOLedsageDokumentNotifikationOpretClient(endpointURL);
             oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator, ie815);
+                    afgiftOperatoerPunktAfgiftIdentifikator, ie819);
         } else {
-            System.out.println("OIOLedsageDocumentOpretClientTest: Endpoint not provided, skipping test");
+            System.out.println("OIOLedsageDokumentNotifikationOpretClientTest: Endpoint not provided, skipping test");
         }
     }
 

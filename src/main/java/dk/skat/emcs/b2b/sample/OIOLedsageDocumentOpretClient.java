@@ -1,5 +1,6 @@
 package dk.skat.emcs.b2b.sample;
 
+import com.sun.org.apache.xerces.internal.xni.NamespaceContext;
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.AdvisStrukturType;
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.FejlStrukturType;
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerType;
@@ -15,6 +16,16 @@ import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+import org.w3c.dom.Node;
+
+import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import org.apache.commons.lang.RandomStringUtils;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -23,23 +34,15 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.ws.BindingProvider;
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import java.util.logging.Logger;
-
+import org.xml.sax.InputSource;
 /**
  * OIOLedsageDocumentOpretClient
  *
- * Input:
- *  IE815 document
- *
- * Output:
- *  ARC number = if IE815 was accepted
- *  Error Message stating IE704 = Instruction to call the service OIOBeskedAfvisningSamlingHentC
  *
  * @author SKAT
- * @since 1.0
+ * @since 1.2
  */
 @SuppressWarnings("ALL")
 public class OIOLedsageDocumentOpretClient {
@@ -63,6 +66,114 @@ public class OIOLedsageDocumentOpretClient {
         this.endpointURL = endpointURL;
     }
 
+
+    public String invoke(String virksomhedSENummerIdentifikator,
+                       String afgiftOperatoerPunktAfgiftIdentifikator,
+                       String ie815,boolean override) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+        // ie815 = doc. browser
+
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder;
+        Document doc = null;
+            try
+            {
+                builder = factory.newDocumentBuilder();
+                doc = builder.parse( new InputSource( new StringReader( ie815 ) ) );
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            XPath xPath = XPathFactory.newInstance().newXPath();
+
+            Node TimeOfPreparation = null;
+            try {
+                TimeOfPreparation = (Node) xPath.compile("/IE815/Header/TimeOfPreparation").evaluate(doc, XPathConstants.NODE);
+            } catch (XPathExpressionException e) {
+                e.printStackTrace();
+            }
+
+            Node MessageIdentifier = null;
+            try {
+                MessageIdentifier = (Node) xPath.compile("/IE815/Header/MessageIdentifier").evaluate(doc, XPathConstants.NODE);
+            } catch (XPathExpressionException e) {
+                e.printStackTrace();
+            }
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
+            String formatDateTime = now.format(formatter);
+            String result = RandomStringUtils.random(7, false, true);
+
+            TimeOfPreparation.setTextContent(formatDateTime);
+            final String uuid = UUID.randomUUID().toString();
+            MessageIdentifier.setTextContent(uuid);
+
+        if(override){
+            Node LocalReferenceNumber = null;
+            try {
+                LocalReferenceNumber = (Node) xPath.compile("/IE815/Body/SubmittedDraftOfEAD/EadDraft/LocalReferenceNumber").evaluate(doc, XPathConstants.NODE);
+            } catch (XPathExpressionException e) {
+                e.printStackTrace();
+            }
+
+            LocalReferenceNumber.setTextContent(result);
+
+        }
+
+        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
+
+
+    }
+
+    public void invoke(String virksomhedSENummerIdentifikator,
+                       String afgiftOperatoerPunktAfgiftIdentifikator,
+                       File ie815) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+        // Load IE815 document
+
+
+
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+
+        Document doc = db.parse(ie815);
+
+
+        XPath xPath = XPathFactory.newInstance().newXPath();
+
+        Node TimeOfPreparation = null;
+        try {
+            TimeOfPreparation = (Node) xPath.compile("/IE815/Header/TimeOfPreparation").evaluate(doc, XPathConstants.NODE);
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        }
+
+        Node MessageIdentifier = null;
+        try {
+            MessageIdentifier = (Node) xPath.compile("/IE815/Header/MessageIdentifier").evaluate(doc, XPathConstants.NODE);
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        }
+        Node LocalReferenceNumber = null;
+        try {
+            LocalReferenceNumber = (Node) xPath.compile("/IE815/Body/SubmittedDraftOfEAD/EadDraft/LocalReferenceNumber").evaluate(doc, XPathConstants.NODE);
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        }
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
+        String formatDateTime = now.format(formatter);
+        String result = RandomStringUtils.random(7, false, true);
+
+        TimeOfPreparation.setTextContent(formatDateTime);
+        final String uuid = UUID.randomUUID().toString();
+        MessageIdentifier.setTextContent(uuid);
+        LocalReferenceNumber.setTextContent(result);
+        final String newLine = System.getProperty("line.separator");
+        LOGGER.info(newLine + "Replacing message Identifier: " + TimeOfPreparation.getTextContent() +" "+ MessageIdentifier.getTextContent() + " " + LocalReferenceNumber.getTextContent()) ;
+
+        this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
+    }
+
+
     /**
      * Call OIOLedsageDocumentOpret service
      *
@@ -74,9 +185,9 @@ public class OIOLedsageDocumentOpretClient {
      * @throws IOException N/A
      * @throws SAXException N/A
      */
-    public void invoke(String virksomhedSENummerIdentifikator,
+    private String invokeit(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
-                       String ie815) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+                        Document doc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
         final String newLine = System.getProperty("line.separator");
 
@@ -99,12 +210,6 @@ public class OIOLedsageDocumentOpretClient {
         Indberetter indberetter = new Indberetter();
         indberetter.setVirksomhedSENummerIdentifikator(virksomhedSENummerIdentifikator);
         virksomhedIdentifikationStrukturType.setIndberetter(indberetter);
-
-        // Load IE815 document
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = dbf.newDocumentBuilder();
-        File file = new File(ie815);
-        Document doc = db.parse(file);
 
         // Build IE815StrukturType
         IE815StrukturType ie815StrukturType = new IE815StrukturType();
@@ -139,12 +244,15 @@ public class OIOLedsageDocumentOpretClient {
 
 
         OIOLedsageDokumentOpretOType out = port.getOIOLedsageDokumentOpret(oioLedsageDokumentOpretIType);
+        String arc = new String("");
+
         StringBuilder sb = new StringBuilder();
         sb.append("*******************************************************************").append(newLine);
         sb.append("** HovedOplysningerSvar").append(newLine);
         sb.append("**** Transaction Id: ").append(out.getHovedOplysningerSvar().getTransaktionIdentifikator()).append(newLine);
         sb.append("**** Transaction Time: ").append(out.getHovedOplysningerSvar().getTransaktionTid()).append(newLine);
         sb.append("**** Service Identification: ").append(out.getHovedOplysningerSvar().getServiceIdentifikator()).append(newLine);
+
         if (out.getHovedOplysningerSvar().getSvarStruktur().getAdvisStrukturOrFejlStruktur().size() > 0) {
             for (Object errorOrAdvis : out.getHovedOplysningerSvar().getSvarStruktur().getAdvisStrukturOrFejlStruktur()) {
                 if (errorOrAdvis instanceof FejlStrukturType) {
@@ -161,12 +269,21 @@ public class OIOLedsageDocumentOpretClient {
                 }
             }
         } else {
-            sb.append("Ledsagedokument Valideret Dato: ").append(out.getOutput().getLedsageDokument().getLedsagedokumentValideretDato().toString()).append(newLine);
-            sb.append("Ledsagedokument ARC Identifikator: ").append(out.getOutput().getLedsageDokument().getLedsagedokumentARCIdentifikator()).append(newLine);
+
+                sb.append("Ledsagedokument Valideret Dato: ").append(out.getOutput().getLedsageDokument().getLedsagedokumentValideretDato().toString()).append(newLine);
+                sb.append("Ledsagedokument ARC Identifikator: ").append(out.getOutput().getLedsageDokument().getLedsagedokumentARCIdentifikator()).append(newLine);
+                arc = out.getOutput().getLedsageDokument().getLedsagedokumentARCIdentifikator();
+
         }
         sb.append("*******************************************************************").append(newLine);
 
         LOGGER.info(newLine + sb.toString());
-    }
+
+
+            return arc;
+
+        }
+
+
 
 }

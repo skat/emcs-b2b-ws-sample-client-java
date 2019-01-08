@@ -32,7 +32,7 @@ import org.apache.wss4j.common.ext.WSPasswordCallback;
  * UTPasswordCallback
  *
  * @author SKAT
- * @since 1.0
+ * @since 1.2
  */
 public class UTPasswordCallback implements CallbackHandler {
 

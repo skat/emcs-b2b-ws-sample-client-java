@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ie:IE818 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:IE818:V1.92">
+    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:TMS:V1.92">
+        <tms:MessageSender >NDEA.DK</tms:MessageSender>
+        <tms:MessageRecipient>NDEA.DK</tms:MessageRecipient>
+        <tms:DateOfPreparation>2011-10-26</tms:DateOfPreparation>
+        <tms:TimeOfPreparation>11:43:55.643</tms:TimeOfPreparation>
+        <tms:MessageIdentifier>1fe3074a-db2a-4de7-9c9b-63c9672d38fa</tms:MessageIdentifier>
+    </ie:Header>
+    <ie:Body>
+        <ie:AcceptedOrRejectedReportOfReceiptExport>
+            <ie:Attributes>
+                <ie:DateAndTimeOfValidationOfReportOfReceiptExport>2011-10-26T11:43:55.000</ie:DateAndTimeOfValidationOfReportOfReceiptExport>
+            </ie:Attributes>
+            <ie:ConsigneeTrader language="da">
+                <ie:Traderid>DK30808460300</ie:Traderid>
+                <ie:TraderName>SEED selskab 1 test 2</ie:TraderName>
+                <ie:StreetName>Kirkegade</ie:StreetName>
+                <ie:StreetNumber>1</ie:StreetNumber>
+                <ie:Postcode>6840</ie:Postcode>
+                <ie:City>Oksbøl</ie:City>
+            </ie:ConsigneeTrader>
+            <ie:ExciseMovementEad>
+                <ie:AdministrativeReferenceCode>18DK6T3AQYMQQWRQWSK05</ie:AdministrativeReferenceCode>
+                <ie:SequenceNumber>1</ie:SequenceNumber>
+            </ie:ExciseMovementEad>
+            <ie:DeliveryPlaceTrader language="da">
+                <ie:Traderid>DK99025875499</ie:Traderid>
+                <ie:TraderName>SEED selskab 1 test 2</ie:TraderName>
+                <ie:StreetName>Statshavnen</ie:StreetName>
+                <ie:StreetNumber>6</ie:StreetNumber>
+                <ie:Postcode>3000</ie:Postcode>
+                <ie:City>Helsingør</ie:City>
+            </ie:DeliveryPlaceTrader>
+            <ie:DestinationOffice>
+                <ie:ReferenceNumber>DK008047</ie:ReferenceNumber>
+            </ie:DestinationOffice>
+            <ie:ReportOfReceiptExport>
+                <ie:DateOfArrivalOfExciseProducts>2011-10-26</ie:DateOfArrivalOfExciseProducts>
+                <ie:GlobalConclusionOfReceipt>1</ie:GlobalConclusionOfReceipt>
+            </ie:ReportOfReceiptExport>
+        </ie:AcceptedOrRejectedReportOfReceiptExport>
+    </ie:Body>
+</ie:IE818>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ie:IE825 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:IE825:V1.92">
+    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:TMS:V1.92">
+        <tms:MessageSender>NDEA.DK</tms:MessageSender>
+        <tms:MessageRecipient>NDEA.DK</tms:MessageRecipient>
+        <tms:DateOfPreparation>2011-10-26</tms:DateOfPreparation>
+        <tms:TimeOfPreparation>12:24:46.623</tms:TimeOfPreparation>
+        <tms:MessageIdentifier>4156567c-efe7-4b84-8b07-83970044397c</tms:MessageIdentifier>
+    </ie:Header>
+    <ie:Body>
+        <ie:SubmittedDraftOfSplittingOperation>
+            <ie:SplittingEad>
+                <ie:UpstreamArc>11DKVXPIER3254IXXW4M6</ie:UpstreamArc>
+            </ie:SplittingEad>
+            <ie:SplitDetailsEad>
+                <ie:LocalReferenceNumber>SKS02699</ie:LocalReferenceNumber>
+                <ie:JourneyTime>D02</ie:JourneyTime>
+                <ie:ChangedTransportArrangement>1</ie:ChangedTransportArrangement>
+                <ie:DestinationChanged>
+                    <ie:DestinationTypeCode>1</ie:DestinationTypeCode>
+                </ie:DestinationChanged>
+                <ie:NewConsigneeTrader language="da">
+                    <ie:Traderid>DK99025875300</ie:Traderid>
+                    <ie:TraderName>SEED selskab 1 test 2</ie:TraderName>
+                    <ie:StreetName>Kirkegade</ie:StreetName>
+                    <ie:StreetNumber>1</ie:StreetNumber>
+                    <ie:Postcode>6840</ie:Postcode>
+                    <ie:City>Oksbøl</ie:City>
+                </ie:NewConsigneeTrader>
+                <ie:DeliveryPlaceTrader language="da">
+                    <ie:Traderid>DK99025875499</ie:Traderid>
+                    <ie:TraderName>SEED selskab 1 test 2</ie:TraderName>
+                    <ie:StreetName>Statshavnen</ie:StreetName>
+                    <ie:StreetNumber>6</ie:StreetNumber>
+                    <ie:Postcode>3000</ie:Postcode>
+                    <ie:City>Helsingør</ie:City>
+                </ie:DeliveryPlaceTrader>
+                <ie:TransportDetails>
+                    <ie:TransportUnitCode>1</ie:TransportUnitCode>
+                    <ie:IdentityOfTransportUnits>LODE125DX</ie:IdentityOfTransportUnits>
+                </ie:TransportDetails>
+                <ie:BodyEad>
+                    <ie:BodyRecordUniqueReference>1</ie:BodyRecordUniqueReference>
+                    <ie:ExciseProductCode>E420</ie:ExciseProductCode>
+                    <ie:CnCode>27101131</ie:CnCode>
+                    <ie:Quantity>500</ie:Quantity>
+                    <ie:GrossWeight>500</ie:GrossWeight>
+                    <ie:NetWeight>500</ie:NetWeight>
+                    <ie:FiscalMarkUsedFlag>0</ie:FiscalMarkUsedFlag>
+                    <ie:Density>500</ie:Density>
+                    <ie:CommercialDescription language="da">Flyverbenzin</ie:CommercialDescription>
+                    <ie:Package>
+                        <ie:KindOfPackages>TY</ie:KindOfPackages>
+                        <ie:NumberOfPackages>1</ie:NumberOfPackages>
+                    </ie:Package>
+                </ie:BodyEad>
+            </ie:SplitDetailsEad>
+            <ie:SplitDetailsEad>
+                <ie:LocalReferenceNumber>SKS02700</ie:LocalReferenceNumber>
+                <ie:JourneyTime>D07</ie:JourneyTime>
+                <ie:ChangedTransportArrangement>1</ie:ChangedTransportArrangement>
+                <ie:DestinationChanged>
+                    <ie:DestinationTypeCode>1</ie:DestinationTypeCode>
+                </ie:DestinationChanged>
+                <ie:NewConsigneeTrader language="da">
+                    <ie:Traderid>DK82065849300</ie:Traderid>
+                    <ie:TraderName>Test af KS-1, testsitnr. 3.1.3.19</ie:TraderName>
+                    <ie:StreetName>Baunehøjen</ie:StreetName>
+                    <ie:StreetNumber>1</ie:StreetNumber>
+                    <ie:Postcode>3320</ie:Postcode>
+                    <ie:City>Skævinge</ie:City>
+                </ie:NewConsigneeTrader>
+                <ie:DeliveryPlaceTrader language="da">
+                    <ie:Traderid>DK82065849301</ie:Traderid>
+                    <ie:TraderName>Test af KS-1, testsitnr. 3.1.3.19</ie:TraderName>
+                    <ie:StreetName>Baunehøjen</ie:StreetName>
+                    <ie:StreetNumber>2</ie:StreetNumber>
+                    <ie:Postcode>3320</ie:Postcode>
+                    <ie:City>Skævinge</ie:City>
+                </ie:DeliveryPlaceTrader>
+                <ie:TransportDetails>
+                    <ie:TransportUnitCode>1</ie:TransportUnitCode>
+                    <ie:IdentityOfTransportUnits>OILDD26DR</ie:IdentityOfTransportUnits>
+                </ie:TransportDetails>
+                <ie:BodyEad>
+                    <ie:BodyRecordUniqueReference>1</ie:BodyRecordUniqueReference>
+                    <ie:ExciseProductCode>E420</ie:ExciseProductCode>
+                    <ie:CnCode>27101131</ie:CnCode>
+                    <ie:Quantity>500</ie:Quantity>
+                    <ie:GrossWeight>500</ie:GrossWeight>
+                    <ie:NetWeight>500</ie:NetWeight>
+                    <ie:FiscalMarkUsedFlag>0</ie:FiscalMarkUsedFlag>
+                    <ie:Density>500</ie:Density>
+                    <ie:CommercialDescription language="da">Flyverbenzin</ie:CommercialDescription>
+                    <ie:Package>
+                        <ie:KindOfPackages>TY</ie:KindOfPackages>
+                        <ie:NumberOfPackages>1</ie:NumberOfPackages>
+                    </ie:Package>
+                </ie:BodyEad>
+            </ie:SplitDetailsEad>
+            <ie:MsaOfSplitting>
+                <ie:MemberStateCode>DK</ie:MemberStateCode>
+            </ie:MsaOfSplitting>
+        </ie:SubmittedDraftOfSplittingOperation>
+    </ie:Body>
+</ie:IE825>

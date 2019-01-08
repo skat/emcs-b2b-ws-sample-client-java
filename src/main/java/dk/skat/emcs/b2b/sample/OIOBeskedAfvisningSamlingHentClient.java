@@ -26,16 +26,10 @@ import java.util.logging.Logger;
 /**
  * OIOBeskedAfvisningSamlingHentClient
  *
- * Input:
- *  Date time period (start, end) = the last month
- *
- * Output:
- *  IE704 documents (if any)
- *
  * @author SKAT
- * @since 1.1
+ * @since 1.2
  */
-public class OIOBeskedAfvisningSamlingHentClient {
+public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
 
     private static final Logger LOGGER = Logger.getLogger(OIOBeskedAfvisningSamlingHentClient.class.getName());
 
@@ -66,8 +60,29 @@ public class OIOBeskedAfvisningSamlingHentClient {
      * @throws IOException N/A
      * @throws SAXException N/A
      */
-    public void invoke(String virksomhedSENummerIdentifikator,
-                       String afgiftOperatoerPunktAfgiftIdentifikator)
+
+    public String  invoke(String virksomhedSENummerIdentifikator,
+                       String afgiftOperatoerPunktAfgiftIdentifikator,
+                        Integer interval )
+            throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+
+        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, interval);
+
+
+    }
+
+    public String  invoke(String virksomhedSENummerIdentifikator,
+                          String afgiftOperatoerPunktAfgiftIdentifikator)
+            throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+
+        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, 1);
+
+
+    }
+
+    private String invokeit(String virksomhedSENummerIdentifikator,
+                       String afgiftOperatoerPunktAfgiftIdentifikator,
+                           Integer interval)
                        throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
         final String newLine = System.getProperty("line.separator");
@@ -95,19 +110,7 @@ public class OIOBeskedAfvisningSamlingHentClient {
         OIOBeskedAfvisningSamlingHentIType oioBeskedAfvisningSamlingHentIType = new OIOBeskedAfvisningSamlingHentIType();
         oioBeskedAfvisningSamlingHentIType.setHovedOplysninger(hovedOplysningerType);
         oioBeskedAfvisningSamlingHentIType.setVirksomhedIdentifikationStruktur(virksomhedIdentifikationStrukturType);
-        SøgeParametreStrukturType soegeParametreStrukturType = new SøgeParametreStrukturType();
-        SøgeParametreStrukturType.SøgeParametre soegeParametre = new SøgeParametreStrukturType.SøgeParametre();
-        SøgeParametreStrukturType.SøgeParametre.GyldighedPeriodeUdsøgning gyldighedPeriodeUdsøgning
-                = new SøgeParametreStrukturType.SøgeParametre.GyldighedPeriodeUdsøgning();
-        soegeParametre.setGyldighedPeriodeUdsøgning(gyldighedPeriodeUdsøgning);
-
-        // Search for messages in the period: now minus 1 month -- to -- now
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MONTH, -1);
-        Date startDate = cal.getTime();
-        gyldighedPeriodeUdsøgning.setStartDate(getXMLGregorianCalendar(startDate));
-        gyldighedPeriodeUdsøgning.setEndDate(getXMLGregorianCalendar(new Date()));
-        soegeParametreStrukturType.setSøgeParametre(soegeParametre);
+        SøgeParametreStrukturType soegeParametreStrukturType = getSøgeParametreStrukturType(interval);
         oioBeskedAfvisningSamlingHentIType.setSøgeParametreStruktur(soegeParametreStrukturType);
 
         Bus bus = new SpringBusFactory().createBus("emcs-policy.xml", false);
@@ -172,11 +175,7 @@ public class OIOBeskedAfvisningSamlingHentClient {
         }
 
         LOGGER.info(newLine + sb.toString());
+        return sb.toString();
     }
 
-    private XMLGregorianCalendar getXMLGregorianCalendar(Date date) throws DatatypeConfigurationException {
-        GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        gregorianCalendar.setTime(date);
-        return DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar);
-    }
 }

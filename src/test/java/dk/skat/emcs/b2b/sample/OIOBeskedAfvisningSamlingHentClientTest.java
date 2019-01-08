@@ -6,7 +6,7 @@ import org.junit.Test;
  * OIOBeskedAfvisningSamlingHentClientTest
  *
  * @author SKAT
- * @since 1.1
+ * @since 1.2
  */
 public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClient {
 
