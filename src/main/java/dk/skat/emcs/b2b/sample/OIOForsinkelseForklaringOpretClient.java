@@ -1,7 +1,5 @@
 package dk.skat.emcs.b2b.sample;
 
-import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.AdvisStrukturType;
-import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.FejlStrukturType;
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerType;
 import oio.skat.emcs.ws._1_0.IE837StrukturType;
 import oio.skat.emcs.ws._1_0.OIOForsinkelseForklaringOpretIType;
@@ -36,7 +34,7 @@ import java.util.logging.Logger;
  * @since 1.2
  */
 @SuppressWarnings("ALL")
-public class OIOForsinkelseForklaringOpretClient {
+public class OIOForsinkelseForklaringOpretClient extends EMCSBaseClient {
 
     private static final Logger LOGGER = Logger.getLogger(OIOForsinkelseForklaringOpretClient.class.getName());
 
@@ -71,8 +69,6 @@ public class OIOForsinkelseForklaringOpretClient {
     public void invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        String ie837) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
-
-        final String newLine = System.getProperty("line.separator");
 
         // Generate Transaction Id
         final String transactionID = TransactionIdGenerator.getTransactionId();
@@ -121,44 +117,18 @@ public class OIOForsinkelseForklaringOpretClient {
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
 
         StringBuilder sbRequest = new StringBuilder();
-        sbRequest.append("*******************************************************************").append(newLine);
-        sbRequest.append("** HovedOplysninger").append(newLine);
-        sbRequest.append("**** Transaction Id: ").append(oioForsinkelseForklaringOpretIType.getHovedOplysninger().getTransaktionIdentifikator()).append(newLine);
-        sbRequest.append("**** Transaction Time: ").append(oioForsinkelseForklaringOpretIType.getHovedOplysninger().getTransaktionTid()).append(newLine);
-        sbRequest.append("** VirksomhedIdentifikationStruktur").append(newLine);
-        sbRequest.append("**** AfgiftOperatoerPunktAfgiftIdentifikator: ").append(oioForsinkelseForklaringOpretIType.getVirksomhedIdentifikationStruktur().getAfgiftOperatoerPunktAfgiftIdentifikator()).append(newLine);
-        sbRequest.append("**** VirksomhedSENummerIdentifikator: ").append(oioForsinkelseForklaringOpretIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()).append(newLine);
-        sbRequest.append("*******************************************************************").append(newLine);
-        LOGGER.info(newLine + sbRequest.toString());
-
+        sbRequest.append(generateConsoleOutput(
+                oioForsinkelseForklaringOpretIType.getHovedOplysninger(),
+                oioForsinkelseForklaringOpretIType.getVirksomhedIdentifikationStruktur().getAfgiftOperatoerPunktAfgiftIdentifikator(),
+                oioForsinkelseForklaringOpretIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
+        ));
+        LOGGER.info(NEW_LINE + sbRequest.toString());
 
         OIOForsinkelseForklaringOpretOType out = port.getOIOForsinkelseForklaringOpret(oioForsinkelseForklaringOpretIType);
         StringBuilder sb = new StringBuilder();
-        sb.append("*******************************************************************").append(newLine);
-        sb.append("** HovedOplysningerSvar").append(newLine);
-        sb.append("**** Transaction Id: ").append(out.getHovedOplysningerSvar().getTransaktionIdentifikator()).append(newLine);
-        sb.append("**** Transaction Time: ").append(out.getHovedOplysningerSvar().getTransaktionTid()).append(newLine);
-        sb.append("**** Service Identification: ").append(out.getHovedOplysningerSvar().getServiceIdentifikator()).append(newLine);
-        if (out.getHovedOplysningerSvar().getSvarStruktur().getAdvisStrukturOrFejlStruktur().size() > 0) {
-            for (Object errorOrAdvis : out.getHovedOplysningerSvar().getSvarStruktur().getAdvisStrukturOrFejlStruktur()) {
-                if (errorOrAdvis instanceof FejlStrukturType) {
-                    FejlStrukturType fejlStrukturType = (FejlStrukturType) errorOrAdvis;
-                    sb.append("**** Error").append(newLine);
-                    sb.append("****** Error Code: ").append(fejlStrukturType.getFejlIdentifikator()).append(newLine);
-                    sb.append("****** Error Text: ").append(fejlStrukturType.getFejlTekst()).append(newLine);
-                }
-                if (errorOrAdvis instanceof AdvisStrukturType) {
-                    AdvisStrukturType advisStrukturType = (AdvisStrukturType) errorOrAdvis;
-                    sb.append("**** Advis").append(newLine);
-                    sb.append("****** Advis Code: ").append(advisStrukturType.getAdvisIdentifikator()).append(newLine);
-                    sb.append("****** Advis Text: ").append(advisStrukturType.getAdvisTekst()).append(newLine);
-                }
-            }
-        } else {
-        }
-        sb.append("*******************************************************************").append(newLine);
+        sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
 
-        LOGGER.info(newLine + sb.toString());
+        LOGGER.info(NEW_LINE + sb.toString());
     }
 
 }

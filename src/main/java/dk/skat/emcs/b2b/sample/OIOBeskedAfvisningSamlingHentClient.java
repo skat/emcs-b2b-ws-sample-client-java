@@ -1,7 +1,5 @@
 package dk.skat.emcs.b2b.sample;
 
-import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.AdvisStrukturType;
-import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.FejlStrukturType;
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerType;
 import oio.skat.emcs.ws._1_0.*;
 import oio.skat.emcs.ws._1_0_1.OIOBeskedAfvisningSamlingHentService;
@@ -17,7 +15,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.ws.BindingProvider;
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -53,17 +50,17 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
     /**
      * Call OIOBeskedAfvisningSamlingHent service
      *
-     * @param virksomhedSENummerIdentifikator VAT number of entity calling entity
+     * @param virksomhedSENummerIdentifikator         VAT number of entity calling entity
      * @param afgiftOperatoerPunktAfgiftIdentifikator Excise Number of calling entity
      * @throws DatatypeConfigurationException N/A
-     * @throws ParserConfigurationException N/A
-     * @throws IOException N/A
-     * @throws SAXException N/A
+     * @throws ParserConfigurationException   N/A
+     * @throws IOException                    N/A
+     * @throws SAXException                   N/A
      */
 
-    public String  invoke(String virksomhedSENummerIdentifikator,
-                       String afgiftOperatoerPunktAfgiftIdentifikator,
-                        Integer interval )
+    public String invoke(String virksomhedSENummerIdentifikator,
+                         String afgiftOperatoerPunktAfgiftIdentifikator,
+                         Integer interval)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
         return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, interval);
@@ -71,8 +68,8 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
 
     }
 
-    public String  invoke(String virksomhedSENummerIdentifikator,
-                          String afgiftOperatoerPunktAfgiftIdentifikator)
+    public String invoke(String virksomhedSENummerIdentifikator,
+                         String afgiftOperatoerPunktAfgiftIdentifikator)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
         return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, 1);
@@ -81,11 +78,9 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
     }
 
     private String invokeit(String virksomhedSENummerIdentifikator,
-                       String afgiftOperatoerPunktAfgiftIdentifikator,
-                           Integer interval)
-                       throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
-
-        final String newLine = System.getProperty("line.separator");
+                            String afgiftOperatoerPunktAfgiftIdentifikator,
+                            Integer interval)
+            throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
         // Generate Transaction Id
         final String transactionID = TransactionIdGenerator.getTransactionId();
@@ -120,61 +115,37 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
         OIOBeskedAfvisningSamlingHentServicePortType port = service.getOIOBeskedAfvisningSamlingHentServicePort();
 
         // Set endpoint of service.
-        BindingProvider bp = (BindingProvider)port;
+        BindingProvider bp = (BindingProvider) port;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
 
         StringBuilder sbRequest = new StringBuilder();
-        sbRequest.append("*******************************************************************").append(newLine);
-        sbRequest.append("** HovedOplysninger").append(newLine);
-        sbRequest.append("**** Transaction Id: ").append(oioBeskedAfvisningSamlingHentIType.getHovedOplysninger().getTransaktionIdentifikator()).append(newLine);
-        sbRequest.append("**** Transaction Time: ").append(oioBeskedAfvisningSamlingHentIType.getHovedOplysninger().getTransaktionTid()).append(newLine);
-        sbRequest.append("** VirksomhedIdentifikationStruktur").append(newLine);
-        sbRequest.append("**** AfgiftOperatoerPunktAfgiftIdentifikator: ").append(oioBeskedAfvisningSamlingHentIType.getVirksomhedIdentifikationStruktur().getAfgiftOperatoerPunktAfgiftIdentifikator()).append(newLine);
-        sbRequest.append("**** VirksomhedSENummerIdentifikator: ").append(oioBeskedAfvisningSamlingHentIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()).append(newLine);
-        sbRequest.append("** Start Date: ").append(oioBeskedAfvisningSamlingHentIType.getSøgeParametreStruktur().getSøgeParametre().getGyldighedPeriodeUdsøgning().getStartDate()).append(newLine);
-        sbRequest.append("** End Date: ").append(oioBeskedAfvisningSamlingHentIType.getSøgeParametreStruktur().getSøgeParametre().getGyldighedPeriodeUdsøgning().getEndDate()).append(newLine);
-        sbRequest.append("*******************************************************************").append(newLine);
-        LOGGER.info(newLine + sbRequest.toString());
-
+        sbRequest.append(generateConsoleOutput(
+                oioBeskedAfvisningSamlingHentIType.getHovedOplysninger(),
+                oioBeskedAfvisningSamlingHentIType.getVirksomhedIdentifikationStruktur().getAfgiftOperatoerPunktAfgiftIdentifikator(),
+                oioBeskedAfvisningSamlingHentIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
+        ));
+        sbRequest.append("** Start Date: ").append(oioBeskedAfvisningSamlingHentIType.getSøgeParametreStruktur().getSøgeParametre().getGyldighedPeriodeUdsøgning().getStartDate()).append(NEW_LINE);
+        sbRequest.append("** End Date: ").append(oioBeskedAfvisningSamlingHentIType.getSøgeParametreStruktur().getSøgeParametre().getGyldighedPeriodeUdsøgning().getEndDate()).append(NEW_LINE);
+        sbRequest.append("*******************************************************************").append(NEW_LINE);
+        LOGGER.info(NEW_LINE + sbRequest.toString());
 
         OIOBeskedAfvisningSamlingHentOType out = port.getOIOBeskedAfvisningSamlingHent(oioBeskedAfvisningSamlingHentIType);
         StringBuilder sb = new StringBuilder();
-        sb.append("*******************************************************************").append(newLine);
-        sb.append("** HovedOplysningerSvar").append(newLine);
-        sb.append("**** Transaction Id: ").append(out.getHovedOplysningerSvar().getTransaktionIdentifikator()).append(newLine);
-        sb.append("**** Transaction Time: ").append(out.getHovedOplysningerSvar().getTransaktionTid()).append(newLine);
-        sb.append("**** Service Identification: ").append(out.getHovedOplysningerSvar().getServiceIdentifikator()).append(newLine);
-        sb.append("*******************************************************************").append(newLine);
-        if (out.getHovedOplysningerSvar().getSvarStruktur().getAdvisStrukturOrFejlStruktur().size() > 0) {
-            for (Object errorOrAdvis : out.getHovedOplysningerSvar().getSvarStruktur().getAdvisStrukturOrFejlStruktur()) {
-                if (errorOrAdvis instanceof FejlStrukturType) {
-                    FejlStrukturType fejlStrukturType = (FejlStrukturType) errorOrAdvis;
-                    sb.append("**** Error").append(newLine);
-                    sb.append("****** Error Code: ").append(fejlStrukturType.getFejlIdentifikator()).append(newLine);
-                    sb.append("****** Error Text: ").append(fejlStrukturType.getFejlTekst()).append(newLine);
-                }
-                if (errorOrAdvis instanceof AdvisStrukturType) {
-                    AdvisStrukturType advisStrukturType = (AdvisStrukturType) errorOrAdvis;
-                    sb.append("**** Advis").append(newLine);
-                    sb.append("****** Advis Code: ").append(advisStrukturType.getAdvisIdentifikator()).append(newLine);
-                    sb.append("****** Advis Text: ").append(advisStrukturType.getAdvisTekst()).append(newLine);
-                }
-            }
-        } else {
-            sb.append("** IE704 Messages: ").append(newLine);
+        sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
+        if (!hasError(out.getHovedOplysningerSvar())) {
+            sb.append("** IE704 Messages: ").append(NEW_LINE);
             List<String> ie704Messages = out.getBeskedAfvisningSamling().getIE704BeskedTekst();
             if (ie704Messages != null && ie704Messages.size() > 0) {
                 for (String message : ie704Messages) {
-                    sb.append(message).append(newLine);
-                    sb.append("*******************************************************************").append(newLine);
+                    sb.append(message).append(NEW_LINE);
+                    sb.append("*******************************************************************").append(NEW_LINE);
                 }
             } else {
-                sb.append("There are no IE 704 messages!").append(newLine);
-                sb.append("*******************************************************************").append(newLine);
+                sb.append("There are no IE 704 messages!").append(NEW_LINE);
+                sb.append("*******************************************************************").append(NEW_LINE);
             }
         }
-
-        LOGGER.info(newLine + sb.toString());
+        LOGGER.info(NEW_LINE + sb.toString());
         return sb.toString();
     }
 
