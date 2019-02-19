@@ -8,6 +8,12 @@ package dk.skat.emcs.b2b.sample;
  */
 public class BaseClient {
 
+    static {
+        // Comment out for running tests in IDE and change "CHANGEME" values.
+        // System.setProperty("dk.skat.emcs.b2b.sample.P12_PASSPHRASE", "CHANGEME");
+        // System.setProperty("dk.skat.emcs.b2b.sample.OIOLedsageDocumentOpret.ENDPOINT", "CHANGEME");
+    }
+
     /**
      * Get VAT number
      *
