@@ -8,15 +8,13 @@ import org.junit.Test;
  * @author SKAT
  * @since 1.2
  */
-public class OIOForsinkelseForklaringOpretClientTest extends BaseClient {
+public class OIOForsinkelseForklaringOpretClientTest extends BaseClientTest {
 
     @Test
     public void invoke() throws Exception {
         String endpointURL =
-                System.getProperty("dk.skat.emcs.b2b.sample.OIOForsinkelseForklaringOpret.ENDPOINT");
-
+                getEndpoint("OIOForsinkelseForklaringOpret");
         if (endpointURL != null) {
-
             // Path to where the IE837 document is located
             String ie837 = "ie837.xml";
             // VAT Number of the entity sending. Rule of thumb: this number matches
@@ -28,8 +26,6 @@ public class OIOForsinkelseForklaringOpretClientTest extends BaseClient {
             OIOForsinkelseForklaringOpretClient oioForsinkelseForklaringClient = new OIOForsinkelseForklaringOpretClient(endpointURL);
             oioForsinkelseForklaringClient.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator, ie837);
-        } else {
-            System.out.println("OIOForsinkelseForklaringOpretClientTest: Endpoint not provided, skipping test");
         }
     }
 

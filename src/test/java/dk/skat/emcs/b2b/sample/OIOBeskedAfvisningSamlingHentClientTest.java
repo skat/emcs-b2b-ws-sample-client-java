@@ -8,13 +8,12 @@ import org.junit.Test;
  * @author SKAT
  * @since 1.2
  */
-public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClient {
+public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClientTest {
 
     @Test
     public void invoke() throws Exception {
         String endpointURL =
-                System.getProperty("dk.skat.emcs.b2b.sample.OIOBeskedAfvisningSamlingHent.ENDPOINT");
-
+                getEndpoint("OIOBeskedAfvisningSamlingHent");
         if (endpointURL != null) {
             // this CVR number present in the certificate.
             String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
@@ -24,8 +23,6 @@ public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClient {
             OIOBeskedAfvisningSamlingHentClient oioBeskedAfvisningSamlingHentClient = new OIOBeskedAfvisningSamlingHentClient(endpointURL);
             oioBeskedAfvisningSamlingHentClient.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator);
-        } else {
-            System.out.println("OIOBeskedAfvisningSamlingHentClientTest: Endpoint not provided, skipping test");
         }
     }
 

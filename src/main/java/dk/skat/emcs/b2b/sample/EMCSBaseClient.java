@@ -5,10 +5,18 @@ import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.FejlStrukturT
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerSvarType;
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerType;
 import oio.skat.emcs.ws._1_0.SøgeParametreStrukturType;
+import oio.skat.emcs.ws._1_0.VirksomhedIdentifikationStrukturType;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -22,6 +30,41 @@ import java.util.GregorianCalendar;
 public class EMCSBaseClient {
 
     protected static final String NEW_LINE = System.getProperty("line.separator");
+
+    protected Document loadIEDocument(String path) throws IOException, SAXException, ParserConfigurationException {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        File file = new File(path);
+        Document doc = db.parse(file);
+        return doc;
+    }
+
+    protected HovedOplysningerType generateHovedOplysningerType() throws DatatypeConfigurationException {
+        // Generate Transaction Id
+        final String transactionID = TransactionIdGenerator.getTransactionId();
+        // Generate Transaction Time
+        GregorianCalendar gregorianCalendar = new GregorianCalendar();
+        gregorianCalendar.setTime(new Date());
+        XMLGregorianCalendar transactionTime = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar);
+        // Build HovedOplysninger Object and set transaction id and time
+        HovedOplysningerType hovedOplysningerType = new HovedOplysningerType();
+        hovedOplysningerType.setTransaktionIdentifikator(transactionID);
+        hovedOplysningerType.setTransaktionTid(transactionTime);
+        return hovedOplysningerType;
+    }
+
+    protected VirksomhedIdentifikationStrukturType generateVirksomhedIdentifikationStrukturType(String virksomhedSENummerIdentifikator,
+                            String afgiftOperatoerPunktAfgiftIdentifikator) {
+        // Build VirksomhedIdentifikationStruktur
+        VirksomhedIdentifikationStrukturType virksomhedIdentifikationStrukturType = new VirksomhedIdentifikationStrukturType();
+        virksomhedIdentifikationStrukturType.setAfgiftOperatoerPunktAfgiftIdentifikator(afgiftOperatoerPunktAfgiftIdentifikator);
+        VirksomhedIdentifikationStrukturType.Indberetter indberetter = new VirksomhedIdentifikationStrukturType.Indberetter();
+        indberetter.setVirksomhedSENummerIdentifikator(virksomhedSENummerIdentifikator);
+        virksomhedIdentifikationStrukturType.setIndberetter(indberetter);
+        return virksomhedIdentifikationStrukturType;
+
+    }
+
 
     protected SøgeParametreStrukturType getSøgeParametreStrukturType(Integer interval) throws DatatypeConfigurationException {
         SøgeParametreStrukturType soegeParametreStrukturType = new SøgeParametreStrukturType();
@@ -72,11 +115,11 @@ public class EMCSBaseClient {
 
     /**
      * Generate output of HovedOplysningerType document for console together with fields:
-     *
+     * <p>
      * AfgiftOperatoerPunktAfgiftIdentifikator
      * VirksomhedSENummerIdentifikator
      *
-     * @param hovedOplysningerType HovedOplysningerType document (found in service response)
+     * @param hovedOplysningerType                    HovedOplysningerType document (found in service response)
      * @param afgiftOperatoerPunktAfgiftIdentifikator
      * @param virksomhedSENummerIdentifikator
      * @return String formatted for console output

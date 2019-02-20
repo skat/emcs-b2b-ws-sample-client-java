@@ -1,11 +1,8 @@
 package dk.skat.emcs.b2b.sample;
 
-import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerType;
 import oio.skat.emcs.ws._1_0.IE825StrukturType;
 import oio.skat.emcs.ws._1_0.OIOLedsageDokumentOpsplitningOpretIType;
 import oio.skat.emcs.ws._1_0.OIOLedsageDokumentOpsplitningOpretOType;
-import oio.skat.emcs.ws._1_0.VirksomhedIdentifikationStrukturType;
-import oio.skat.emcs.ws._1_0.VirksomhedIdentifikationStrukturType.Indberetter;
 import oio.skat.emcs.ws._1_0_1.OIOLedsageDokumentOpsplitningOpretService;
 import oio.skat.emcs.ws._1_0_1.OIOLedsageDokumentOpsplitningOpretServicePortType;
 import org.apache.cxf.Bus;
@@ -15,16 +12,12 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.ws.BindingProvider;
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.logging.Logger;
 
 /**
@@ -70,26 +63,6 @@ public class OIOLedsageDokumentOpsplitningOpretClient extends EMCSBaseClient {
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        String ie825) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
-        // Generate Transaction Id
-        final String transactionID = TransactionIdGenerator.getTransactionId();
-
-        // Generate Transaction Time
-        GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        gregorianCalendar.setTime(new Date());
-        XMLGregorianCalendar transactionTime = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar);
-
-        // Build HovedOplysninger Object and set transaction id and time
-        HovedOplysningerType hovedOplysningerType = new HovedOplysningerType();
-        hovedOplysningerType.setTransaktionIdentifikator(transactionID);
-        hovedOplysningerType.setTransaktionTid(transactionTime);
-
-        // Build VirksomhedIdentifikationStruktur
-        VirksomhedIdentifikationStrukturType virksomhedIdentifikationStrukturType = new VirksomhedIdentifikationStrukturType();
-        virksomhedIdentifikationStrukturType.setAfgiftOperatoerPunktAfgiftIdentifikator(afgiftOperatoerPunktAfgiftIdentifikator);
-        Indberetter indberetter = new Indberetter();
-        indberetter.setVirksomhedSENummerIdentifikator(virksomhedSENummerIdentifikator);
-        virksomhedIdentifikationStrukturType.setIndberetter(indberetter);
-
         // Load IE815 document
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
@@ -102,8 +75,8 @@ public class OIOLedsageDokumentOpsplitningOpretClient extends EMCSBaseClient {
         IE825StrukturType.setAny(doc.getDocumentElement());
 
         OIOLedsageDokumentOpsplitningOpretIType oioLedsageDokumentOpsplitningOpretIType = new OIOLedsageDokumentOpsplitningOpretIType();
-        oioLedsageDokumentOpsplitningOpretIType.setHovedOplysninger(hovedOplysningerType);
-        oioLedsageDokumentOpsplitningOpretIType.setVirksomhedIdentifikationStruktur(virksomhedIdentifikationStrukturType);
+        oioLedsageDokumentOpsplitningOpretIType.setHovedOplysninger(generateHovedOplysningerType());
+        oioLedsageDokumentOpsplitningOpretIType.setVirksomhedIdentifikationStruktur(generateVirksomhedIdentifikationStrukturType(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator));
         oioLedsageDokumentOpsplitningOpretIType.setIE825Struktur(IE825StrukturType);
 
         Bus bus = new SpringBusFactory().createBus("emcs-policy.xml", false);

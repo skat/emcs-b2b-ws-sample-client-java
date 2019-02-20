@@ -1,16 +1,12 @@
 package dk.skat.emcs.b2b.sample;
 
-import org.junit.Test;
-
-import java.io.File;
-
 /**
  * OIOLedsageDocumentOpretClient Test
  *
  * @author SKAT
  * @since 1.2
  */
-public class OIOLedsageDocumentOpretClientStringTest extends BaseClient {
+public class OIOLedsageDocumentOpretClientStringTest extends BaseClientTest {
 
   //  @Test
     public void invoke() throws Exception {
@@ -134,7 +130,7 @@ public class OIOLedsageDocumentOpretClientStringTest extends BaseClient {
             // Excise number
             String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
 
-            OIOLedsageDocumentOpretClient oioLedsageDocumentClient = new OIOLedsageDocumentOpretClient(endpointURL);
+            OIOLedsageDokumentOpretClient oioLedsageDocumentClient = new OIOLedsageDokumentOpretClient(endpointURL);
             oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator, ie815,true);
         } else {

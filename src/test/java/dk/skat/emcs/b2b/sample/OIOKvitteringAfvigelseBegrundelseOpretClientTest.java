@@ -8,12 +8,12 @@ import org.junit.Test;
  * @author SKAT
  * @since 1.2
  */
-public class OIOKvitteringAfvigelseBegrundelseOpretClientTest extends BaseClient {
+public class OIOKvitteringAfvigelseBegrundelseOpretClientTest extends BaseClientTest {
 
     @Test
     public void invoke() throws Exception {
         String endpointURL =
-                System.getProperty("dk.skat.emcs.b2b.sample.OIOKvitteringAfvigelseBegrundelseOpret.ENDPOINT");
+                getEndpoint("OIOKvitteringAfvigelseBegrundelseOpret");
 
         if (endpointURL != null) {
 
@@ -28,8 +28,6 @@ public class OIOKvitteringAfvigelseBegrundelseOpretClientTest extends BaseClient
             OIOKvitteringAfvigelseBegrundelseOpretClient oioKvitteringAfvigelseBegrundelseOpretClient = new OIOKvitteringAfvigelseBegrundelseOpretClient(endpointURL);
             oioKvitteringAfvigelseBegrundelseOpretClient.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator, ie871);
-        } else {
-            System.out.println("OIOKvitteringAfvigelseBegrundelseOpretClientTest: Endpoint not provided, skipping test");
         }
     }
 

@@ -46,16 +46,16 @@ import org.xml.sax.InputSource;
  * @since 1.2
  */
 @SuppressWarnings("ALL")
-public class OIOLedsageDocumentOpretClient extends EMCSBaseClient {
+public class OIOLedsageDokumentOpretClient extends EMCSBaseClient {
 
-    private static final Logger LOGGER = Logger.getLogger(OIOLedsageDocumentOpretClient.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(OIOLedsageDokumentOpretClient.class.getName());
 
     private String endpointURL;
 
     /**
      * Private constructor
      */
-    private OIOLedsageDocumentOpretClient() {
+    private OIOLedsageDokumentOpretClient() {
     }
 
     /**
@@ -63,7 +63,7 @@ public class OIOLedsageDocumentOpretClient extends EMCSBaseClient {
      *
      * @param endpointURL Endpoint of OIOLedsageDocumentOpret service
      */
-    public OIOLedsageDocumentOpretClient(String endpointURL) {
+    public OIOLedsageDokumentOpretClient(String endpointURL) {
         this.endpointURL = endpointURL;
     }
 

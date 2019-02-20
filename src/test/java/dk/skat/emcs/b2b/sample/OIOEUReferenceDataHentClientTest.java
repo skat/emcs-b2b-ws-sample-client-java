@@ -2,33 +2,24 @@ package dk.skat.emcs.b2b.sample;
 
 import org.junit.Test;
 
-/**
- * OIOLedsageDokumentDestinationSkiftOpretClient Test
- *
- * @author SKAT
- * @since 1.2
- */
-public class OIOLedsageDokumentDestinationSkiftOpretClientTest extends BaseClientTest {
+public class OIOEUReferenceDataHentClientTest extends BaseClientTest {
 
     @Test
     public void invoke() throws Exception {
         String endpointURL =
-                getEndpoint("OIOLedsageDokumentDestinationSkiftOpret");
+                getEndpoint("OIOEUReferenceDataHent");
 
         if (endpointURL != null) {
-
-            // Path to where the IE813 document is located
-            String ie813 = "ie813.xml";
+            String beskedIdentifikator = "123456789ABCD";
             // VAT Number of the entity sending. Rule of thumb: this number matches
             // this CVR number present in the certificate.
             String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
             // Excise number
             String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
 
-            OIOLedsageDokumentDestinationSkiftOpretClient client = new OIOLedsageDokumentDestinationSkiftOpretClient(endpointURL);
+            OIOEUReferenceDataHentClient client = new OIOEUReferenceDataHentClient(endpointURL);
             client.invoke(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator, ie813);
+                    afgiftOperatoerPunktAfgiftIdentifikator, beskedIdentifikator);
         }
     }
-
 }

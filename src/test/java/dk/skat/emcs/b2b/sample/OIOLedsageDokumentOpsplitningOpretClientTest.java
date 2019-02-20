@@ -8,12 +8,12 @@ import org.junit.Test;
  * @author SKAT
  * @since 1.2
  */
-public class OIOLedsageDokumentOpsplitningOpretClientTest extends BaseClient {
+public class OIOLedsageDokumentOpsplitningOpretClientTest extends BaseClientTest {
 
     @Test
     public void invoke() throws Exception {
         String endpointURL =
-                System.getProperty("dk.skat.emcs.b2b.sample.OIOLedsageDokumentOpsplitningOpret.ENDPOINT");
+                getEndpoint("OIOLedsageDokumentOpsplitningOpret");
 
         if (endpointURL != null) {
 
@@ -28,8 +28,6 @@ public class OIOLedsageDokumentOpsplitningOpretClientTest extends BaseClient {
             OIOLedsageDokumentOpsplitningOpretClient oioLedsageDocumentAnnulleringOpretClient = new OIOLedsageDokumentOpsplitningOpretClient(endpointURL);
             oioLedsageDocumentAnnulleringOpretClient.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator, ie825);
-        } else {
-            System.out.println("OIOLedsageDokumentOpsplitningOpretClientTest: Endpoint not provided, skipping test");
         }
     }
 

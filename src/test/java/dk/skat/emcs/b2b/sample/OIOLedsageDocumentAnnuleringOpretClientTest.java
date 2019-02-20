@@ -8,15 +8,14 @@ import org.junit.Test;
  * @author SKAT
  * @since 1.2
  */
-public class OIOLedsageDocumentAnnuleringOpretClientTest extends BaseClient {
+public class OIOLedsageDocumentAnnuleringOpretClientTest extends BaseClientTest {
 
     @Test
     public void invoke() throws Exception {
         String endpointURL =
-                System.getProperty("dk.skat.emcs.b2b.sample.OIOLedsageDocumentAnnulleringOpret.ENDPOINT");
+                getEndpoint("OIOLedsageDocumentAnnulleringOpret");
 
         if (endpointURL != null) {
-
             // Path to where the IE810 document is located
             String ie810 = "ie810.xml";
             // VAT Number of the entity sending. Rule of thumb: this number matches
@@ -28,8 +27,6 @@ public class OIOLedsageDocumentAnnuleringOpretClientTest extends BaseClient {
             OIOLedsageDokumentAnnulleringOpretClient oioLedsageDocumentAnnulleringOpretClient = new OIOLedsageDokumentAnnulleringOpretClient(endpointURL);
             oioLedsageDocumentAnnulleringOpretClient.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator, ie810);
-        } else {
-            System.out.println("OIOLedsageDocumentAnnulleringOpretClientTest: Endpoint not provided, skipping test");
         }
     }
 

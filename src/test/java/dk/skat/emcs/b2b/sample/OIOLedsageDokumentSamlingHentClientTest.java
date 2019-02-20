@@ -8,17 +8,17 @@ import org.junit.Test;
  * @author SKAT
  * @since 1.2
  */
-public class OIOLedsageDokumentSamlingHentClientTest extends BaseClient {
+public class OIOLedsageDokumentSamlingHentClientTest extends BaseClientTest {
 
     @Test
     public void invoke() throws Exception {
         String endpointURL =
-                System.getProperty("dk.skat.emcs.b2b.sample.OIOLedsageDokumentSamlingHent.ENDPOINT");
+                getEndpoint("OIOLedsageDokumentSamlingHent");
 
         if (endpointURL != null) {
 
             // The ARC number
-            String ARCnumber =   System.getProperty("dk.skat.emcs.b2b.sample.ARC");
+            String ARCnumber = System.getProperty("dk.skat.emcs.b2b.sample.ARC");
             // VAT Number of the entity sending. Rule of thumb: this number matches
             // this CVR number present in the certificate.
             String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
@@ -28,8 +28,6 @@ public class OIOLedsageDokumentSamlingHentClientTest extends BaseClient {
             OIOLedsageDokumentSamlingHentClient ledsageDokumentSamlingHentClient = new OIOLedsageDokumentSamlingHentClient(endpointURL);
             ledsageDokumentSamlingHentClient.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator, ARCnumber);
-        } else {
-            System.out.println("OIOLedsageDokumentSamlingHentClientTest: Endpoint not provided, skipping test");
         }
     }
 

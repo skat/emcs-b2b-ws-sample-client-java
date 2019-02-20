@@ -10,10 +10,9 @@ import java.io.File;
  * @author SKAT
  * @since 1.2
  */
-public class OIOLedsageDocumentOpretClientTest extends BaseClient {
+public class OIOLedsageDocumentOpretClientTest extends BaseClientTest {
 
-    private String endpointURL =
-            System.getProperty("dk.skat.emcs.b2b.sample.OIOLedsageDocumentOpret.ENDPOINT");
+    private String endpointURL = getEndpoint("OIOLedsageDocumentOpret");
 
     /**
      * Test submit of ie815 - no delegation
@@ -41,11 +40,9 @@ public class OIOLedsageDocumentOpretClientTest extends BaseClient {
             // Excise number
             String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
 
-            OIOLedsageDocumentOpretClient oioLedsageDocumentClient = new OIOLedsageDocumentOpretClient(endpointURL);
+            OIOLedsageDokumentOpretClient oioLedsageDocumentClient = new OIOLedsageDokumentOpretClient(endpointURL);
             oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator, ie815);
-        } else {
-            System.out.println("OIOLedsageDocumentOpretClientTest: Endpoint not provided, skipping test");
         }
     }
 
@@ -75,11 +72,9 @@ public class OIOLedsageDocumentOpretClientTest extends BaseClient {
             // Excise number
             String afgiftOperatoerPunktAfgiftIdentifikator = "DK82065873300";
 
-            OIOLedsageDocumentOpretClient oioLedsageDocumentClient = new OIOLedsageDocumentOpretClient(endpointURL);
+            OIOLedsageDokumentOpretClient oioLedsageDocumentClient = new OIOLedsageDokumentOpretClient(endpointURL);
             oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator, ie815);
-        } else {
-            System.out.println("OIOLedsageDocumentOpretClientTest: Endpoint not provided, skipping test");
         }
     }
 
@@ -101,11 +96,9 @@ public class OIOLedsageDocumentOpretClientTest extends BaseClient {
             // Excise number
             String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
 
-            OIOLedsageDocumentOpretClient oioLedsageDocumentClient = new OIOLedsageDocumentOpretClient(endpointURL);
+            OIOLedsageDokumentOpretClient oioLedsageDocumentClient = new OIOLedsageDokumentOpretClient(endpointURL);
             oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator, ie815);
-        } else {
-            System.out.println("OIOLedsageDocumentOpretClientTest: Endpoint not provided, skipping test");
         }
     }
 
@@ -127,11 +120,9 @@ public class OIOLedsageDocumentOpretClientTest extends BaseClient {
             // Excise number
             String afgiftOperatoerPunktAfgiftIdentifikator = "DK12345678300";
 
-            OIOLedsageDocumentOpretClient oioLedsageDocumentClient = new OIOLedsageDocumentOpretClient(endpointURL);
-            oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,
+            OIOLedsageDokumentOpretClient client = new OIOLedsageDokumentOpretClient(endpointURL);
+            client.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator, ie815);
-        } else {
-            System.out.println("OIOLedsageDocumentOpretClientTest: Endpoint not provided, skipping test");
         }
     }
 
@@ -153,11 +144,9 @@ public class OIOLedsageDocumentOpretClientTest extends BaseClient {
             // Excise number
             String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
 
-            OIOLedsageDocumentOpretClient oioLedsageDocumentClient = new OIOLedsageDocumentOpretClient(endpointURL);
-            oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,
+            OIOLedsageDokumentOpretClient client = new OIOLedsageDokumentOpretClient(endpointURL);
+            client.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator, ie815);
-        } else {
-            System.out.println("OIOLedsageDocumentOpretClientTest: Endpoint not provided, skipping test");
         }
     }
 

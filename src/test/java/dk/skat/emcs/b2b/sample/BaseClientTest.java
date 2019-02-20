@@ -6,7 +6,7 @@ package dk.skat.emcs.b2b.sample;
  * @author SKAT
  * @since 1.2
  */
-public class BaseClient {
+public class BaseClientTest {
 
     static {
         // Comment out for running tests in IDE and change "CHANGEME" values.
@@ -32,6 +32,20 @@ public class BaseClient {
     protected String getAfgiftOperatoerPunktAfgiftIdentifikator() {
         String afgiftOperatoerPunktAfgiftIdentifikator = "DK82065873300";
         return afgiftOperatoerPunktAfgiftIdentifikator;
+    }
+
+    /**
+     * Get endpoint
+     *
+     * @return Endpoint
+     */
+    protected String getEndpoint(String service) {
+        String endpointURL =
+                System.getProperty("dk.skat.emcs.b2b.sample." + service + ".ENDPOINT");
+        if (endpointURL == null) {
+            System.out.println(service + ": Endpoint not provided, skipping test");
+        }
+        return endpointURL;
     }
 
 }

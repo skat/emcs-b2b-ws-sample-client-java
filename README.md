@@ -35,7 +35,7 @@ returned ARC number) and **OIOBeskedAfvisningSamlingHent** (if submitted IE815 w
 
 The main entry point into the source code of the implementation is these classes:
 
-* [OIOLedsageDocumentOpretClient.java](src/main/java/dk/skat/emcs/b2b/sample/OIOLedsageDocumentOpretClient.java)
+* [OIOLedsageDokumentOpretClient.java](src/main/java/dk/skat/emcs/b2b/sample/OIOLedsageDokumentOpretClient.java)
 * [OIOLedsageDokumentSamlingHentClient.java](src/main/java/dk/skat/emcs/b2b/sample/OIOLedsageDokumentSamlingHentClient.java)
 * [OIOBeskedAfvisningSamlingHentClient.java](src/main/java/dk/skat/emcs/b2b/sample/OIOBeskedAfvisningSamlingHentClient.java)
 

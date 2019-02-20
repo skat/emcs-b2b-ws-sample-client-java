@@ -9,13 +9,12 @@ import java.io.File;
  * @author SKAT
  * @since 1.2
  */
-public class OIOKvitteringOpretClientTest extends BaseClient {
+public class OIOKvitteringOpretClientTest extends BaseClientTest {
 
     @Test
     public void invoke() throws Exception {
         String endpointURL =
-                System.getProperty("dk.skat.emcs.b2b.sample.OIOKvitteringOpret.ENDPOINT");
-
+                getEndpoint("OIOKvitteringOpret");
         if (endpointURL != null) {
             File ie818 = new File ("ie818.xml");
             // this CVR number present in the certificate.
@@ -26,8 +25,6 @@ public class OIOKvitteringOpretClientTest extends BaseClient {
             OIOKvitteringOpretClient oioKvitteringOpretClient = new OIOKvitteringOpretClient(endpointURL);
             oioKvitteringOpretClient.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator,ie818);
-        } else {
-            System.out.println("OIOKvitteringOpretClientTest: Endpoint not provided, skipping test");
         }
     }
 

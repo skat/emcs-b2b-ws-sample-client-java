@@ -1,6 +1,5 @@
 package dk.skat.emcs.b2b.sample;
 
-import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerType;
 import oio.skat.emcs.ws._1_0.*;
 import oio.skat.emcs.ws._1_0_1.OIOBeskedAfvisningSamlingHentService;
 import oio.skat.emcs.ws._1_0_1.OIOBeskedAfvisningSamlingHentServicePortType;
@@ -10,13 +9,9 @@ import org.apache.cxf.bus.spring.SpringBusFactory;
 import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.ws.BindingProvider;
 import java.io.IOException;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -82,29 +77,9 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
                             Integer interval)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
-        // Generate Transaction Id
-        final String transactionID = TransactionIdGenerator.getTransactionId();
-
-        // Generate Transaction Time
-        GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        gregorianCalendar.setTime(new Date());
-        XMLGregorianCalendar transactionTime = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar);
-
-        // Build HovedOplysninger Object and set transaction id and time
-        HovedOplysningerType hovedOplysningerType = new HovedOplysningerType();
-        hovedOplysningerType.setTransaktionIdentifikator(transactionID);
-        hovedOplysningerType.setTransaktionTid(transactionTime);
-
-        // Build VirksomhedIdentifikationStruktur
-        VirksomhedIdentifikationStrukturType virksomhedIdentifikationStrukturType = new VirksomhedIdentifikationStrukturType();
-        virksomhedIdentifikationStrukturType.setAfgiftOperatoerPunktAfgiftIdentifikator(afgiftOperatoerPunktAfgiftIdentifikator);
-        VirksomhedIdentifikationStrukturType.Indberetter indberetter = new VirksomhedIdentifikationStrukturType.Indberetter();
-        indberetter.setVirksomhedSENummerIdentifikator(virksomhedSENummerIdentifikator);
-        virksomhedIdentifikationStrukturType.setIndberetter(indberetter);
-
         OIOBeskedAfvisningSamlingHentIType oioBeskedAfvisningSamlingHentIType = new OIOBeskedAfvisningSamlingHentIType();
-        oioBeskedAfvisningSamlingHentIType.setHovedOplysninger(hovedOplysningerType);
-        oioBeskedAfvisningSamlingHentIType.setVirksomhedIdentifikationStruktur(virksomhedIdentifikationStrukturType);
+        oioBeskedAfvisningSamlingHentIType.setHovedOplysninger(generateHovedOplysningerType());
+        oioBeskedAfvisningSamlingHentIType.setVirksomhedIdentifikationStruktur(generateVirksomhedIdentifikationStrukturType(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator));
         SøgeParametreStrukturType soegeParametreStrukturType = getSøgeParametreStrukturType(interval);
         oioBeskedAfvisningSamlingHentIType.setSøgeParametreStruktur(soegeParametreStrukturType);
 

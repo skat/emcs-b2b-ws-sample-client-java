@@ -28,6 +28,7 @@ import java.util.logging.Logger;
  * @since 1.0
  */
 public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClient {
+
     private static final Logger LOGGER = Logger.getLogger(OIOLedsageDokumentAnnulleringSamlingHentClient.class.getName());
 
     private String endpointURL;
@@ -77,8 +78,6 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClie
                          String arcnumber)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
         SøgeParametreStrukturType søgeparameter = getSøgeParametreStrukturType(arcnumber);
-
-
         return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, søgeparameter);
 
 
