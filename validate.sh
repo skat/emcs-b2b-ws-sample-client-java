@@ -2,6 +2,9 @@
 
 xmllint --noout --schema schema/ie705.xsd ie705.xml
 xmllint --noout --schema schema/ie815.xsd ie815.xml
+xmllint --noout --schema schema/ie815.xsd ie815-no-delegation.xml
+xmllint --noout --schema schema/ie815.xsd ie815-trigger-error-104.xml
+xmllint --noout --schema schema/ie815.xsd ie815-valid-delegation.xml
 xmllint --noout --schema schema/ie818.xsd ie818.xml
 xmllint --noout --schema schema/ie810.xsd ie810.xml
 xmllint --noout --schema schema/ie813.xsd ie813.xml
