@@ -10,7 +10,13 @@ notifications:
 jdk:
   - oraclejdk8
 
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt install jq
+  - sudo apt install libxml2-utils
+
 script:
+  - ./validate.sh
   - mvn --version
   # Skip unit test in CI
   - mvn clean install -Dmaven.test.skip=true
