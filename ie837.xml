@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ie:IE837 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:IE837:V2.02">
-    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:TMS:V2.02">
+<ie:IE837 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE837:V3.01">
+    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">
         <tms:MessageSender>NDEA.DK</tms:MessageSender>
         <tms:MessageRecipient>NDEA.DK</tms:MessageRecipient>
         <tms:DateOfPreparation>2011-05-03</tms:DateOfPreparation>
@@ -16,10 +16,10 @@
                 <ie:MessageRole>1</ie:MessageRole>
                 <ie:DateAndTimeOfValidationOfExplanationOnDelay>2011-05-03T13:39:01.000</ie:DateAndTimeOfValidationOfExplanationOnDelay>
             </ie:Attributes>
-            <ie:ExciseMovementEad>
+            <ie:ExciseMovement>
                 <ie:AdministrativeReferenceCode>11DKWT71BMB8AWEY9BHP2</ie:AdministrativeReferenceCode>
                 <ie:SequenceNumber>1</ie:SequenceNumber>
-            </ie:ExciseMovementEad>
+            </ie:ExciseMovement>
         </ie:ExplanationOnDelayForDelivery>
     </ie:Body>
 </ie:IE837>

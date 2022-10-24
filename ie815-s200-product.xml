@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ie:IE815 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:IE815:V2.02">
-    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:TMS:V2.02">
+<ie:IE815 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE815:V3.01">
+    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">
         <tms:MessageSender>NDEA.DK</tms:MessageSender>
         <tms:MessageRecipient>NDEA.DK</tms:MessageRecipient>
         <tms:DateOfPreparation>2011-10-26</tms:DateOfPreparation>
         <tms:TimeOfPreparation>11:27:00.803</tms:TimeOfPreparation>
         <tms:MessageIdentifier>9e1e74a5-aaae-41d6-8280-c3892246e783</tms:MessageIdentifier>
     </ie:Header>
-    <ns26:Body xmlns:ns26="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:IE815:V2.02">
-        <ns26:SubmittedDraftOfEAD>
+    <ns26:Body xmlns:ns26="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE815:V3.01">
+        <ns26:SubmittedDraftOfEADESAD>
             <ns26:Attributes>
                 <ns26:SubmissionMessageType>1</ns26:SubmissionMessageType>
                 <!-- IMPORTANT: We ONLY set this to 1 to allows us to resend
@@ -57,25 +57,25 @@
                 <ns26:Postcode>2800</ns26:Postcode>
                 <ns26:City>Roskilde</ns26:City>
             </ns26:FirstTransporterTrader>
-            <ns26:HeaderEad>
+            <ns26:HeaderEadEsad>
                 <ns26:DestinationTypeCode>1</ns26:DestinationTypeCode>
                 <ns26:JourneyTime>H06</ns26:JourneyTime>
                 <ns26:TransportArrangement>1</ns26:TransportArrangement>
-            </ns26:HeaderEad>
+            </ns26:HeaderEadEsad>
             <ns26:TransportMode>
                 <ns26:TransportModeCode>4</ns26:TransportModeCode>
             </ns26:TransportMode>
             <ns26:MovementGuarantee>
                 <ns26:GuarantorTypeCode>1</ns26:GuarantorTypeCode>
             </ns26:MovementGuarantee>
-            <ns26:BodyEad>
+            <ns26:BodyEadEsad>
                 <ns26:BodyRecordUniqueReference>1</ns26:BodyRecordUniqueReference>
                 <ns26:ExciseProductCode>S200</ns26:ExciseProductCode>
                 <ns26:CnCode>22082027</ns26:CnCode>
                 <ns26:Quantity>100</ns26:Quantity>
-                <ns26:GrossWeight>100</ns26:GrossWeight>
-                <ns26:NetWeight>99</ns26:NetWeight>
-                <ns26:AlcoholicStrengthByVolumeInPercentage>38</ns26:AlcoholicStrengthByVolumeInPercentage>
+                <ns26:GrossMass>100</ns26:GrossMass>
+                <ns26:NetMass>99</ns26:NetMass>
+                <ns26:AlcoholicStrengthByVolumeInPercentage>12</ns26:AlcoholicStrengthByVolumeInPercentage>
                 <ns26:FiscalMark language="da">Nix</ns26:FiscalMark>
                 <ns26:FiscalMarkUsedFlag>1</ns26:FiscalMarkUsedFlag>
                 <ns26:DesignationOfOrigin language="da">Tjo</ns26:DesignationOfOrigin>
@@ -91,19 +91,19 @@
                     <ns26:WineGrowingZoneCode>1</ns26:WineGrowingZoneCode>
                     <ns26:OtherInformation language="da">jajaja</ns26:OtherInformation>
                 </ns26:WineProduct>
-            </ns26:BodyEad>
-            <ns26:EadDraft>
+            </ns26:BodyEadEsad>
+            <ns26:EadEsadDraft>
                 <ns26:LocalReferenceNumber>1964466</ns26:LocalReferenceNumber>
                 <ns26:InvoiceNumber>INV026594</ns26:InvoiceNumber>
                 <ns26:InvoiceDate>2011-10-18</ns26:InvoiceDate>
                 <ns26:OriginTypeCode>1</ns26:OriginTypeCode>
                 <ns26:DateOfDispatch>2011-10-26</ns26:DateOfDispatch>
                 <ns26:TimeOfDispatch>02:00:00.814</ns26:TimeOfDispatch>
-            </ns26:EadDraft>
+            </ns26:EadEsadDraft>
             <ns26:TransportDetails>
                 <ns26:TransportUnitCode>1</ns26:TransportUnitCode>
                 <ns26:IdentityOfTransportUnits>299</ns26:IdentityOfTransportUnits>
             </ns26:TransportDetails>
-        </ns26:SubmittedDraftOfEAD>
+        </ns26:SubmittedDraftOfEADESAD>
     </ns26:Body>
 </ie:IE815>

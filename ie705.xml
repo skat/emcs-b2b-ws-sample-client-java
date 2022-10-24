@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urn:IE705 xmlns:urn="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:IE705:V2.02"
-           xmlns:urn1="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:TMS:V2.02">
+<urn:IE705 xmlns:urn="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE705:V3.01"
+           xmlns:urn1="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">
     <urn:Header>
         <urn1:MessageSender>NDEA.DK</urn1:MessageSender>
         <urn1:MessageRecipient>NDEA.DK</urn1:MessageRecipient>

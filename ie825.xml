@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ie:IE825 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:IE825:V2.02">
-    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:TMS:V2.02">
+<ie:IE825 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE825:V3.01">
+    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">
         <tms:MessageSender>NDEA.DK</tms:MessageSender>
         <tms:MessageRecipient>NDEA.DK</tms:MessageRecipient>
         <tms:DateOfPreparation>2011-10-26</tms:DateOfPreparation>
@@ -44,8 +44,8 @@
                     <ie:ExciseProductCode>E420</ie:ExciseProductCode>
                     <ie:CnCode>27101131</ie:CnCode>
                     <ie:Quantity>500</ie:Quantity>
-                    <ie:GrossWeight>500</ie:GrossWeight>
-                    <ie:NetWeight>500</ie:NetWeight>
+                    <ie:GrossMass>500</ie:GrossMass>
+                    <ie:NetMass>500</ie:NetMass>
                     <ie:FiscalMarkUsedFlag>0</ie:FiscalMarkUsedFlag>
                     <ie:Density>500</ie:Density>
                     <ie:CommercialDescription language="da">Flyverbenzin</ie:CommercialDescription>
@@ -87,8 +87,8 @@
                     <ie:ExciseProductCode>E420</ie:ExciseProductCode>
                     <ie:CnCode>27101131</ie:CnCode>
                     <ie:Quantity>500</ie:Quantity>
-                    <ie:GrossWeight>500</ie:GrossWeight>
-                    <ie:NetWeight>500</ie:NetWeight>
+                    <ie:GrossMass>500</ie:GrossMass>
+                    <ie:NetMass>500</ie:NetMass>
                     <ie:FiscalMarkUsedFlag>0</ie:FiscalMarkUsedFlag>
                     <ie:Density>500</ie:Density>
                     <ie:CommercialDescription language="da">Flyverbenzin</ie:CommercialDescription>
