@@ -13,7 +13,7 @@ public class OIOLedsageDocumentAnnuleringOpretClientTest extends BaseClientTest 
     @Test
     public void invoke() throws Exception {
         String endpointURL =
-                getEndpoint("OIOLedsageDocumentAnnulleringOpret");
+                getEndpoint("OIOLedsageDokumentAnnulleringOpret");
 
         if (endpointURL != null) {
             // Path to where the IE810 document is located

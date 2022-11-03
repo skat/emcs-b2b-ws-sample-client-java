@@ -10,11 +10,11 @@
     <ie:Body>
         <ie:CancellationOfEAD>
             <ie:Attributes>
-                <ie:DateAndTimeOfValidationOfCancellation>2018-10-26T11:34:42.000
+                <ie:DateAndTimeOfValidationOfCancellation>2022-11-03T11:34:42.000
                 </ie:DateAndTimeOfValidationOfCancellation>
             </ie:Attributes>
             <ie:ExciseMovementEad>
-                <ie:AdministrativeReferenceCode>18DK6T3AQYMQQWRQWSK05</ie:AdministrativeReferenceCode>
+                <ie:AdministrativeReferenceCode>22DK6DLFYP30NP784L367</ie:AdministrativeReferenceCode>
             </ie:ExciseMovementEad>
             <ie:Cancellation>
                 <ie:CancellationReasonCode>2</ie:CancellationReasonCode>

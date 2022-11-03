@@ -8,34 +8,20 @@ import oio.skat.emcs.ws._1_0.VirksomhedIdentifikationStrukturType;
 import oio.skat.emcs.ws._1_0.VirksomhedIdentifikationStrukturType.Indberetter;
 import oio.skat.emcs.ws._1_0_1.OIOLedsageDokumentAnnulleringOpretService;
 import oio.skat.emcs.ws._1_0_1.OIOLedsageDokumentAnnulleringOpretServicePortType;
-import org.apache.commons.lang.RandomStringUtils;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.ws.BindingProvider;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-import java.io.File;
 import java.io.IOException;
-import java.io.StringReader;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.UUID;
 import java.util.logging.Logger;
 
 /**
@@ -80,59 +66,11 @@ public class OIOLedsageDokumentAnnulleringOpretClient extends EMCSBaseClient {
     public String  invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        String ie810) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
-
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder;
-        Document doc = null;
-        try
-        {
-            builder = factory.newDocumentBuilder();
-            doc = builder.parse( new InputSource( new StringReader( ie810 ) ) );
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        XPath xPath = XPathFactory.newInstance().newXPath();
-
-        Node TimeOfPreparation = null;
-        try {
-            TimeOfPreparation = (Node) xPath.compile("/IE810/Header/TimeOfPreparation").evaluate(doc, XPathConstants.NODE);
-        } catch (XPathExpressionException e) {
-            e.printStackTrace();
-        }
-
-        Node MessageIdentifier = null;
-        try {
-            MessageIdentifier = (Node) xPath.compile("/IE810/Header/MessageIdentifier").evaluate(doc, XPathConstants.NODE);
-        } catch (XPathExpressionException e) {
-            e.printStackTrace();
-        }
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
-        String formatDateTime = now.format(formatter);
-        String result = RandomStringUtils.random(7, false, true);
-
-        TimeOfPreparation.setTextContent(formatDateTime);
-        final String uuid = UUID.randomUUID().toString();
-        MessageIdentifier.setTextContent(uuid);
-
-
+        Document doc = loadIEDocument(ie810);
+        resetDateOfPreparation(doc, "/IE810/Header/DateOfPreparation");
+        resetTimeOfPreparation(doc, "/IE810/Header/TimeOfPreparation");
+        resetMessageIdentifier(doc, "/IE810/Header/MessageIdentifier");
         return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
-
-
-    }
-
-
-        public void invoke(String virksomhedSENummerIdentifikator,
-                       String afgiftOperatoerPunktAfgiftIdentifikator,
-                       File ie810) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
-
-        // Load IE815 document
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = dbf.newDocumentBuilder();
-
-        Document doc = db.parse(ie810);
-            this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
     }
 
 
@@ -188,7 +126,7 @@ public class OIOLedsageDokumentAnnulleringOpretClient extends EMCSBaseClient {
                 oioLedsageDokumentAnnulleringOpretIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
         ));
         LOGGER.info(NEW_LINE + sbRequest.toString());
-
+        LOGGER.info(prettyPrintDocument(doc, 2, true));
 
         OIOLedsageDokumentAnnulleringOpretOType out = port.getOIOLedsageDokumentAnnulleringOpret(oioLedsageDokumentAnnulleringOpretIType);
         StringBuilder sb = new StringBuilder();
