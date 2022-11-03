@@ -235,6 +235,7 @@ public class OIOLedsageDokumentOpretClient extends EMCSBaseClient {
                 oioLedsageDokumentOpretIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
         ));
         LOGGER.info(NEW_LINE + sbRequest.toString());
+        LOGGER.info(prettyPrintDocument(doc, 2, true));
 
 
         OIOLedsageDokumentOpretOType out = port.getOIOLedsageDokumentOpret(oioLedsageDokumentOpretIType);
@@ -243,9 +244,15 @@ public class OIOLedsageDokumentOpretClient extends EMCSBaseClient {
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
         if (!hasError(out.getHovedOplysningerSvar())) {
-            sb.append("Ledsagedokument Valideret Dato: ").append(out.getOutput().getLedsageDokument().getLedsagedokumentValideretDato().toString()).append(NEW_LINE);
-            sb.append("Ledsagedokument ARC Identifikator: ").append(out.getOutput().getLedsageDokument().getLedsagedokumentARCIdentifikator()).append(NEW_LINE);
-            arc = out.getOutput().getLedsageDokument().getLedsagedokumentARCIdentifikator();
+            if (out.getOutput().getLedsageDokument() != null) {
+                sb.append("Ledsagedokument Valideret Dato: ").append(out.getOutput().getLedsageDokument().getLedsagedokumentValideretDato().toString()).append(NEW_LINE);
+                sb.append("Ledsagedokument ARC Identifikator: ").append(out.getOutput().getLedsageDokument().getLedsagedokumentARCIdentifikator()).append(NEW_LINE);
+                arc = out.getOutput().getLedsageDokument().getLedsagedokumentARCIdentifikator();
+            }
+            if (out.getOutput().getIE917BeskedTekst() != null) {
+                sb.append("IE917 in Response:");
+                sb.append(prettyPrintByXMLString(out.getOutput().getIE917BeskedTekst(), 2, true));
+            }
         }
         sb.append("*******************************************************************").append(NEW_LINE);
 

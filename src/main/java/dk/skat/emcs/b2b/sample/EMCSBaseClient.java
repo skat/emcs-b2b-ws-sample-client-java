@@ -8,6 +8,7 @@ import oio.skat.emcs.ws._1_0.SøgeParametreStrukturType;
 import oio.skat.emcs.ws._1_0.VirksomhedIdentifikationStrukturType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -25,10 +26,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -261,5 +259,17 @@ public class EMCSBaseClient {
             throw new RuntimeException("Error occurs when pretty-printing xml:", e);
         }
     }
+
+    public static String prettyPrintByXMLString(String xmlString, int indent, boolean ignoreDeclaration) {
+
+        try {
+            InputSource src = new InputSource(new StringReader(xmlString));
+            Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(src);
+            return prettyPrintDocument(document, indent, ignoreDeclaration);
+        } catch (Exception e) {
+            throw new RuntimeException("Error occurs when pretty-printing xml:" + xmlString, e);
+        }
+    }
+
 
 }
