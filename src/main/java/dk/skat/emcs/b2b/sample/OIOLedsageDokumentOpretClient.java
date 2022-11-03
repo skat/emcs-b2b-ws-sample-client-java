@@ -153,7 +153,7 @@ public class OIOLedsageDokumentOpretClient extends EMCSBaseClient {
         }
         Node LocalReferenceNumber = null;
         try {
-            LocalReferenceNumber = (Node) xPath.compile("/IE815/Body/SubmittedDraftOfEAD/EadDraft/LocalReferenceNumber").evaluate(doc, XPathConstants.NODE);
+            LocalReferenceNumber = (Node) xPath.compile("/IE815/Body/SubmittedDraftOfEADESAD/EadEsadDraft/LocalReferenceNumber").evaluate(doc, XPathConstants.NODE);
         } catch (XPathExpressionException e) {
             e.printStackTrace();
         }
