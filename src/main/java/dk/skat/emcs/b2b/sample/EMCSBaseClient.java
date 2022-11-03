@@ -7,6 +7,7 @@ import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysnin
 import oio.skat.emcs.ws._1_0.SøgeParametreStrukturType;
 import oio.skat.emcs.ws._1_0.VirksomhedIdentifikationStrukturType;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -15,11 +16,25 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.io.File;
 import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.UUID;
 
 /**
  * EMCSBaseClient
@@ -184,6 +199,67 @@ public class EMCSBaseClient {
             }
         }
         return hasError;
+    }
+
+    protected void resetTimeOfPreparation(Document doc, String path) {
+        XPath xPath = XPathFactory.newInstance().newXPath();
+        Node TimeOfPreparation = null;
+        try {
+            TimeOfPreparation = (Node) xPath.compile(path).evaluate(doc, XPathConstants.NODE);
+        } catch (
+                XPathExpressionException e) {
+            e.printStackTrace();
+        }
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String formatDateTime = now.format(formatter);
+
+        TimeOfPreparation.setTextContent(formatDateTime);
+    }
+
+    protected void resetDateOfPreparation(Document doc, String path) {
+        XPath xPath = XPathFactory.newInstance().newXPath();
+        Node dateOfPreparation = null;
+        try {
+            dateOfPreparation = (Node) xPath.compile(path).evaluate(doc, XPathConstants.NODE);
+        } catch (
+                XPathExpressionException e) {
+            e.printStackTrace();
+        }
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formatDateTime = now.format(formatter);
+        dateOfPreparation.setTextContent(formatDateTime);
+    }
+
+    protected void resetMessageIdentifier(Document doc, String path) {
+        XPath xPath = XPathFactory.newInstance().newXPath();
+        Node messageIdentifier = null;
+        try {
+            messageIdentifier = (Node) xPath.compile(path).evaluate(doc, XPathConstants.NODE);
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        }
+        final String uuid = UUID.randomUUID().toString();
+        messageIdentifier.setTextContent(uuid);
+    }
+
+
+    public static String prettyPrintDocument(Document document, int indent, boolean ignoreDeclaration) {
+        try {
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            transformerFactory.setAttribute("indent-number", indent);
+            Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, ignoreDeclaration ? "yes" : "no");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+            Writer out = new StringWriter();
+            transformer.transform(new DOMSource(document), new StreamResult(out));
+            return out.toString();
+        } catch (Exception e) {
+            throw new RuntimeException("Error occurs when pretty-printing xml:", e);
+        }
     }
 
 }
