@@ -83,51 +83,11 @@ public class OIOKvitteringOpretClient extends EMCSBaseClient {
                          String ie818,boolean override) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
 
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder;
-        Document doc = null;
-        try
-        {
-            builder = factory.newDocumentBuilder();
-            doc = builder.parse( new InputSource( new StringReader( ie818 ) ) );
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-            XPath xPath = XPathFactory.newInstance().newXPath();
-
-            Node TimeOfPreparation = null;
-            try {
-                TimeOfPreparation = (Node) xPath.compile("/IE818/Header/TimeOfPreparation").evaluate(doc, XPathConstants.NODE);
-            } catch (XPathExpressionException e) {
-                e.printStackTrace();
-            }
-
-            Node MessageIdentifier = null;
-            try {
-                MessageIdentifier = (Node) xPath.compile("/IE818/Header/MessageIdentifier").evaluate(doc, XPathConstants.NODE);
-            } catch (XPathExpressionException e) {
-                e.printStackTrace();
-            }
-            LocalDateTime now = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
-            String formatDateTime = now.format(formatter);
-            String result = RandomStringUtils.random(7, false, true);
-
-            TimeOfPreparation.setTextContent(formatDateTime);
-            final String uuid = UUID.randomUUID().toString();
-            MessageIdentifier.setTextContent(uuid);
+        Document doc = loadIEDocument(ie818);
+        String result = RandomStringUtils.random(7, false, true);
         if(override){
-            Node LocalReferenceNumber = null;
-            try {
-                LocalReferenceNumber = (Node) xPath.compile("/IE818/Body/AcceptedOrRejectedReportOfReceiptExport/DestinationOffice/ReferenceNumber").evaluate(doc, XPathConstants.NODE);
-            } catch (XPathExpressionException e) {
-                e.printStackTrace();
-            }
-            LocalReferenceNumber.setTextContent(result);
-
+            replaceValue(doc, "/IE818/Body/AcceptedOrRejectedReportOfReceiptExport/DestinationOffice/ReferenceNumber", result);
         }
-
         return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
 
 
