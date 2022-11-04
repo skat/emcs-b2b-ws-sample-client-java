@@ -200,48 +200,41 @@ public class EMCSBaseClient {
     }
 
     protected void resetTimeOfPreparation(Document doc, String path) {
-        XPath xPath = XPathFactory.newInstance().newXPath();
-        Node TimeOfPreparation = null;
-        try {
-            TimeOfPreparation = (Node) xPath.compile(path).evaluate(doc, XPathConstants.NODE);
-        } catch (
-                XPathExpressionException e) {
-            e.printStackTrace();
-        }
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         String formatDateTime = now.format(formatter);
-
-        TimeOfPreparation.setTextContent(formatDateTime);
+        replaceValue(doc, path, formatDateTime);
     }
 
     protected void resetDateOfPreparation(Document doc, String path) {
-        XPath xPath = XPathFactory.newInstance().newXPath();
-        Node dateOfPreparation = null;
-        try {
-            dateOfPreparation = (Node) xPath.compile(path).evaluate(doc, XPathConstants.NODE);
-        } catch (
-                XPathExpressionException e) {
-            e.printStackTrace();
-        }
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formatDateTime = now.format(formatter);
-        dateOfPreparation.setTextContent(formatDateTime);
+        replaceValue(doc, path, formatDateTime);
+    }
+
+    protected void resetDateAndTimeOfValidationOfCancellation(Document doc, String path) {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
+        String formatDateTime = now.format(formatter);
+        replaceValue(doc, path, formatDateTime);
     }
 
     protected void resetMessageIdentifier(Document doc, String path) {
+        final String uuid = UUID.randomUUID().toString();
+        replaceValue(doc, path, uuid);
+    }
+
+    protected void replaceValue(Document doc, String path, String value) {
         XPath xPath = XPathFactory.newInstance().newXPath();
-        Node messageIdentifier = null;
+        Node node = null;
         try {
-            messageIdentifier = (Node) xPath.compile(path).evaluate(doc, XPathConstants.NODE);
+            node = (Node) xPath.compile(path).evaluate(doc, XPathConstants.NODE);
         } catch (XPathExpressionException e) {
             e.printStackTrace();
         }
-        final String uuid = UUID.randomUUID().toString();
-        messageIdentifier.setTextContent(uuid);
+        node.setTextContent(value);
     }
-
 
     public static String prettyPrintDocument(Document document, int indent, boolean ignoreDeclaration) {
         try {

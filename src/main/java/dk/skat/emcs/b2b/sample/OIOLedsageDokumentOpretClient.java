@@ -124,52 +124,19 @@ public class OIOLedsageDokumentOpretClient extends EMCSBaseClient {
 
     }
 
-    public void invoke(String virksomhedSENummerIdentifikator,
+    public String invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        File ie815) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
         // Load IE815 document
-
-
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
-
         Document doc = db.parse(ie815);
-
-
-        XPath xPath = XPathFactory.newInstance().newXPath();
-
-        Node TimeOfPreparation = null;
-        try {
-            TimeOfPreparation = (Node) xPath.compile("/IE815/Header/TimeOfPreparation").evaluate(doc, XPathConstants.NODE);
-        } catch (XPathExpressionException e) {
-            e.printStackTrace();
-        }
-
-        Node MessageIdentifier = null;
-        try {
-            MessageIdentifier = (Node) xPath.compile("/IE815/Header/MessageIdentifier").evaluate(doc, XPathConstants.NODE);
-        } catch (XPathExpressionException e) {
-            e.printStackTrace();
-        }
-        Node LocalReferenceNumber = null;
-        try {
-            LocalReferenceNumber = (Node) xPath.compile("/IE815/Body/SubmittedDraftOfEADESAD/EadEsadDraft/LocalReferenceNumber").evaluate(doc, XPathConstants.NODE);
-        } catch (XPathExpressionException e) {
-            e.printStackTrace();
-        }
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
-        String formatDateTime = now.format(formatter);
+        resetDateOfPreparation(doc, "/IE815/Header/DateOfPreparation");
+        resetTimeOfPreparation(doc, "/IE815/Header/TimeOfPreparation");
+        resetMessageIdentifier(doc, "/IE815/Header/MessageIdentifier");
         String result = RandomStringUtils.random(7, false, true);
-
-        TimeOfPreparation.setTextContent(formatDateTime);
-        final String uuid = UUID.randomUUID().toString();
-        MessageIdentifier.setTextContent(uuid);
-        LocalReferenceNumber.setTextContent(result);
-        final String newLine = System.getProperty("line.separator");
-        LOGGER.info(newLine + "Replacing message Identifier: " + TimeOfPreparation.getTextContent() + " " + MessageIdentifier.getTextContent() + " " + LocalReferenceNumber.getTextContent());
-
-        this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
+        replaceValue(doc, "/IE815/Body/SubmittedDraftOfEADESAD/EadEsadDraft/LocalReferenceNumber", result);
+        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
     }
 
 

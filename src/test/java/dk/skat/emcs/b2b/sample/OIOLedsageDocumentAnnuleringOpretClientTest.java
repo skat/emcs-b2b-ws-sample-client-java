@@ -26,7 +26,7 @@ public class OIOLedsageDocumentAnnuleringOpretClientTest extends BaseClientTest 
 
             OIOLedsageDokumentAnnulleringOpretClient oioLedsageDocumentAnnulleringOpretClient = new OIOLedsageDokumentAnnulleringOpretClient(endpointURL);
             oioLedsageDocumentAnnulleringOpretClient.invoke(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator, ie810);
+                    afgiftOperatoerPunktAfgiftIdentifikator, ie810, null);
         }
     }
 

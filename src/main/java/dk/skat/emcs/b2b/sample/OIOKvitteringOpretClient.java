@@ -172,8 +172,9 @@ public class OIOKvitteringOpretClient extends EMCSBaseClient {
         indberetter.setVirksomhedSENummerIdentifikator(virksomhedSENummerIdentifikator);
         virksomhedIdentifikationStrukturType.setIndberetter(indberetter);
 
-
-
+        resetTimeOfPreparation(doc, "/IE818/Header/TimeOfPreparation");
+        resetDateOfPreparation(doc, "/IE818/Header/DateOfPreparation");
+        resetMessageIdentifier(doc, "/IE818/Header/MessageIdentifier");
 
         IE818InputStrukturType ie818InputStrukturType = new IE818InputStrukturType();
         ie818InputStrukturType.setAny(doc.getDocumentElement());
@@ -200,6 +201,7 @@ public class OIOKvitteringOpretClient extends EMCSBaseClient {
                 oioKvitteringOpretIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
         ));
         LOGGER.info(NEW_LINE + sbRequest.toString());
+        LOGGER.info(prettyPrintDocument(doc, 2, true));
 
         OIOKvitteringOpretOType out = port.getOIOKvitteringOpret(oioKvitteringOpretIType);
         StringBuilder sb = new StringBuilder();

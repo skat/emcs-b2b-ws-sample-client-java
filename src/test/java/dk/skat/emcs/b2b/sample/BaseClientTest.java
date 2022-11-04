@@ -8,6 +8,13 @@ package dk.skat.emcs.b2b.sample;
  */
 public class BaseClientTest {
 
+    protected static final String OIO_LEDSAGEDOCUMENT_OPRET = "OIOLedsageDocumentOpret";
+    protected static final String OIO_LEDSAGEDOKUMENT_ANNULLERING_OPRET = "OIOLedsageDokumentAnnulleringOpret";
+    protected static final String OIO_BESKED_AFVISNING_SAMLING_HENT = "OIOBeskedAfvisningSamlingHent";
+    protected static final String OIO_LEDSAGE_DOKUMENT_NOTIFIKATION_OPRET = "OIOLedsageDokumentNotifikationOpret";
+
+
+
     static {
         // Comment out for running tests in IDE and change "CHANGEME" values.
         // System.setProperty("dk.skat.emcs.b2b.sample.P12_PASSPHRASE", "CHANGEME");

@@ -65,11 +65,15 @@ public class OIOLedsageDokumentAnnulleringOpretClient extends EMCSBaseClient {
      */
     public String  invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
-                       String ie810) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+                       String ie810, String arc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
         Document doc = loadIEDocument(ie810);
         resetDateOfPreparation(doc, "/IE810/Header/DateOfPreparation");
         resetTimeOfPreparation(doc, "/IE810/Header/TimeOfPreparation");
         resetMessageIdentifier(doc, "/IE810/Header/MessageIdentifier");
+        resetDateAndTimeOfValidationOfCancellation(doc, "/IE810/Body/CancellationOfEAD/Attributes/DateAndTimeOfValidationOfCancellation");
+        if (arc != null) {
+            replaceValue(doc, "/IE810/Body/CancellationOfEAD/ExciseMovementEad/AdministrativeReferenceCode", arc);
+        }
         return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
     }
 
