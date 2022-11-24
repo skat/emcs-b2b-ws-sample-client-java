@@ -150,7 +150,7 @@ public class OIOLedsageDokumentNotifikationOpretClient extends EMCSBaseClient {
                 oioLedsageDokumentNotifikationOpretIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
         ));
         LOGGER.info(NEW_LINE + sbRequest.toString());
-        LOGGER.info(prettyPrintDocument(doc, 2, true));
+        LOGGER.info(prettyFormatDocument(doc, 2, true));
 
         OIOLedsageDokumentNotifikationOpretOType out = port.getOIOLedsageDokumentNotifikationOpret(oioLedsageDokumentNotifikationOpretIType);
         StringBuilder sb = new StringBuilder();

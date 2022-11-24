@@ -130,7 +130,7 @@ public class OIOLedsageDokumentAnnulleringOpretClient extends EMCSBaseClient {
                 oioLedsageDokumentAnnulleringOpretIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
         ));
         LOGGER.info(NEW_LINE + sbRequest.toString());
-        LOGGER.info(prettyPrintDocument(doc, 2, true));
+        LOGGER.info(prettyFormatDocument(doc, 2, true));
 
         OIOLedsageDokumentAnnulleringOpretOType out = port.getOIOLedsageDokumentAnnulleringOpret(oioLedsageDokumentAnnulleringOpretIType);
         StringBuilder sb = new StringBuilder();

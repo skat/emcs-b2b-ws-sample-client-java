@@ -18,7 +18,7 @@ public class OIOKvitteringSamlingHentClientTest extends BaseClientTest {
 
             OIOKvitteringSamlingHentClient client = new OIOKvitteringSamlingHentClient(endpointURL);
             client.invoke(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator);
+                    afgiftOperatoerPunktAfgiftIdentifikator, null);
         }
     }
 }

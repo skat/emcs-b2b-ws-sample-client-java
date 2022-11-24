@@ -37,16 +37,16 @@ public class OIOEUReferenceDataAnmodClient extends EMCSBaseClient {
     }
 
     /**
-     *
-     * @param virksomhedSENummerIdentifikator VAT number of entity calling entity
+     * @param virksomhedSENummerIdentifikator         VAT number of entity calling entity
      * @param afgiftOperatoerPunktAfgiftIdentifikator Excise Number of calling entity
-     * @param path Path to IE705 Document
+     * @param path                                    Path to IE705 Document
      * @return
      * @throws DatatypeConfigurationException
      */
     public OIOEUReferenceDataAnmodOType invoke(String virksomhedSENummerIdentifikator,
-                       String afgiftOperatoerPunktAfgiftIdentifikator,
-                       String path) throws DatatypeConfigurationException, ParserConfigurationException, SAXException, IOException {
+                                               String afgiftOperatoerPunktAfgiftIdentifikator,
+                                               String path,
+                                               String beskedIdentifikator) throws DatatypeConfigurationException, ParserConfigurationException, SAXException, IOException {
 
         OIOEUReferenceDataAnmodIType request = new OIOEUReferenceDataAnmodIType();
         request.setHovedOplysninger(generateHovedOplysningerType());
@@ -55,7 +55,7 @@ public class OIOEUReferenceDataAnmodClient extends EMCSBaseClient {
         Document ie705 = loadIEDocument(path);
         resetTimeOfPreparation(ie705, "/IE705/Header/TimeOfPreparation");
         resetDateOfPreparation(ie705, "/IE705/Header/DateOfPreparation");
-        resetMessageIdentifier(ie705, "/IE705/Header/MessageIdentifier");
+        resetMessageIdentifier(ie705, "/IE705/Header/MessageIdentifier", beskedIdentifikator);
         ie705StrukturType.setAny(ie705.getDocumentElement());
         request.setIE705Struktur(ie705StrukturType);
 
@@ -75,10 +75,9 @@ public class OIOEUReferenceDataAnmodClient extends EMCSBaseClient {
                 request.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
         ));
         LOGGER.info(NEW_LINE + sbRequest.toString());
-        LOGGER.info(prettyPrintDocument(ie705, 2, true));
+        LOGGER.info(prettyFormatDocument(ie705, 2, true));
 
         OIOEUReferenceDataAnmodOType response = port.getOIOEUReferenceDataAnmod(request);
-
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(response.getHovedOplysningerSvar()));
 

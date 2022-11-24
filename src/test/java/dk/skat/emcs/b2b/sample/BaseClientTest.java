@@ -8,10 +8,15 @@ package dk.skat.emcs.b2b.sample;
  */
 public class BaseClientTest {
 
+    protected static final String OIO_EUREFERENCE_DATA_ANMOD = "OIOEUReferenceDataAnmod";
+    protected static final String OIO_EUREFERENCE_DATA_HENT = "OIOEUReferenceDataHent";
     protected static final String OIO_LEDSAGEDOCUMENT_OPRET = "OIOLedsageDocumentOpret";
+    protected static final String OIO_KVITTERING_OPRET = "OIOKvitteringOpret";
+    protected static final String OIO_KVITTERING_SAMLIMG_HENT = "OIOKvitteringSamlingHent";
     protected static final String OIO_LEDSAGEDOKUMENT_ANNULLERING_OPRET = "OIOLedsageDokumentAnnulleringOpret";
     protected static final String OIO_BESKED_AFVISNING_SAMLING_HENT = "OIOBeskedAfvisningSamlingHent";
     protected static final String OIO_LEDSAGE_DOKUMENT_NOTIFIKATION_OPRET = "OIOLedsageDokumentNotifikationOpret";
+    protected static final String OIO_LEDSAGE_DOKUMENT_SAMLLING_HENT = "OIOLedsageDokumentSamlingHent";
 
 
 

@@ -45,9 +45,13 @@ public class EMCSBaseClient {
     protected static final String NEW_LINE = System.getProperty("line.separator");
 
     protected Document loadIEDocument(String path) throws IOException, SAXException, ParserConfigurationException {
+        File file = new File(path);
+        return loadIEDocument(file);
+    }
+
+    protected Document loadIEDocument(File file) throws IOException, SAXException, ParserConfigurationException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
-        File file = new File(path);
         Document doc = db.parse(file);
         return doc;
     }
@@ -225,6 +229,10 @@ public class EMCSBaseClient {
         replaceValue(doc, path, uuid);
     }
 
+    protected void resetMessageIdentifier(Document doc, String path, String messageIdentifier) {
+        replaceValue(doc, path, messageIdentifier);
+    }
+
     protected void replaceValue(Document doc, String path, String value) {
         XPath xPath = XPathFactory.newInstance().newXPath();
         Node node = null;
@@ -236,7 +244,7 @@ public class EMCSBaseClient {
         node.setTextContent(value);
     }
 
-    public static String prettyPrintDocument(Document document, int indent, boolean ignoreDeclaration) {
+    public static String prettyFormatDocument(Document document, int indent, boolean ignoreDeclaration) {
         try {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             transformerFactory.setAttribute("indent-number", indent);
@@ -253,12 +261,12 @@ public class EMCSBaseClient {
         }
     }
 
-    public static String prettyPrintByXMLString(String xmlString, int indent, boolean ignoreDeclaration) {
+    public static String prettyFormatDocument(String xmlString, int indent, boolean ignoreDeclaration) {
 
         try {
             InputSource src = new InputSource(new StringReader(xmlString));
             Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(src);
-            return prettyPrintDocument(document, indent, ignoreDeclaration);
+            return prettyFormatDocument(document, indent, ignoreDeclaration);
         } catch (Exception e) {
             throw new RuntimeException("Error occurs when pretty-printing xml:" + xmlString, e);
         }

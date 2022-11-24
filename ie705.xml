@@ -13,14 +13,13 @@
     <urn:Body>
         <urn:ExternalRequest>
             <urn:Attributes>
-                <urn:RequestingEconomicOperator>DK12345678901</urn:RequestingEconomicOperator>
-                <!--Optional:-->
-                <urn:RequestReason language="to">token</urn:RequestReason>
+                <urn:RequestingEconomicOperator>DK82070486100</urn:RequestingEconomicOperator>
             </urn:Attributes>
             <!--1 to 99 repetitions:-->
             <urn:ListOfCodes>
                 <urn:RequestedListOfCodesCode>18</urn:RequestedListOfCodesCode>
             </urn:ListOfCodes>
+
         </urn:ExternalRequest>
     </urn:Body>
 </urn:IE705>

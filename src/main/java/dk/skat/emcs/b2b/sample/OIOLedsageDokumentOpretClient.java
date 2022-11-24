@@ -153,7 +153,7 @@ public class OIOLedsageDokumentOpretClient extends EMCSBaseClient {
                 oioLedsageDokumentOpretIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
         ));
         LOGGER.info(NEW_LINE + sbRequest.toString());
-        LOGGER.info(prettyPrintDocument(doc, 2, true));
+        LOGGER.info(prettyFormatDocument(doc, 2, true));
 
 
         OIOLedsageDokumentOpretOType out = port.getOIOLedsageDokumentOpret(oioLedsageDokumentOpretIType);
@@ -169,7 +169,7 @@ public class OIOLedsageDokumentOpretClient extends EMCSBaseClient {
             }
             if (out.getOutput().getIE917BeskedTekst() != null) {
                 sb.append("IE917 in Response:");
-                sb.append(prettyPrintByXMLString(out.getOutput().getIE917BeskedTekst(), 2, true));
+                sb.append(prettyFormatDocument(out.getOutput().getIE917BeskedTekst(), 2, true));
             }
         }
         sb.append("*******************************************************************").append(NEW_LINE);

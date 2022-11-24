@@ -69,10 +69,15 @@ public class OIOEUReferenceDataHentClient extends EMCSBaseClient {
 
         OIOEUReferenceDataHentOType response = port.getOIOEUReferenceDataHent(request);
 
+
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(response.getHovedOplysningerSvar()));
 
+
         LOGGER.info(NEW_LINE + sb.toString());
+        String ie733 = prettyFormatDocument(response.getIE733BeskedTekst(), 2, true);
+        LOGGER.info("IE733:");
+        LOGGER.info(ie733);
         return response;
     }
 

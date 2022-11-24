@@ -112,7 +112,7 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
             List<String> ie704Messages = out.getBeskedAfvisningSamling().getIE704BeskedTekst();
             if (ie704Messages != null && ie704Messages.size() > 0) {
                 for (String message : ie704Messages) {
-                    sb.append(prettyPrintByXMLString(message, 2, true)).append(NEW_LINE);
+                    sb.append(prettyFormatDocument(message, 2, true)).append(NEW_LINE);
                     sb.append("*******************************************************************").append(NEW_LINE);
                 }
             } else {

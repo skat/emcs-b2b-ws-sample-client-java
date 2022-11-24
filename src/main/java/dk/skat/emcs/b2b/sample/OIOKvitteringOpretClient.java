@@ -13,29 +13,17 @@ import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.ws.BindingProvider;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 import java.io.File;
 import java.io.IOException;
-import java.io.StringReader;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.UUID;
 import java.util.logging.Logger;
 
 /**
@@ -88,7 +76,7 @@ public class OIOKvitteringOpretClient extends EMCSBaseClient {
         if(override){
             replaceValue(doc, "/IE818/Body/AcceptedOrRejectedReportOfReceiptExport/DestinationOffice/ReferenceNumber", result);
         }
-        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
+        return this.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
 
 
     }
@@ -98,17 +86,21 @@ public class OIOKvitteringOpretClient extends EMCSBaseClient {
     public void invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        File ie818) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+        Document doc = loadIEDocument(ie818);
+        this.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
+    }
 
-        // Load IE818 document
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = dbf.newDocumentBuilder();
-        Document doc = db.parse(ie818);
-        this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
-
+    public void invoke(String virksomhedSENummerIdentifikator,
+                       String afgiftOperatoerPunktAfgiftIdentifikator,
+                       File ie818,
+                       String arc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+        Document doc = loadIEDocument(ie818);
+        this.replaceValue(doc, "/IE818/Body/AcceptedOrRejectedReportOfReceiptExport/ExciseMovement/AdministrativeReferenceCode", arc);
+        this.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
     }
 
 
-    private String invokeit(String virksomhedSENummerIdentifikator,
+    private String invoke(String virksomhedSENummerIdentifikator,
                             String afgiftOperatoerPunktAfgiftIdentifikator,
                             Document doc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
@@ -135,6 +127,9 @@ public class OIOKvitteringOpretClient extends EMCSBaseClient {
         resetTimeOfPreparation(doc, "/IE818/Header/TimeOfPreparation");
         resetDateOfPreparation(doc, "/IE818/Header/DateOfPreparation");
         resetMessageIdentifier(doc, "/IE818/Header/MessageIdentifier");
+        replaceValue(doc,"/IE818/Body/AcceptedOrRejectedReportOfReceiptExport/ConsigneeTrader/Traderid", afgiftOperatoerPunktAfgiftIdentifikator);
+        // Also reset date
+        resetDateAndTimeOfValidationOfCancellation(doc,"/IE818/Body/AcceptedOrRejectedReportOfReceiptExport/Attributes/DateAndTimeOfValidationOfReportOfReceiptExport");
 
         IE818InputStrukturType ie818InputStrukturType = new IE818InputStrukturType();
         ie818InputStrukturType.setAny(doc.getDocumentElement());
@@ -161,13 +156,14 @@ public class OIOKvitteringOpretClient extends EMCSBaseClient {
                 oioKvitteringOpretIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
         ));
         LOGGER.info(NEW_LINE + sbRequest.toString());
-        LOGGER.info(prettyPrintDocument(doc, 2, true));
+        LOGGER.info(prettyFormatDocument(doc, 2, true));
 
         OIOKvitteringOpretOType out = port.getOIOKvitteringOpret(oioKvitteringOpretIType);
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
-
         LOGGER.info(NEW_LINE + sb.toString());
+
+        boolean hasError = hasError(out.getHovedOplysningerSvar());
 
         return sb.toString();
     }
