@@ -21,11 +21,13 @@ public class OIOForsinkelseForklaringOpretClientTest extends BaseClientTest {
             // this CVR number present in the certificate.
             String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
             // Excise number
-            String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
+            String afgiftOperatoerPunktAfgiftIdentifikator = "DK82065873300"; //getAfgiftOperatoerPunktAfgiftIdentifikator();
+
+            String arc = "22DKQ68LFULXD4F11S652";
 
             OIOForsinkelseForklaringOpretClient oioForsinkelseForklaringClient = new OIOForsinkelseForklaringOpretClient(endpointURL);
             oioForsinkelseForklaringClient.invoke(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator, ie837);
+                    afgiftOperatoerPunktAfgiftIdentifikator, ie837, arc, afgiftOperatoerPunktAfgiftIdentifikator);
         }
     }
 

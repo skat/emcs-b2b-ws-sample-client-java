@@ -13,6 +13,7 @@
                 <ie:SubmitterIdentification>DK82000801300</ie:SubmitterIdentification>
                 <ie:SubmitterType>1</ie:SubmitterType>
                 <ie:ExplanationCode>0</ie:ExplanationCode>
+                <ie:ComplementaryInformation language="da">Lorem ipsum</ie:ComplementaryInformation>
                 <ie:MessageRole>1</ie:MessageRole>
                 <ie:DateAndTimeOfValidationOfExplanationOnDelay>2011-05-03T13:39:01.000</ie:DateAndTimeOfValidationOfExplanationOnDelay>
             </ie:Attributes>
