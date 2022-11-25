@@ -23,11 +23,11 @@ public class OIOLedsageDokumentDestinationSkiftOpretClientTest extends BaseClien
             // this CVR number present in the certificate.
             String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
             // Excise number
-            String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
-
+            String afgiftOperatoerPunktAfgiftIdentifikator = "DK82065873300"; //getAfgiftOperatoerPunktAfgiftIdentifikator();
+            String arc = null;
             OIOLedsageDokumentDestinationSkiftOpretClient client = new OIOLedsageDokumentDestinationSkiftOpretClient(endpointURL);
             client.invoke(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator, ie813);
+                    afgiftOperatoerPunktAfgiftIdentifikator, ie813, arc);
         }
     }
 
