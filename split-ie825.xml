@@ -1,0 +1,110 @@
+<ns0:IE825 xmlns:ns0="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE825:V3.01">
+    <ns7:Header xmlns:ns7="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE825:V3.01">
+        <ns8:MessageSender xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">NDEA.DK</ns8:MessageSender>
+        <ns8:MessageRecipient xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">NDEA.DK</ns8:MessageRecipient>
+        <ns8:DateOfPreparation xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">2023-01-13</ns8:DateOfPreparation>
+        <ns8:TimeOfPreparation xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">13:28:32.177</ns8:TimeOfPreparation>
+        <ns8:MessageIdentifier xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">DKEMCS20230000000345169</ns8:MessageIdentifier>
+    </ns7:Header>
+    <ns7:Body xmlns:ns7="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE825:V3.01">
+        <ns7:SubmittedDraftOfSplittingOperation>
+            <ns7:SplittingEad>
+                <ns7:UpstreamArc>23DK82IYLPSDQ4P6MWF16</ns7:UpstreamArc>
+            </ns7:SplittingEad>
+            <ns7:SplitDetailsEad>
+                <ns7:LocalReferenceNumber>DK1673612912177</ns7:LocalReferenceNumber>
+                <ns7:JourneyTime>H02</ns7:JourneyTime>
+                <ns7:DestinationChanged>
+                    <ns7:DestinationTypeCode>1</ns7:DestinationTypeCode>
+                </ns7:DestinationChanged>
+                <ns7:DeliveryPlaceTrader language="da">
+                    <ns7:Traderid>DK82000100301</ns7:Traderid>
+                    <ns7:TraderName>Dampskibet v/Bjarne Hvitfeld Hansen</ns7:TraderName>
+                    <ns7:StreetName>Statshavnen</ns7:StreetName>
+                    <ns7:StreetNumber>6</ns7:StreetNumber>
+                    <ns7:Postcode>3000</ns7:Postcode>
+                    <ns7:City>Helsingør</ns7:City>
+                </ns7:DeliveryPlaceTrader>
+                <ns7:NewTransporterTrader language="da">
+                    <ns7:VatNumber>12345678</ns7:VatNumber>
+                    <ns7:StreetName>vej</ns7:StreetName>
+                    <ns7:StreetNumber>8</ns7:StreetNumber>
+                    <ns7:Postcode>2000</ns7:Postcode>
+                    <ns7:City>2000</ns7:City>
+                </ns7:NewTransporterTrader>
+                <ns7:TransportDetails>
+                    <ns7:TransportUnitCode>2</ns7:TransportUnitCode>
+                    <ns7:IdentityOfTransportUnits>9090</ns7:IdentityOfTransportUnits>
+                </ns7:TransportDetails>
+                <ns7:BodyEad>
+                    <ns7:BodyRecordUniqueReference>1</ns7:BodyRecordUniqueReference>
+                    <ns7:ExciseProductCode>E300</ns7:ExciseProductCode>
+                    <ns7:CnCode>27071000</ns7:CnCode>
+                    <ns7:Quantity>200.000</ns7:Quantity>
+                    <ns7:GrossMass>200.000000</ns7:GrossMass>
+                    <ns7:NetMass>180.000000</ns7:NetMass>
+                    <ns7:FiscalMarkUsedFlag>0</ns7:FiscalMarkUsedFlag>
+                    <ns7:Density>0.90</ns7:Density>
+                    <ns7:CommercialDescription language="da">Benzol (benzen)</ns7:CommercialDescription>
+                    <ns7:Package>
+                        <ns7:KindOfPackages>BA</ns7:KindOfPackages>
+                        <ns7:NumberOfPackages>10000</ns7:NumberOfPackages>
+                    </ns7:Package>
+                </ns7:BodyEad>
+            </ns7:SplitDetailsEad>
+            <ns7:SplitDetailsEad>
+                <ns7:LocalReferenceNumber>DK1673612912199</ns7:LocalReferenceNumber>
+                <ns7:DestinationChanged>
+                    <ns7:DestinationTypeCode>1</ns7:DestinationTypeCode>
+                </ns7:DestinationChanged>
+                <ns7:NewConsigneeTrader language="da">
+                    <ns7:Traderid>DK99025875300</ns7:Traderid>
+                    <ns7:TraderName>SEED selskab 1 20120710</ns7:TraderName>
+                    <ns7:StreetName>Kirkegade</ns7:StreetName>
+                    <ns7:StreetNumber>10</ns7:StreetNumber>
+                    <ns7:Postcode>6840</ns7:Postcode>
+                    <ns7:City>Oksbøl</ns7:City>
+                </ns7:NewConsigneeTrader>
+                <ns7:DeliveryPlaceTrader language="da">
+                    <ns7:Traderid>DK99025875499</ns7:Traderid>
+                    <ns7:TraderName>SEED selskab 1 20120710</ns7:TraderName>
+                    <ns7:StreetName>Statshavnen</ns7:StreetName>
+                    <ns7:StreetNumber>6</ns7:StreetNumber>
+                    <ns7:Postcode>3000</ns7:Postcode>
+                    <ns7:City>Helsingør</ns7:City>
+                </ns7:DeliveryPlaceTrader>
+                <ns7:NewTransporterTrader language="da">
+                    <ns7:VatNumber>23456789</ns7:VatNumber>
+                    <ns7:TraderName>navn</ns7:TraderName>
+                    <ns7:StreetName>vej</ns7:StreetName>
+                    <ns7:StreetNumber>9</ns7:StreetNumber>
+                    <ns7:Postcode>2000</ns7:Postcode>
+                    <ns7:City>by</ns7:City>
+                </ns7:NewTransporterTrader>
+                <ns7:TransportDetails>
+                    <ns7:TransportUnitCode>2</ns7:TransportUnitCode>
+
+                    <ns7:IdentityOfTransportUnits>7878</ns7:IdentityOfTransportUnits>
+                </ns7:TransportDetails>
+                <ns7:BodyEad>
+                    <ns7:BodyRecordUniqueReference>1</ns7:BodyRecordUniqueReference>
+                    <ns7:ExciseProductCode>E300</ns7:ExciseProductCode>
+                    <ns7:CnCode>27071000</ns7:CnCode>
+                    <ns7:Quantity>9800.000</ns7:Quantity>
+                    <ns7:GrossMass>9800.000000</ns7:GrossMass>
+                    <ns7:NetMass>8820.000000</ns7:NetMass>
+                    <ns7:FiscalMarkUsedFlag>0</ns7:FiscalMarkUsedFlag>
+                    <ns7:Density>0.90</ns7:Density>
+                    <ns7:CommercialDescription language="da">Benzol (benzen)</ns7:CommercialDescription>
+                    <ns7:Package>
+                        <ns7:KindOfPackages>BA</ns7:KindOfPackages>
+                        <ns7:NumberOfPackages>10000</ns7:NumberOfPackages>
+                    </ns7:Package>
+                </ns7:BodyEad>
+            </ns7:SplitDetailsEad>
+            <ns7:MsaOfSplitting>
+                <ns7:MemberStateCode>DK</ns7:MemberStateCode>
+            </ns7:MsaOfSplitting>
+        </ns7:SubmittedDraftOfSplittingOperation>
+    </ns7:Body>
+</ns0:IE825>

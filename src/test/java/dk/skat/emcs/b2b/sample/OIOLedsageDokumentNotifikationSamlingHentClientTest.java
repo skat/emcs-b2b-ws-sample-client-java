@@ -16,7 +16,7 @@ public class OIOLedsageDokumentNotifikationSamlingHentClientTest extends BaseCli
             // this CVR number present in the certificate.
             String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
             // Excise number
-            String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
+            String afgiftOperatoerPunktAfgiftIdentifikator = "DK99025875300";
             OIOLedsageDokumentNotifikationSamlingHentClient client = new OIOLedsageDokumentNotifikationSamlingHentClient(endpointURL);
             client.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator);

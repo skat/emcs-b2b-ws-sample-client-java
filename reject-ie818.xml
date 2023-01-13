@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns0:IE818 xmlns:ns0="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE818:V3.01">
+    <ns7:Header xmlns:ns7="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE818:V3.01">
+        <ns8:MessageSender xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">NDEA.DK</ns8:MessageSender>
+        <ns8:MessageRecipient xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">NDEA.DK</ns8:MessageRecipient>
+        <ns8:DateOfPreparation xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">2023-01-13</ns8:DateOfPreparation>
+        <ns8:TimeOfPreparation xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">12:19:45.878</ns8:TimeOfPreparation>
+        <ns8:MessageIdentifier xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">DKEMCS20230000000345136</ns8:MessageIdentifier>
+    </ns7:Header>
+    <ns7:Body xmlns:ns7="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE818:V3.01">
+        <ns7:AcceptedOrRejectedReportOfReceiptExport>
+            <ns7:Attributes>
+                <ns7:DateAndTimeOfValidationOfReportOfReceiptExport>2023-01-13T12:19:45.000</ns7:DateAndTimeOfValidationOfReportOfReceiptExport>
+            </ns7:Attributes>
+            <ns7:ConsigneeTrader language="da">
+                <ns7:Traderid>DK99025875300</ns7:Traderid>
+                <ns7:TraderName>SEED selskab 1 20120710</ns7:TraderName>
+                <ns7:StreetName>Kirkegade</ns7:StreetName>
+                <ns7:StreetNumber>10</ns7:StreetNumber>
+                <ns7:Postcode>6840</ns7:Postcode>
+                <ns7:City>Oksbøl</ns7:City>
+            </ns7:ConsigneeTrader>
+            <ns7:ExciseMovement>
+                <ns7:AdministrativeReferenceCode>23DKLAWWKM7TCWAKL2B09</ns7:AdministrativeReferenceCode>
+                <ns7:SequenceNumber>1</ns7:SequenceNumber>
+            </ns7:ExciseMovement>
+            <ns7:DeliveryPlaceTrader language="da">
+                <ns7:Traderid>DK99025875499</ns7:Traderid>
+                <ns7:TraderName>SEED selskab 1 20120710</ns7:TraderName>
+                <ns7:StreetName>Statshavnen</ns7:StreetName>
+                <ns7:StreetNumber>6</ns7:StreetNumber>
+                <ns7:Postcode>3000</ns7:Postcode>
+                <ns7:City>Helsingør</ns7:City>
+            </ns7:DeliveryPlaceTrader>
+            <ns7:DestinationOffice>
+                <ns7:ReferenceNumber>DK008047</ns7:ReferenceNumber>
+            </ns7:DestinationOffice>
+            <ns7:ReportOfReceiptExport>
+                <ns7:DateOfArrivalOfExciseProducts>2023-01-13</ns7:DateOfArrivalOfExciseProducts>
+                <ns7:GlobalConclusionOfReceipt>2</ns7:GlobalConclusionOfReceipt>
+                <ns7:ComplementaryInformation language="da">Utilfredsstillende - afvigelse, manko</ns7:ComplementaryInformation>
+            </ns7:ReportOfReceiptExport>
+            <ns7:BodyReportOfReceiptExport>
+                <ns7:BodyRecordUniqueReference>1</ns7:BodyRecordUniqueReference>
+                <ns7:IndicatorOfShortageOrExcess>S</ns7:IndicatorOfShortageOrExcess>
+                <ns7:ObservedShortageOrExcess>4</ns7:ObservedShortageOrExcess>
+                <ns7:ExciseProductCode>E500</ns7:ExciseProductCode>
+                <ns7:UnsatisfactoryReason>
+                    <ns7:UnsatisfactoryReasonCode>2</ns7:UnsatisfactoryReasonCode>
+                    <ns7:ComplementaryInformation language="da">Manko på 4 stk</ns7:ComplementaryInformation>
+                </ns7:UnsatisfactoryReason>
+            </ns7:BodyReportOfReceiptExport>
+        </ns7:AcceptedOrRejectedReportOfReceiptExport>
+    </ns7:Body>
+</ns0:IE818>

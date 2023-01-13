@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns0:IE813 xmlns:ns0="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE813:V3.01">
+    <ns7:Header xmlns:ns7="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE813:V3.01">
+        <ns8:MessageSender xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">NDEA.DK</ns8:MessageSender>
+        <ns8:MessageRecipient xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">NDEA.DK</ns8:MessageRecipient>
+        <ns8:DateOfPreparation xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">2023-01-12</ns8:DateOfPreparation>
+        <ns8:TimeOfPreparation xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">13:34:36.938</ns8:TimeOfPreparation>
+        <ns8:MessageIdentifier xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">DKEMCS20230000000344948</ns8:MessageIdentifier>
+    </ns7:Header>
+    <ns7:Body xmlns:ns7="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE813:V3.01">
+        <ns7:ChangeOfDestination>
+            <ns7:Attributes>
+                <ns7:DateAndTimeOfValidationOfChangeOfDestination>2023-01-12T13:34:36.000</ns7:DateAndTimeOfValidationOfChangeOfDestination>
+            </ns7:Attributes>
+            <ns7:UpdateEadEsad>
+                <ns7:AdministrativeReferenceCode>23DK4HOT8VCVUDCPYYG43</ns7:AdministrativeReferenceCode>
+                <ns7:SequenceNumber>2</ns7:SequenceNumber>
+            </ns7:UpdateEadEsad>
+            <ns7:DestinationChanged>
+                <ns7:DestinationTypeCode>1</ns7:DestinationTypeCode>
+                <ns7:DeliveryPlaceTrader language="da">
+                    <ns7:Traderid>DK82065873305</ns7:Traderid>
+                    <ns7:TraderName>Test af KS-1, testsitnr. 3.1.3.22</ns7:TraderName>
+                    <ns7:StreetName>Perlegade</ns7:StreetName>
+                    <ns7:StreetNumber>38</ns7:StreetNumber>
+                    <ns7:Postcode>6400</ns7:Postcode>
+                    <ns7:City>Sønderborg</ns7:City>
+                </ns7:DeliveryPlaceTrader>
+            </ns7:DestinationChanged>
+        </ns7:ChangeOfDestination>
+    </ns7:Body>
+</ns0:IE813>

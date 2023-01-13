@@ -25,9 +25,10 @@ public class OIOLedsageDokumentOpsplitningOpretClientTest extends BaseClientTest
             // Excise number
             String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
 
+            String arc = "22DKDKXBJO75Q6XV9MJ27";
             OIOLedsageDokumentOpsplitningOpretClient oioLedsageDocumentAnnulleringOpretClient = new OIOLedsageDokumentOpsplitningOpretClient(endpointURL);
             oioLedsageDocumentAnnulleringOpretClient.invoke(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator, ie825);
+                    afgiftOperatoerPunktAfgiftIdentifikator, ie825,arc);
         }
     }
 

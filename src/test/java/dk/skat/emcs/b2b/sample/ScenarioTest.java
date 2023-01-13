@@ -34,7 +34,6 @@ public class ScenarioTest extends BaseClientTest {
                 afgiftOperatoerPunktAfgiftIdentifikator, ie810, arc);
     }
 
-
     @Test
     public void testCreateIE815andIE818() throws Exception {
         // VAT Number of the entity sending. Rule of thumb: this number matches
@@ -169,5 +168,130 @@ public class ScenarioTest extends BaseClientTest {
 
     }
 
+    @Test
+    public void testCreateIE815AndIE813() throws Exception {
+        // VAT Number of the entity sending. Rule of thumb: this number matches
+        // this CVR number present in the certificate.
+        String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
+        // Excise number
+        String afgiftOperatoerPunktAfgiftIdentifikator = "DK31175143300";
+
+        String arc = null;
+        File ie815 = new File("change-dest-ie815.xml");
+        OIOLedsageDokumentOpretClient oioLedsageDocumentClient = new OIOLedsageDokumentOpretClient(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
+        arc = oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,
+                afgiftOperatoerPunktAfgiftIdentifikator, ie815);
+
+
+        String ie813 = "change-dest-ie813.xml";
+        OIOLedsageDokumentDestinationSkiftOpretClient client = new OIOLedsageDokumentDestinationSkiftOpretClient(getEndpoint("OIOLedsageDokumentDestinationSkiftOpret"));
+        client.invoke(virksomhedSENummerIdentifikator,
+                afgiftOperatoerPunktAfgiftIdentifikator, ie813, arc);
+
+    }
+
+    @Test
+    public void testCreateIE815AndIE819() throws Exception {
+        // VAT Number of the entity sending. Rule of thumb: this number matches
+        // this CVR number present in the certificate.
+        String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
+        // Excise number
+        String afgiftOperatoerPunktAfgiftIdentifikator = "DK31175143300";
+
+        String arc = null;
+        File ie815 = new File("for-notification-ie815.xml");
+        OIOLedsageDokumentOpretClient oioLedsageDocumentClient = new OIOLedsageDokumentOpretClient(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
+        arc = oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,
+                afgiftOperatoerPunktAfgiftIdentifikator, ie815);
+
+        if (arc != null && arc.length() > 0) {
+            String ie819 = "for-notification-ie819.xml";
+            OIOLedsageDokumentNotifikationOpretClient oioLedsageDokumentNotifikationOpretClient = new OIOLedsageDokumentNotifikationOpretClient(getEndpoint("OIOLedsageDokumentNotifikationOpret"));
+            oioLedsageDokumentNotifikationOpretClient.invoke(virksomhedSENummerIdentifikator,
+                    "DK99025875300", ie819, arc);
+        }
+
+    }
+
+    @Test
+    public void testCreateIE815andIE818andIE871() throws Exception {
+        // VAT Number of the entity sending. Rule of thumb: this number matches
+        // this CVR number present in the certificate.
+        String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
+        // Excise number
+        String consignor = "DK31175143300";
+
+        String arc = null;
+
+        String consignee = "DK99025875300";
+
+        // Call OIOLedsageDokumentOpret as Consignor
+
+        File ie815 = new File("reject-ie815.xml");
+        OIOLedsageDokumentOpretClient oioLedsageDocumentClient = new OIOLedsageDokumentOpretClient(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
+        arc = oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,
+                consignor, ie815);
+
+        if (arc == null) {
+            LOGGER.warning("Did not receive ARC number. Exiting");
+            return;
+        }
+        LOGGER.info("Received ARC = " + arc);
+
+        LOGGER.info("Waiting 2 minutes before proceeding...");
+        Thread.sleep(1000*60*2);
+
+        // Call OIOLedsageDokumentSamlingHent as Consignee
+        OIOLedsageDokumentSamlingHentClient ledsageDokumentSamlingHentClient = new OIOLedsageDokumentSamlingHentClient(getEndpoint(OIO_LEDSAGE_DOKUMENT_SAMLLING_HENT));
+        ledsageDokumentSamlingHentClient.invoke(virksomhedSENummerIdentifikator,
+                consignee, arc);
+
+        // Call OIOKvitteringOpret as Consignee
+
+        File ie818 = new File ("reject-ie818.xml");
+        OIOKvitteringOpretClient oioKvitteringOpretClient = new OIOKvitteringOpretClient(getEndpoint(OIO_KVITTERING_OPRET));
+        oioKvitteringOpretClient.invoke(virksomhedSENummerIdentifikator,
+                consignee,ie818, arc);
+
+        LOGGER.info("Waiting 2 minutes before proceeding...");
+        Thread.sleep(1000*60*2);
+
+        String ie871 = "reject-ie871.xml";
+        OIOKvitteringAfvigelseBegrundelseOpretClient oioKvitteringAfvigelseBegrundelseOpretClient = new OIOKvitteringAfvigelseBegrundelseOpretClient(getEndpoint("OIOKvitteringAfvigelseBegrundelseOpret"));
+        oioKvitteringAfvigelseBegrundelseOpretClient.invoke(virksomhedSENummerIdentifikator,
+                consignee, ie871, arc);
+
+
+    }
+
+    @Test
+    public void testCreateIE815andIE825() throws Exception {
+        // VAT Number of the entity sending. Rule of thumb: this number matches
+        // this CVR number present in the certificate.
+        String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
+        // Excise number
+        String consignor = "DK31175143300";
+
+        String arc = null;
+
+        File ie815 = new File("split-ie815.xml");
+        OIOLedsageDokumentOpretClient oioLedsageDocumentClient = new OIOLedsageDokumentOpretClient(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
+        arc = oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,
+                consignor, ie815);
+
+        if (arc == null) {
+            LOGGER.warning("Did not receive ARC number. Exiting");
+            return;
+        }
+        LOGGER.info("Received ARC = " + arc);
+        LOGGER.info("Waiting 2 minutes before proceeding...");
+        Thread.sleep(1000*60*2);
+
+        String ie825 = "split-ie825.xml";
+        OIOLedsageDokumentOpsplitningOpretClient oioLedsageDokumentOpsplitningOpretClient = new OIOLedsageDokumentOpsplitningOpretClient(getEndpoint("OIOLedsageDokumentOpsplitningOpret"));
+        oioLedsageDokumentOpsplitningOpretClient.invoke(virksomhedSENummerIdentifikator,
+                consignor, ie825,arc);
+
+    }
 
 }

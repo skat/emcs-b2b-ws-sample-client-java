@@ -1,0 +1,99 @@
+<ns0:IE815 xmlns:ns0="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE815:V3.01">
+    <ns7:Header xmlns:ns7="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE815:V3.01">
+        <ns8:MessageSender xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">NDEA.DK</ns8:MessageSender>
+        <ns8:MessageRecipient xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">NDEA.DK</ns8:MessageRecipient>
+        <ns8:DateOfPreparation xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">2023-01-13</ns8:DateOfPreparation>
+        <ns8:TimeOfPreparation xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">12:42:05.761</ns8:TimeOfPreparation>
+        <ns8:MessageIdentifier xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">DKEMCS20230000000345144</ns8:MessageIdentifier>
+    </ns7:Header>
+    <ns7:Body xmlns:ns7="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE815:V3.01">
+        <ns7:SubmittedDraftOfEADESAD>
+            <ns7:Attributes>
+                <ns7:SubmissionMessageType>1</ns7:SubmissionMessageType>
+                <ns7:DeferredSubmissionFlag>1</ns7:DeferredSubmissionFlag>
+            </ns7:Attributes>
+            <ns7:ConsigneeTrader language="da">
+                <ns7:Traderid>DK82000100300</ns7:Traderid>
+                <ns7:TraderName>Dampskibet v/Bjarne Hvitfeld Hansen</ns7:TraderName>
+                <ns7:StreetName>Munch Petersens Vej</ns7:StreetName>
+                <ns7:StreetNumber>8</ns7:StreetNumber>
+                <ns7:Postcode>3700</ns7:Postcode>
+                <ns7:City>Rønne</ns7:City>
+            </ns7:ConsigneeTrader>
+            <ns7:ConsignorTrader language="da">
+                <ns7:TraderExciseNumber>DK31175143300</ns7:TraderExciseNumber>
+                <ns7:TraderName>eService FKT-TEST BLAA 0013</ns7:TraderName>
+                <ns7:StreetName>Silkeborgvej</ns7:StreetName>
+                <ns7:StreetNumber>9</ns7:StreetNumber>
+                <ns7:Postcode>8000</ns7:Postcode>
+                <ns7:City>Århus C</ns7:City>
+            </ns7:ConsignorTrader>
+            <ns7:PlaceOfDispatchTrader language="da">
+                <ns7:ReferenceOfTaxWarehouse>DK31175143301</ns7:ReferenceOfTaxWarehouse>
+                <ns7:TraderName>eService FKT-TEST BLAA 0013</ns7:TraderName>
+                <ns7:StreetName>Silkeborgvej</ns7:StreetName>
+                <ns7:StreetNumber>9</ns7:StreetNumber>
+                <ns7:Postcode>8000</ns7:Postcode>
+                <ns7:City>Århus C</ns7:City>
+            </ns7:PlaceOfDispatchTrader>
+            <ns7:DeliveryPlaceTrader language="da">
+                <ns7:Traderid>DK82000100301</ns7:Traderid>
+                <ns7:TraderName>Dampskibet v/Bjarne Hvitfeld Hansen</ns7:TraderName>
+                <ns7:StreetName>Statshavnen</ns7:StreetName>
+                <ns7:StreetNumber>6</ns7:StreetNumber>
+                <ns7:Postcode>3000</ns7:Postcode>
+                <ns7:City>Helsingør</ns7:City>
+            </ns7:DeliveryPlaceTrader>
+            <ns7:CompetentAuthorityDispatchOffice>
+                <ns7:ReferenceNumber>DK008047</ns7:ReferenceNumber>
+            </ns7:CompetentAuthorityDispatchOffice>
+            <ns7:FirstTransporterTrader language="da">
+                <ns7:VatNumber>CVR_Energi</ns7:VatNumber>
+                <ns7:TraderName>TransportørNavn</ns7:TraderName>
+                <ns7:StreetName>TransportørVej</ns7:StreetName>
+                <ns7:StreetNumber>8</ns7:StreetNumber>
+                <ns7:Postcode>2000</ns7:Postcode>
+                <ns7:City>TransportørBy</ns7:City>
+            </ns7:FirstTransporterTrader>
+            <ns7:HeaderEadEsad>
+                <ns7:DestinationTypeCode>1</ns7:DestinationTypeCode>
+                <ns7:JourneyTime>D03</ns7:JourneyTime>
+                <ns7:TransportArrangement>1</ns7:TransportArrangement>
+            </ns7:HeaderEadEsad>
+            <ns7:TransportMode>
+                <ns7:TransportModeCode>0</ns7:TransportModeCode>
+                <ns7:ComplementaryInformation language="da">Forsendelse af energi</ns7:ComplementaryInformation>
+            </ns7:TransportMode>
+            <ns7:MovementGuarantee>
+                <ns7:GuarantorTypeCode>1</ns7:GuarantorTypeCode>
+            </ns7:MovementGuarantee>
+            <ns7:BodyEadEsad>
+                <ns7:BodyRecordUniqueReference>1</ns7:BodyRecordUniqueReference>
+                <ns7:ExciseProductCode>E300</ns7:ExciseProductCode>
+                <ns7:CnCode>27071000</ns7:CnCode>
+                <ns7:Quantity>10000</ns7:Quantity>
+                <ns7:GrossMass>10000</ns7:GrossMass>
+                <ns7:NetMass>9000</ns7:NetMass>
+                <ns7:FiscalMarkUsedFlag>0</ns7:FiscalMarkUsedFlag>
+                <ns7:Density>0.90</ns7:Density>
+                <ns7:CommercialDescription language="da">Benzol (benzen)</ns7:CommercialDescription>
+                <ns7:Package>
+                    <ns7:KindOfPackages>BA</ns7:KindOfPackages>
+                    <ns7:NumberOfPackages>10000</ns7:NumberOfPackages>
+                </ns7:Package>
+            </ns7:BodyEadEsad>
+            <ns7:EadEsadDraft>
+                <ns7:LocalReferenceNumber>DK1673610125335</ns7:LocalReferenceNumber>
+                <ns7:InvoiceNumber>8979</ns7:InvoiceNumber>
+                <ns7:InvoiceDate>2023-01-13</ns7:InvoiceDate>
+                <ns7:OriginTypeCode>1</ns7:OriginTypeCode>
+                <ns7:DateOfDispatch>2023-01-13</ns7:DateOfDispatch>
+                <ns7:TimeOfDispatch>17:35:05.762</ns7:TimeOfDispatch>
+            </ns7:EadEsadDraft>
+            <ns7:TransportDetails>
+                <ns7:TransportUnitCode>1</ns7:TransportUnitCode>
+                <ns7:IdentityOfTransportUnits>89080</ns7:IdentityOfTransportUnits>
+            </ns7:TransportDetails>
+        </ns7:SubmittedDraftOfEADESAD>
+    </ns7:Body>
+</ns0:IE815>

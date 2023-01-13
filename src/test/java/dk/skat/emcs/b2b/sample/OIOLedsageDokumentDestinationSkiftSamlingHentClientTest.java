@@ -19,7 +19,7 @@ public class OIOLedsageDokumentDestinationSkiftSamlingHentClientTest extends Bas
             // this CVR number present in the certificate.
             String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
             // Excise number
-            String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
+            String afgiftOperatoerPunktAfgiftIdentifikator = "DK31175143300";
             OIOLedsageDokumentDestinationSkiftSamlingHentClient client = new OIOLedsageDokumentDestinationSkiftSamlingHentClient(endpointURL);
             client.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator);
