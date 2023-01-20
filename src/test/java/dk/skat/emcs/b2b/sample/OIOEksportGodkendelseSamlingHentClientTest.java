@@ -16,7 +16,7 @@ public class OIOEksportGodkendelseSamlingHentClientTest extends BaseClientTest {
             // this CVR number present in the certificate.
             String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
             // Excise number
-            String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
+            String afgiftOperatoerPunktAfgiftIdentifikator = "DK31175143300";
             OIOEksportGodkendelseSamlingHentClient client = new OIOEksportGodkendelseSamlingHentClient(endpointURL);
             client.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator);
