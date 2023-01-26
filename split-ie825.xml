@@ -27,6 +27,7 @@
                 </ns7:DeliveryPlaceTrader>
                 <ns7:NewTransporterTrader language="da">
                     <ns7:VatNumber>12345678</ns7:VatNumber>
+                    <ns7:TraderName>Acme Inc.</ns7:TraderName>
                     <ns7:StreetName>vej</ns7:StreetName>
                     <ns7:StreetNumber>8</ns7:StreetNumber>
                     <ns7:Postcode>2000</ns7:Postcode>
