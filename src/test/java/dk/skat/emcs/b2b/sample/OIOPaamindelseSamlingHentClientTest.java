@@ -8,18 +8,12 @@ public class OIOPaamindelseSamlingHentClientTest extends BaseClientTest {
 
     @Test
     public void invoke() throws DatatypeConfigurationException {
-        String endpointURL =
-                getEndpoint("OIOPaamindelseSamlingHent");
 
-        if (endpointURL != null) {
-            // VAT Number of the entity sending. Rule of thumb: this number matches
-            // this CVR number present in the certificate.
+        if (getEndpoint(OIO_PAAMINDELSE_SAMLING_HENT) != null) {
             String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
-            // Excise number
             String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
-            OIOPaamindelseSamlingHentClient client = new OIOPaamindelseSamlingHentClient(endpointURL);
-            client.invoke(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator);
+            OIOPaamindelseSamlingHentClient client = new OIOPaamindelseSamlingHentClient(getEndpoint(OIO_PAAMINDELSE_SAMLING_HENT));
+            client.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator);
         }
     }
 }

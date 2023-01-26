@@ -8,6 +8,7 @@ package dk.skat.emcs.b2b.sample;
  */
 public class BaseClientTest {
 
+    protected static final String OIO_PAAMINDELSE_SAMLING_HENT = "OIOPaamindelseSamlingHent";
     protected static final String OIO_EUREFERENCE_DATA_ANMOD = "OIOEUReferenceDataAnmod";
     protected static final String OIO_EUREFERENCE_DATA_HENT = "OIOEUReferenceDataHent";
     protected static final String OIO_LEDSAGEDOCUMENT_OPRET = "OIOLedsageDocumentOpret";
