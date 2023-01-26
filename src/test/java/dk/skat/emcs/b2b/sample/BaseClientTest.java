@@ -60,4 +60,8 @@ public class BaseClientTest {
         return endpointURL;
     }
 
+    protected void sleep(int minutes) throws InterruptedException {
+        Thread.sleep(1000 * 60 * minutes);
+    }
+
 }

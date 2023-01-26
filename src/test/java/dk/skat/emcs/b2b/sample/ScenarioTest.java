@@ -266,35 +266,4 @@ public class ScenarioTest extends BaseClientTest {
 
 
     }
-
-    @Test
-    public void testCreateIE815andIE825() throws Exception {
-        // VAT Number of the entity sending. Rule of thumb: this number matches
-        // this CVR number present in the certificate.
-        String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
-        // Excise number
-        String consignor = "DK31175143300";
-
-        String arc = null;
-
-        File ie815 = new File("split-ie815.xml");
-        OIOLedsageDokumentOpretClient oioLedsageDocumentClient = new OIOLedsageDokumentOpretClient(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
-        arc = oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,
-                consignor, ie815);
-
-        if (arc == null) {
-            LOGGER.warning("Did not receive ARC number. Exiting");
-            return;
-        }
-        LOGGER.info("Received ARC = " + arc);
-        LOGGER.info("Waiting 2 minutes before proceeding...");
-        Thread.sleep(1000*60*2);
-
-        String ie825 = "split-ie825.xml";
-        OIOLedsageDokumentOpsplitningOpretClient oioLedsageDokumentOpsplitningOpretClient = new OIOLedsageDokumentOpsplitningOpretClient(getEndpoint("OIOLedsageDokumentOpsplitningOpret"));
-        oioLedsageDokumentOpsplitningOpretClient.invoke(virksomhedSENummerIdentifikator,
-                consignor, ie825,arc);
-
-    }
-
 }
