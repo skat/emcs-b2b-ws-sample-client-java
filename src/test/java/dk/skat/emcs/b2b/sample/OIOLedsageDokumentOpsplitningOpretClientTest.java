@@ -6,9 +6,14 @@ import java.io.File;
 import java.util.logging.Logger;
 
 /**
- * OIOLedsageDokumentOpsplitningOpret Test (IE825)
+ * OIOLedsageDokumentOpsplitningOpret Test (IE825 as request)
  *
- * Prerequisites: IE815 must be submitted in advance (using OIOLedsageDokumentOpret).
+ * Purpose: Verify submit of IE825
+ *
+ * Test case design steps:
+ *
+ * Step 1: Submit IE815 (using OIOLedsageDokumentOpret).
+ * Step 2: Submit IE825 (using OIOLedsageDokumentOpsplitningOpret).
  *
  * @author SKAT
  * @since 1.2
@@ -22,15 +27,13 @@ public class OIOLedsageDokumentOpsplitningOpretClientTest extends BaseClientTest
 
         if (getEndpoint(OIO_LEDSAGE_DOKUMENT_OPSPLITNING_OPRET) != null) {
 
-            // VAT Number of the entity sending. Rule of thumb: this number matches
-            // this CVR number present in the certificate.
             String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
 
             // Consignor
             String consignor = "DK31175143300";
 
-            // Submit IE815
-            // ------------
+            // Step 1:
+            // -------
             File ie815 = new File("split-ie815.xml");
             OIOLedsageDokumentOpretClient oioLedsageDocumentClient = new OIOLedsageDokumentOpretClient(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
             String arc = oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,
@@ -44,8 +47,8 @@ public class OIOLedsageDokumentOpsplitningOpretClientTest extends BaseClientTest
             LOGGER.info("Sleeping 2 minutes to allow EMCS process the IE815.");
             sleep(2);
 
-            // Submit IE825
-            // ------------
+            // Step 2:
+            // -------
             String ie825 = "split-ie825.xml";
             OIOLedsageDokumentOpsplitningOpretClient oioLedsageDokumentOpsplitningOpretClient = new OIOLedsageDokumentOpsplitningOpretClient(getEndpoint(OIO_LEDSAGE_DOKUMENT_OPSPLITNING_OPRET));
             oioLedsageDokumentOpsplitningOpretClient.invoke(virksomhedSENummerIdentifikator,
