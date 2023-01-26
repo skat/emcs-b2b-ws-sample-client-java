@@ -123,6 +123,9 @@ public class OIOLedsageDokumentNotifikationOpretClient extends EMCSBaseClient {
         if (arc != null) {
             replaceValue(doc, "/IE819/Body/AlertOrRejectionOfEADESAD/ExciseMovement/AdministrativeReferenceCode", arc);
         }
+        resetDateAndTimeOfValidationOfCancellation(doc,"/IE819/Body/AlertOrRejectionOfEADESAD/Attributes/DateAndTimeOfValidationOfAlertRejection" );
+        resetDateOfPreparation(doc,"/IE819/Body/AlertOrRejectionOfEADESAD/AlertOrRejection/DateOfAlertOrRejection" );
+
         // Build IE819InputStrukturType
         IE819InputStrukturType IE819InputStrukturType = new IE819InputStrukturType();
         // Set ie815 document

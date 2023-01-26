@@ -204,6 +204,9 @@ public class ScenarioTest extends BaseClientTest {
         arc = oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,
                 afgiftOperatoerPunktAfgiftIdentifikator, ie815);
 
+        LOGGER.info("Waiting 2 minutes before proceeding...");
+        Thread.sleep(1000*60*2);
+
         if (arc != null && arc.length() > 0) {
             String ie819 = "for-notification-ie819.xml";
             OIOLedsageDokumentNotifikationOpretClient oioLedsageDokumentNotifikationOpretClient = new OIOLedsageDokumentNotifikationOpretClient(getEndpoint("OIOLedsageDokumentNotifikationOpret"));
