@@ -3,7 +3,9 @@ package dk.skat.emcs.b2b.sample;
 import org.junit.Test;
 
 /**
- * OIOLedsageDokumentDestinationSkiftOpretClient Test
+ * OIOLedsageDokumentDestinationSkiftOpret Test
+ *
+ * IMPORTANT: OIOLedsageDokumentDestinationSkiftOpret is also tested as part of {@link OIOLedsageDokumentDestinationSkiftSamlingHentClientTest#invoke()}
  *
  * @author SKAT
  * @since 1.2
