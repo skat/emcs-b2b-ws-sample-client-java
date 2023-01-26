@@ -84,7 +84,6 @@
                 </ns7:NewTransporterTrader>
                 <ns7:TransportDetails>
                     <ns7:TransportUnitCode>2</ns7:TransportUnitCode>
-
                     <ns7:IdentityOfTransportUnits>7878</ns7:IdentityOfTransportUnits>
                 </ns7:TransportDetails>
                 <ns7:BodyEad>
