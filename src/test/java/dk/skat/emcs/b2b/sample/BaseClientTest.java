@@ -18,6 +18,7 @@ public class BaseClientTest {
     protected static final String OIO_LEDSAGE_DOKUMENT_NOTIFIKATION_OPRET = "OIOLedsageDokumentNotifikationOpret";
     protected static final String OIO_LEDSAGE_DOKUMENT_SAMLLING_HENT = "OIOLedsageDokumentSamlingHent";
     protected static final String OIO_LEDSAGE_DOKUMENT_OPSPLITNING_OPRET = "OIOLedsageDokumentOpsplitningOpret";
+    protected static final String OIO_LEDSAGE_DOKUMENT_ANNULLERING_SAMLING_HENT = "OIOLedsageDokumentAnnulleringSamlingHent";
 
 
 
@@ -29,6 +30,8 @@ public class BaseClientTest {
 
     /**
      * Get VAT number
+     *
+     * VAT Number of the entity sending. Rule of thumb: this number matches this CVR number present in the certificate.
      *
      * @return VAT number
      */
