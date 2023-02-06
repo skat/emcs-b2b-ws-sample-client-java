@@ -4,6 +4,15 @@ import org.junit.Test;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 
+/**
+ * OIOHaendelseRapportSamlingHent Test (IE840 as response)
+ *
+ * IMPORTANT: This test case can first be run following steps completed
+ * in the test system by the Danish Customs and Tax Administration.
+ *
+ * Contact help desk and request test data for the service: OIOHaendelseRapportSamlingHent
+ *
+ */
 public class OIOHaendelseRapportSamlingHentClientTest extends BaseClientTest {
 
     @Test
