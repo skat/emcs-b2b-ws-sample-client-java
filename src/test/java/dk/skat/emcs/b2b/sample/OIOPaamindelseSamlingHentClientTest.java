@@ -14,7 +14,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
  *
  * To test this OIOPaamindelseSamlingHent follow these steps:
  *
- * Step 1: Submit IE15 using {@link OIOLedsageDocumentOpretClientTest#invoke()} and do NOT submit the corresponding IE181
+ * Step 1: Submit IE815 using {@link OIOLedsageDocumentOpretClientTest#invoke()} and do NOT submit the corresponding IE818
  * Step 2: Wait 6 days (to be sure)
  * Step 3: Invoke the OIOPaamindelseSamlingHent service (this test)
  *
