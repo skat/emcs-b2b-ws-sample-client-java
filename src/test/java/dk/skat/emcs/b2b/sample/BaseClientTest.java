@@ -20,6 +20,7 @@ public class BaseClientTest {
     protected static final String OIO_LEDSAGE_DOKUMENT_SAMLLING_HENT = "OIOLedsageDokumentSamlingHent";
     protected static final String OIO_LEDSAGE_DOKUMENT_OPSPLITNING_OPRET = "OIOLedsageDokumentOpsplitningOpret";
     protected static final String OIO_LEDSAGE_DOKUMENT_ANNULLERING_SAMLING_HENT = "OIOLedsageDokumentAnnulleringSamlingHent";
+    protected static final String OIO_LEDSAGE_DOKUMENT_OMDIRIGERET_ADVIS_SAMLING_HENT = "OIOLedsageDokumentOmdirigeretAdvisSamlingHent";
 
 
 

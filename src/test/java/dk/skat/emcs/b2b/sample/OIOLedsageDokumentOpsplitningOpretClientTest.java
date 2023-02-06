@@ -14,6 +14,7 @@ import java.util.logging.Logger;
  *
  * Step 1: Submit IE815 (using OIOLedsageDokumentOpret).
  * Step 2: Submit IE825 (using OIOLedsageDokumentOpsplitningOpret).
+ * Step 3: Fetch IE803 (using OIOLedsageDokumentOmdirigeretAdvisSamlingHent).
  *
  * @author SKAT
  * @since 1.2
@@ -53,6 +54,16 @@ public class OIOLedsageDokumentOpsplitningOpretClientTest extends BaseClientTest
             OIOLedsageDokumentOpsplitningOpretClient oioLedsageDokumentOpsplitningOpretClient = new OIOLedsageDokumentOpsplitningOpretClient(getEndpoint(OIO_LEDSAGE_DOKUMENT_OPSPLITNING_OPRET));
             oioLedsageDokumentOpsplitningOpretClient.invoke(virksomhedSENummerIdentifikator,
                     consignor, ie825,arc);
+
+            LOGGER.info("Sleeping 2 minutes to allow EMCS fetching IE803.");
+            sleep(2);
+
+            // Step 3:
+            // -------
+            OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient client = new OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient(getEndpoint(OIO_LEDSAGE_DOKUMENT_OMDIRIGERET_ADVIS_SAMLING_HENT));
+            client.invoke(virksomhedSENummerIdentifikator,
+                    consignor);
+
         }
     }
 
