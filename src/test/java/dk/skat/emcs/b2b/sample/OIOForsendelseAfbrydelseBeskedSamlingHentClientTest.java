@@ -9,22 +9,26 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+/**
+ * OIOForsendelseAfbrydelseBeskedSamlingHent Test (IE807 as response)
+ *
+ * IMPORTANT: This test case can first be run following steps completed
+ * in the test system by the Danish Customs and Tax Administration.
+ *
+ * Contact help desk and request test data for the service: OIOForsendelseAfbrydelseBeskedSamlingHent
+ *
+ */
 public class OIOForsendelseAfbrydelseBeskedSamlingHentClientTest extends BaseClientTest {
 
     private static final Logger LOGGER = Logger.getLogger(OIOForsendelseAfbrydelseBeskedSamlingHentClientTest.class.getName());
 
     @Test
     public void invoke() throws DatatypeConfigurationException, ParserConfigurationException, SAXException, IOException {
-        String endpointURL =
-                getEndpoint("OIOForsendelseAfbrydelseBeskedSamlingHent");
 
-        if (endpointURL != null) {
-            // VAT Number of the entity sending. Rule of thumb: this number matches
-            // this CVR number present in the certificate.
+        if (getEndpoint(OIO_FORSENDELSE_AFBRYDELSE_BESKED_SAMLING_HENT) != null) {
             String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
-            // Excise number
             String afgiftOperatoerPunktAfgiftIdentifikator = "DK31175143300";
-            OIOForsendelseAfbrydelseBeskedSamlingHentClient client = new OIOForsendelseAfbrydelseBeskedSamlingHentClient(endpointURL);
+            OIOForsendelseAfbrydelseBeskedSamlingHentClient client = new OIOForsendelseAfbrydelseBeskedSamlingHentClient(getEndpoint(OIO_FORSENDELSE_AFBRYDELSE_BESKED_SAMLING_HENT));
             client.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator);
         }
@@ -33,7 +37,7 @@ public class OIOForsendelseAfbrydelseBeskedSamlingHentClientTest extends BaseCli
     @Test
     public void testCreateIE815andIE818andIE871() throws Exception {
         String endpointURL =
-                getEndpoint("OIOForsendelseAfbrydelseBeskedSamlingHent");
+                getEndpoint(OIO_FORSENDELSE_AFBRYDELSE_BESKED_SAMLING_HENT);
 
         if (endpointURL != null) {
             // VAT Number of the entity sending. Rule of thumb: this number matches
