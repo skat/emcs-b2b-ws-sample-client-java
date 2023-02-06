@@ -3,7 +3,9 @@ package dk.skat.emcs.b2b.sample;
 import org.junit.Test;
 
 /**
- * OIOLedsageDokumentSamlingHentClientTest
+ * OIOLedsageDokumentSamlingHent Test
+ *
+ * IMPORTANT: OIOLedsageDokumentSamlingHent is also tested as part of {@link OIOKvitteringSamlingHentClientTest#invoke()}
  *
  * @author SKAT
  * @since 1.2
