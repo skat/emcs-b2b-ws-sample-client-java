@@ -73,7 +73,7 @@ public class OIOPaamindelseSamlingHentClient extends EMCSBaseClient {
         int i = 1;
         for (String message : list) {
             sb.append(NEW_LINE + "Message " + i + ":");
-            sb.append(NEW_LINE + message);
+            sb.append(NEW_LINE + prettyFormatDocument(message, 2, true));
             i++;
         }
 

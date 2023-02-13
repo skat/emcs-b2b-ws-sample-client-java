@@ -68,7 +68,7 @@ public class OIOForsinkelseForklaringOpretClient extends EMCSBaseClient {
      */
     public void invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
-                       String ie837) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+                       String ie837, String arc, String submitterIdentification) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
         // Generate Transaction Id
         final String transactionID = TransactionIdGenerator.getTransactionId();
@@ -96,6 +96,14 @@ public class OIOForsinkelseForklaringOpretClient extends EMCSBaseClient {
         File file = new File(ie837);
         Document doc = db.parse(file);
 
+        resetTimeOfPreparation(doc, "/IE837/Header/TimeOfPreparation");
+        resetDateOfPreparation(doc, "/IE837/Header/DateOfPreparation");
+        resetMessageIdentifier(doc, "/IE837/Header/MessageIdentifier");
+        resetDateAndTimeOfValidationOfCancellation(doc,"/IE837/Body/ExplanationOnDelayForDelivery/Attributes/DateAndTimeOfValidationOfExplanationOnDelay");
+        if (arc != null) {
+            replaceValue(doc, "/IE837/Body/ExplanationOnDelayForDelivery/ExciseMovement/AdministrativeReferenceCode", arc);
+        }
+        replaceValue(doc, "/IE837/Body/ExplanationOnDelayForDelivery/Attributes/SubmitterIdentification",submitterIdentification);
         // Build IE815StrukturType
         IE837StrukturType ie837StrukturType = new IE837StrukturType();
         // Set ie815 document
@@ -123,10 +131,18 @@ public class OIOForsinkelseForklaringOpretClient extends EMCSBaseClient {
                 oioForsinkelseForklaringOpretIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
         ));
         LOGGER.info(NEW_LINE + sbRequest.toString());
+        LOGGER.info("IE837:");
+        LOGGER.info(prettyFormatDocument(doc, 2, true));
 
         OIOForsinkelseForklaringOpretOType out = port.getOIOForsinkelseForklaringOpret(oioForsinkelseForklaringOpretIType);
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
+        String ie917 = out.getIE917BeskedTekst();
+        if (ie917 != null) {
+            LOGGER.info("IE917:");
+            LOGGER.info(prettyFormatDocument(ie917, 2, true));
+
+        }
 
         LOGGER.info(NEW_LINE + sb.toString());
     }

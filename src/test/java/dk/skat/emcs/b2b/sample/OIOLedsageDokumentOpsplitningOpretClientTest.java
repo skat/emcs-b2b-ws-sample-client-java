@@ -2,32 +2,68 @@ package dk.skat.emcs.b2b.sample;
 
 import org.junit.Test;
 
+import java.io.File;
+import java.util.logging.Logger;
+
 /**
- * OIOLedsageDokumentOpsplitningOpretClient Test
+ * OIOLedsageDokumentOpsplitningOpret Test (IE825 as request)
+ *
+ * Purpose: Verify submit of IE825
+ *
+ * Test case design steps:
+ *
+ * Step 1: Submit IE815 (using OIOLedsageDokumentOpret).
+ * Step 2: Submit IE825 (using OIOLedsageDokumentOpsplitningOpret).
+ * Step 3: Fetch IE803 (using OIOLedsageDokumentOmdirigeretAdvisSamlingHent).
  *
  * @author SKAT
  * @since 1.2
  */
 public class OIOLedsageDokumentOpsplitningOpretClientTest extends BaseClientTest {
 
+    private static final Logger LOGGER = Logger.getLogger(OIOLedsageDokumentOpsplitningOpretClientTest.class.getName());
+
     @Test
     public void invoke() throws Exception {
-        String endpointURL =
-                getEndpoint("OIOLedsageDokumentOpsplitningOpret");
 
-        if (endpointURL != null) {
+        if (getEndpoint(OIO_LEDSAGE_DOKUMENT_OPSPLITNING_OPRET) != null) {
 
-            // Path to where the IE825 document is located
-            String ie825 = "ie825.xml";
-            // VAT Number of the entity sending. Rule of thumb: this number matches
-            // this CVR number present in the certificate.
             String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
-            // Excise number
-            String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
 
-            OIOLedsageDokumentOpsplitningOpretClient oioLedsageDocumentAnnulleringOpretClient = new OIOLedsageDokumentOpsplitningOpretClient(endpointURL);
-            oioLedsageDocumentAnnulleringOpretClient.invoke(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator, ie825);
+            // Consignor
+            String consignor = "DK31175143300";
+
+            // Step 1:
+            // -------
+            File ie815 = new File("split-ie815.xml");
+            OIOLedsageDokumentOpretClient oioLedsageDocumentClient = new OIOLedsageDokumentOpretClient(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
+            String arc = oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,
+                    consignor, ie815);
+
+            if (arc == null) {
+                LOGGER.warning("Did not receive ARC number. Exiting");
+                return;
+            }
+            LOGGER.info("Received ARC = " + arc);
+            LOGGER.info("Sleeping 2 minutes to allow EMCS process the IE815.");
+            sleep(2);
+
+            // Step 2:
+            // -------
+            String ie825 = "split-ie825.xml";
+            OIOLedsageDokumentOpsplitningOpretClient oioLedsageDokumentOpsplitningOpretClient = new OIOLedsageDokumentOpsplitningOpretClient(getEndpoint(OIO_LEDSAGE_DOKUMENT_OPSPLITNING_OPRET));
+            oioLedsageDokumentOpsplitningOpretClient.invoke(virksomhedSENummerIdentifikator,
+                    consignor, ie825,arc);
+
+            LOGGER.info("Sleeping 2 minutes to allow EMCS fetching IE803.");
+            sleep(2);
+
+            // Step 3:
+            // -------
+            OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient client = new OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient(getEndpoint(OIO_LEDSAGE_DOKUMENT_OMDIRIGERET_ADVIS_SAMLING_HENT));
+            client.invoke(virksomhedSENummerIdentifikator,
+                    consignor);
+
         }
     }
 

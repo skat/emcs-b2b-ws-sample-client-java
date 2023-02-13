@@ -68,7 +68,7 @@ public class OIOLedsageDokumentDestinationSkiftOpretClient extends EMCSBaseClien
      */
     public void invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
-                       String ie813) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+                       String ie813, String arc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
         // Generate Transaction Id
         final String transactionID = TransactionIdGenerator.getTransactionId();
@@ -96,6 +96,13 @@ public class OIOLedsageDokumentDestinationSkiftOpretClient extends EMCSBaseClien
         File file = new File(ie813);
         Document doc = db.parse(file);
 
+        resetTimeOfPreparation(doc, "/IE813/Header/TimeOfPreparation");
+        resetDateOfPreparation(doc, "/IE813/Header/DateOfPreparation");
+        resetMessageIdentifier(doc, "/IE813/Header/MessageIdentifier");
+        resetDateAndTimeOfValidationOfCancellation(doc, "/IE813/Body/ChangeOfDestination/Attributes/DateAndTimeOfValidationOfChangeOfDestination");
+        if (arc != null) {
+            replaceValue(doc, "/IE813/Body/ChangeOfDestination/UpdateEadEsad/AdministrativeReferenceCode", arc);
+        }
         // Build IE813InputStrukturType
         IE813InputStrukturType IE813InputStrukturType = new IE813InputStrukturType();
         // Set ie813 document
@@ -123,6 +130,8 @@ public class OIOLedsageDokumentDestinationSkiftOpretClient extends EMCSBaseClien
                 oioLedsageDokumentDestinationSkiftOpretIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
         ));
         LOGGER.info(NEW_LINE + sbRequest.toString());
+        LOGGER.info("IE813:");
+        LOGGER.info(prettyFormatDocument(doc, 2, true));
 
         OIOLedsageDokumentDestinationSkiftOpretOType out = port.getOIOLedsageDokumentDestinationSkiftOpret(oioLedsageDokumentDestinationSkiftOpretIType);
         StringBuilder sb = new StringBuilder();

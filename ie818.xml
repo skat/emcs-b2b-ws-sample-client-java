@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ie:IE818 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:IE818:V2.02">
-    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:TMS:V2.02">
+<ie:IE818 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE818:V3.01">
+    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">
         <tms:MessageSender >NDEA.DK</tms:MessageSender>
         <tms:MessageRecipient>NDEA.DK</tms:MessageRecipient>
         <tms:DateOfPreparation>2011-10-26</tms:DateOfPreparation>
@@ -20,10 +20,10 @@
                 <ie:Postcode>6840</ie:Postcode>
                 <ie:City>Oksbøl</ie:City>
             </ie:ConsigneeTrader>
-            <ie:ExciseMovementEad>
+            <ie:ExciseMovement>
                 <ie:AdministrativeReferenceCode>18DK6T3AQYMQQWRQWSK05</ie:AdministrativeReferenceCode>
                 <ie:SequenceNumber>1</ie:SequenceNumber>
-            </ie:ExciseMovementEad>
+            </ie:ExciseMovement>
             <ie:DeliveryPlaceTrader language="da">
                 <ie:Traderid>DK99025875499</ie:Traderid>
                 <ie:TraderName>SEED selskab 1 test 2</ie:TraderName>

@@ -42,13 +42,17 @@ public class OIOKvitteringSamlingHentClient extends EMCSBaseClient {
      * @throws DatatypeConfigurationException
      */
     public OIOKvitteringSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
-                       String afgiftOperatoerPunktAfgiftIdentifikator) throws DatatypeConfigurationException {
+                       String afgiftOperatoerPunktAfgiftIdentifikator,
+                       String arc) throws DatatypeConfigurationException {
 
         OIOKvitteringSamlingHentIType request = new OIOKvitteringSamlingHentIType();
         request.setHovedOplysninger(generateHovedOplysningerType());
         request.setVirksomhedIdentifikationStruktur(generateVirksomhedIdentifikationStrukturType(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator));
-        request.setSøgeParametreStruktur(getSøgeParametreStrukturType(10));
-
+        if (arc != null) {
+            request.setSøgeParametreStruktur(getSøgeParametreStrukturType(arc));
+        } else {
+            request.setSøgeParametreStruktur(getSøgeParametreStrukturType(10));
+        }
         Bus bus = new SpringBusFactory().createBus("emcs-policy.xml", false);
         BusFactory.setDefaultBus(bus);
         OIOKvitteringSamlingHentService service = new OIOKvitteringSamlingHentService();

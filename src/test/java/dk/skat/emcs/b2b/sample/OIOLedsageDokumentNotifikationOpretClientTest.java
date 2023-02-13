@@ -23,7 +23,7 @@ public class OIOLedsageDokumentNotifikationOpretClientTest extends BaseClientTes
             // this CVR number present in the certificate.
             String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
             // Excise number
-            String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
+            String afgiftOperatoerPunktAfgiftIdentifikator = "DK99025875300";
 
             OIOLedsageDokumentNotifikationOpretClient oioLedsageDocumentClient = new OIOLedsageDokumentNotifikationOpretClient(endpointURL);
             oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,

@@ -86,7 +86,9 @@ public class OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient extends EMCSBas
         int i = 1;
         for (String message : list) {
             sb.append(NEW_LINE + "Message " + i + ":");
-            sb.append(NEW_LINE + message);
+            sb.append(NEW_LINE);
+            sb.append(prettyFormatDocument(message, 2, true)).append(NEW_LINE);
+
             i++;
         }
         LOGGER.info(NEW_LINE + sb.toString());

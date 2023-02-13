@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns0:IE819 xmlns:ns0="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE819:V3.01">
+    <ns7:Header xmlns:ns7="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE819:V3.01">
+        <ns8:MessageSender xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">NDEA.DK</ns8:MessageSender>
+        <ns8:MessageRecipient xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">NDEA.DK</ns8:MessageRecipient>
+        <ns8:DateOfPreparation xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">2023-01-13</ns8:DateOfPreparation>
+        <ns8:TimeOfPreparation xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">09:59:58.768</ns8:TimeOfPreparation>
+        <ns8:MessageIdentifier xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">DKEMCS20230000000345061</ns8:MessageIdentifier>
+    </ns7:Header>
+    <ns7:Body xmlns:ns7="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE819:V3.01">
+        <ns7:AlertOrRejectionOfEADESAD>
+            <ns7:Attributes>
+                <ns7:DateAndTimeOfValidationOfAlertRejection>2023-01-13T09:59:58.000</ns7:DateAndTimeOfValidationOfAlertRejection>
+            </ns7:Attributes>
+            <ns7:ConsigneeTrader language="da">
+                <ns7:Traderid>DK99025875300</ns7:Traderid>
+                <ns7:TraderName>SEED selskab 1 20120710</ns7:TraderName>
+                <ns7:StreetName>Kirkegade</ns7:StreetName>
+                <ns7:StreetNumber>10</ns7:StreetNumber>
+                <ns7:Postcode>6840</ns7:Postcode>
+                <ns7:City>Oksbøl</ns7:City>
+            </ns7:ConsigneeTrader>
+            <ns7:ExciseMovement>
+                <ns7:AdministrativeReferenceCode>23DKQBEN4L01GNWFVSC42</ns7:AdministrativeReferenceCode>
+                <ns7:SequenceNumber>1</ns7:SequenceNumber>
+            </ns7:ExciseMovement>
+            <ns7:DestinationOffice>
+                <ns7:ReferenceNumber>DK008047</ns7:ReferenceNumber>
+            </ns7:DestinationOffice>
+            <ns7:AlertOrRejection>
+                <ns7:DateOfAlertOrRejection>2023-01-13</ns7:DateOfAlertOrRejection>
+                <ns7:EadEsadRejectedFlag>1</ns7:EadEsadRejectedFlag>
+            </ns7:AlertOrRejection>
+            <ns7:AlertOrRejectionOfEadEsadReason>
+                <ns7:AlertOrRejectionOfMovementReasonCode>3</ns7:AlertOrRejectionOfMovementReasonCode>
+                <ns7:ComplementaryInformation language="da">Der mangler 2</ns7:ComplementaryInformation>
+            </ns7:AlertOrRejectionOfEadEsadReason>
+        </ns7:AlertOrRejectionOfEADESAD>
+    </ns7:Body>
+</ns0:IE819>

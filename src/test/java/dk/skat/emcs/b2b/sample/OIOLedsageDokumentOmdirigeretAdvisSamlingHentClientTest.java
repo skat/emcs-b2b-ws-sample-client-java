@@ -7,20 +7,28 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
+/**
+ * OIOLedsageDokumentOmdirigeretAdvisSamlingHent Test (IE803 as response)
+ * <p>
+ * Purpose: Fetch list of IE803s
+ * <p>
+ * Test case design steps:
+ * <p>
+ * Step 1: Fetch list of IE803s (using OIOEUReferenceDataAnmod)
+ * <p>
+ * IMPORTANT: OIOLedsageDokumentOmdirigeretAdvisSamlingHent is also tested as part of {@link OIOLedsageDokumentOpsplitningOpretClientTest#invoke()}
+ *
+ * @author SKAT
+ * @since 1.2
+ */
 public class OIOLedsageDokumentOmdirigeretAdvisSamlingHentClientTest extends BaseClientTest {
 
     @Test
     public void invoke() throws DatatypeConfigurationException, ParserConfigurationException, SAXException, IOException {
-        String endpointURL =
-                getEndpoint("OIOLedsageDokumentOmdirigeretAdvisSamlingHent");
-
-        if (endpointURL != null) {
-            // VAT Number of the entity sending. Rule of thumb: this number matches
-            // this CVR number present in the certificate.
+        if (getEndpoint(OIO_LEDSAGE_DOKUMENT_OMDIRIGERET_ADVIS_SAMLING_HENT) != null) {
             String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
-            // Excise number
-            String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
-            OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient client = new OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient(endpointURL);
+            String afgiftOperatoerPunktAfgiftIdentifikator = "DK31175143300";
+            OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient client = new OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient(getEndpoint(OIO_LEDSAGE_DOKUMENT_OMDIRIGERET_ADVIS_SAMLING_HENT));
             client.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator);
         }

@@ -162,7 +162,7 @@ $ mvn clean install \
   -Ddk.skat.emcs.b2b.sample.TXID_PREFIX=ACME_01_
 ```
 
-This service returns a **response** similar to this output:
+This service returns a **response** similar to this output (in thie case PHASE 3 based document):
 
 ```
 *******************************************************************

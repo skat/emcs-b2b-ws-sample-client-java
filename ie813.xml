@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ie:IE813 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:IE813:V2.02">
-    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:TMS:V2.02">
+<ie:IE813 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE813:V3.01">
+    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">
         <tms:MessageSender>NDEA.DK</tms:MessageSender>
         <tms:MessageRecipient>NDEA.DK</tms:MessageRecipient>
         <tms:DateOfPreparation>2011-10-26</tms:DateOfPreparation>
@@ -13,14 +13,14 @@
                 <ie:DateAndTimeOfValidationOfChangeOfDestination>2011-10-26T11:31:23.000
                 </ie:DateAndTimeOfValidationOfChangeOfDestination>
             </ie:Attributes>
-            <ie:UpdateEad>
+            <ie:UpdateEadEsad>
                 <ie:AdministrativeReferenceCode>11DKJKA05CB5I1EXW2KL9</ie:AdministrativeReferenceCode>
                 <ie:JourneyTime>D01</ie:JourneyTime>
                 <ie:ChangedTransportArrangement>1</ie:ChangedTransportArrangement>
                 <ie:SequenceNumber>2</ie:SequenceNumber>
                 <ie:InvoiceDate>2011-10-27</ie:InvoiceDate>
                 <ie:TransportModeCode>3</ie:TransportModeCode>
-            </ie:UpdateEad>
+            </ie:UpdateEadEsad>
             <ie:DestinationChanged>
                 <ie:DestinationTypeCode>2</ie:DestinationTypeCode>
                 <ie:NewConsigneeTrader language="da">

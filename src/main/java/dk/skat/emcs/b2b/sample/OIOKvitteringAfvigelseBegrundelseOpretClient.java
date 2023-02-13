@@ -17,11 +17,8 @@ import org.xml.sax.SAXException;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.ws.BindingProvider;
-import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -69,7 +66,8 @@ public class OIOKvitteringAfvigelseBegrundelseOpretClient extends EMCSBaseClient
      */
     public void invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
-                       String ie871) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+                       String ie871,
+                       String arc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
         // Generate Transaction Id
         final String transactionID = TransactionIdGenerator.getTransactionId();
@@ -92,10 +90,18 @@ public class OIOKvitteringAfvigelseBegrundelseOpretClient extends EMCSBaseClient
         virksomhedIdentifikationStrukturType.setIndberetter(indberetter);
 
         // Load IE815 document
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = dbf.newDocumentBuilder();
-        File file = new File(ie871);
-        Document doc = db.parse(file);
+        Document doc = loadIEDocument(ie871);
+
+        resetTimeOfPreparation(doc, "/IE871/Header/TimeOfPreparation");
+        resetDateOfPreparation(doc, "/IE871/Header/DateOfPreparation");
+        resetMessageIdentifier(doc, "/IE871/Header/MessageIdentifier");
+        if (arc != null) {
+            replaceValue(doc,"/IE871/Body/ExplanationOnReasonForShortage/ExciseMovement/AdministrativeReferenceCode", arc);
+        }
+        // Also reset date
+        resetDateAndTimeOfValidationOfCancellation(doc,"/IE871/Body/ExplanationOnReasonForShortage/Attributes/DateAndTimeOfValidationOfExplanationOnShortage");
+
+        LOGGER.info(NEW_LINE + this.prettyFormatDocument(doc, 2, true));
 
         // Build IE815StrukturType
         IE871StrukturType ie815StrukturType = new IE871StrukturType();

@@ -7,6 +7,8 @@ import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysnin
 import oio.skat.emcs.ws._1_0.SøgeParametreStrukturType;
 import oio.skat.emcs.ws._1_0.VirksomhedIdentifikationStrukturType;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -15,11 +17,22 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.UUID;
 
 /**
  * EMCSBaseClient
@@ -32,9 +45,13 @@ public class EMCSBaseClient {
     protected static final String NEW_LINE = System.getProperty("line.separator");
 
     protected Document loadIEDocument(String path) throws IOException, SAXException, ParserConfigurationException {
+        File file = new File(path);
+        return loadIEDocument(file);
+    }
+
+    protected Document loadIEDocument(File file) throws IOException, SAXException, ParserConfigurationException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
-        File file = new File(path);
         Document doc = db.parse(file);
         return doc;
     }
@@ -185,5 +202,75 @@ public class EMCSBaseClient {
         }
         return hasError;
     }
+
+    protected void resetTimeOfPreparation(Document doc, String path) {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String formatDateTime = now.format(formatter);
+        replaceValue(doc, path, formatDateTime);
+    }
+
+    protected void resetDateOfPreparation(Document doc, String path) {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formatDateTime = now.format(formatter);
+        replaceValue(doc, path, formatDateTime);
+    }
+
+    protected void resetDateAndTimeOfValidationOfCancellation(Document doc, String path) {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
+        String formatDateTime = now.format(formatter);
+        replaceValue(doc, path, formatDateTime);
+    }
+
+    protected void resetMessageIdentifier(Document doc, String path) {
+        final String uuid = UUID.randomUUID().toString();
+        replaceValue(doc, path, uuid);
+    }
+
+    protected void resetMessageIdentifier(Document doc, String path, String messageIdentifier) {
+        replaceValue(doc, path, messageIdentifier);
+    }
+
+    protected void replaceValue(Document doc, String path, String value) {
+        XPath xPath = XPathFactory.newInstance().newXPath();
+        Node node = null;
+        try {
+            node = (Node) xPath.compile(path).evaluate(doc, XPathConstants.NODE);
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        }
+        node.setTextContent(value);
+    }
+
+    public static String prettyFormatDocument(Document document, int indent, boolean ignoreDeclaration) {
+        try {
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            transformerFactory.setAttribute("indent-number", indent);
+            Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, ignoreDeclaration ? "yes" : "no");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+            Writer out = new StringWriter();
+            transformer.transform(new DOMSource(document), new StreamResult(out));
+            return out.toString();
+        } catch (Exception e) {
+            throw new RuntimeException("Error occurs when pretty-printing xml:", e);
+        }
+    }
+
+    public static String prettyFormatDocument(String xmlString, int indent, boolean ignoreDeclaration) {
+
+        try {
+            InputSource src = new InputSource(new StringReader(xmlString));
+            Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(src);
+            return prettyFormatDocument(document, indent, ignoreDeclaration);
+        } catch (Exception e) {
+            throw new RuntimeException("Error occurs when pretty-printing xml:" + xmlString, e);
+        }
+    }
+
 
 }

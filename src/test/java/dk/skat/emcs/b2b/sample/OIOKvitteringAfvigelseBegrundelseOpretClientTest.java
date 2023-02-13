@@ -25,9 +25,11 @@ public class OIOKvitteringAfvigelseBegrundelseOpretClientTest extends BaseClient
             // Excise number
             String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
 
+            String arc = "22DKTJSJ5HLFU0BAI7164";
+
             OIOKvitteringAfvigelseBegrundelseOpretClient oioKvitteringAfvigelseBegrundelseOpretClient = new OIOKvitteringAfvigelseBegrundelseOpretClient(endpointURL);
             oioKvitteringAfvigelseBegrundelseOpretClient.invoke(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator, ie871);
+                    afgiftOperatoerPunktAfgiftIdentifikator, ie871, arc);
         }
     }
 

@@ -61,13 +61,19 @@ public class OIOLedsageDokumentOpsplitningOpretClient extends EMCSBaseClient {
      */
     public void invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
-                       String ie825) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+                       String ie825, String arc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
         // Load IE815 document
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
         File file = new File(ie825);
         Document doc = db.parse(file);
+
+        resetTimeOfPreparation(doc, "/IE825/Header/TimeOfPreparation");
+        resetDateOfPreparation(doc, "/IE825/Header/DateOfPreparation");
+        resetMessageIdentifier(doc, "/IE825/Header/MessageIdentifier");
+        replaceValue(doc,"/IE825/Body/SubmittedDraftOfSplittingOperation/SplittingEad/UpstreamArc", arc);
+
 
         // Build IE825StrukturType
         IE825StrukturType IE825StrukturType = new IE825StrukturType();
@@ -96,6 +102,8 @@ public class OIOLedsageDokumentOpsplitningOpretClient extends EMCSBaseClient {
                 oioLedsageDokumentOpsplitningOpretIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
         ));
         LOGGER.info(NEW_LINE + sbRequest.toString());
+        LOGGER.info("IE825:");
+        LOGGER.info(prettyFormatDocument(doc, 2, true));
 
         OIOLedsageDokumentOpsplitningOpretOType out = port.getOIOLedsageDokumentOpsplitningOpret(oioLedsageDokumentOpsplitningOpretIType);
         StringBuilder sb = new StringBuilder();

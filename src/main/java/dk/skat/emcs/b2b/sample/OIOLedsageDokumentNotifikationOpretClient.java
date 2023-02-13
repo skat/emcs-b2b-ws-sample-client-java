@@ -70,6 +70,26 @@ public class OIOLedsageDokumentNotifikationOpretClient extends EMCSBaseClient {
     public void invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        String ie819) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+        invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, ie819, null);
+    }
+
+
+        /**
+         * Call OIOLedsageDokumentNotifikationOpret service
+         *
+         * @param virksomhedSENummerIdentifikator VAT number of entity calling entity
+         * @param afgiftOperatoerPunktAfgiftIdentifikator Excise Number of calling entity
+         * @param ie819 IE819 document file path.
+         * @param arc Reference no.
+         * @throws DatatypeConfigurationException N/A
+         * @throws ParserConfigurationException N/A
+         * @throws IOException N/A
+         * @throws SAXException N/A
+         */
+    public void invoke(String virksomhedSENummerIdentifikator,
+                       String afgiftOperatoerPunktAfgiftIdentifikator,
+                       String ie819,
+                       String arc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
         // Generate Transaction Id
         final String transactionID = TransactionIdGenerator.getTransactionId();
@@ -96,6 +116,15 @@ public class OIOLedsageDokumentNotifikationOpretClient extends EMCSBaseClient {
         DocumentBuilder db = dbf.newDocumentBuilder();
         File file = new File(ie819);
         Document doc = db.parse(file);
+
+        resetDateOfPreparation(doc, "/IE819/Header/DateOfPreparation");
+        resetTimeOfPreparation(doc, "/IE819/Header/TimeOfPreparation");
+        resetMessageIdentifier(doc, "/IE819/Header/MessageIdentifier");
+        if (arc != null) {
+            replaceValue(doc, "/IE819/Body/AlertOrRejectionOfEADESAD/ExciseMovement/AdministrativeReferenceCode", arc);
+        }
+        resetDateAndTimeOfValidationOfCancellation(doc,"/IE819/Body/AlertOrRejectionOfEADESAD/Attributes/DateAndTimeOfValidationOfAlertRejection" );
+        resetDateOfPreparation(doc,"/IE819/Body/AlertOrRejectionOfEADESAD/AlertOrRejection/DateOfAlertOrRejection" );
 
         // Build IE819InputStrukturType
         IE819InputStrukturType IE819InputStrukturType = new IE819InputStrukturType();
@@ -124,6 +153,7 @@ public class OIOLedsageDokumentNotifikationOpretClient extends EMCSBaseClient {
                 oioLedsageDokumentNotifikationOpretIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
         ));
         LOGGER.info(NEW_LINE + sbRequest.toString());
+        LOGGER.info(prettyFormatDocument(doc, 2, true));
 
         OIOLedsageDokumentNotifikationOpretOType out = port.getOIOLedsageDokumentNotifikationOpret(oioLedsageDokumentNotifikationOpretIType);
         StringBuilder sb = new StringBuilder();
