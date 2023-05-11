@@ -100,12 +100,7 @@
                 <constructor-arg>
                     <map>
                         <entry key="action" value="Timestamp Signature Encrypt"/>
-                        <!-- SKAT: Options =
-                             - valid
-                             - expired
-                             - revoked
-                        -->
-                        <entry key="signatureUser" value="valid"/>
+                        <entry key="signatureUser" value="#{systemProperties['dk.skat.emcs.b2b.sample.ClientCertAlias']}"/>
                         <entry key="passwordCallbackClass" value="dk.skat.emcs.b2b.sample.UTPasswordCallback"/>
                         <!-- Encryption Configuration -->
                         <!-- Depends on alias defined in client-truststore.jks -->

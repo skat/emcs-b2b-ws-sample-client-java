@@ -40,10 +40,9 @@ public class UTPasswordCallback implements CallbackHandler {
             new HashMap<String, String>();
 
     public UTPasswordCallback() {
+        String P12_ALIAS = System.getProperty("dk.skat.emcs.b2b.sample.ClientCertAlias");
         String P12_PASSPHRASE = System.getProperty("dk.skat.emcs.b2b.sample.P12_PASSPHRASE");
-        passwords.put("valid", P12_PASSPHRASE);
-        passwords.put("revoked", P12_PASSPHRASE);
-        passwords.put("expired", P12_PASSPHRASE);
+        passwords.put(P12_ALIAS, P12_PASSPHRASE);
     }
 
     /**

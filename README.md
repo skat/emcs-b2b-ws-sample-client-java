@@ -83,9 +83,10 @@ command:
 
 ```sh
 $ mvn clean install \
-  -Ddk.skat.emcs.b2b.sample.P12_PASSPHRASE=<CHANGE_THIS> \
-  -Ddk.skat.emcs.b2b.sample.OIOLedsageDocumentOpret.ENDPOINT=<CHANGE_THIS>
-  -Ddk.skat.emcs.b2b.sample.TXID_PREFIX=ACME_01_
+  -Ddk.skat.emcs.b2b.sample.P12_PASSPHRASE='<CHANGE_THIS>' \
+  -Ddk.skat.emcs.b2b.sample.OIOLedsageDocumentOpret.ENDPOINT='<CHANGE_THIS>' \
+  -Ddk.skat.emcs.b2b.sample.TXID_PREFIX=ACME_01_ \
+  -Ddk.skat.emcs.b2b.sample.ClientCertAlias='<CHANGE_THIS>
 ```
 
 The following is partial output of build and exhibits the request and response written
@@ -156,10 +157,11 @@ build process using the following command:
 
 ```sh
 $ mvn clean install \
-  -Ddk.skat.emcs.b2b.sample.P12_PASSPHRASE=<CHANGE_THIS> \
-  -Ddk.skat.emcs.b2b.sample.OIOLedsageDokumentSamlingHent.ENDPOINT=<CHANGE_THIS>
+  -Ddk.skat.emcs.b2b.sample.P12_PASSPHRASE='<CHANGE_THIS>' \
+  -Ddk.skat.emcs.b2b.sample.OIOLedsageDokumentSamlingHent.ENDPOINT='<CHANGE_THIS>'
   -Ddk.skat.emcs.b2b.sample.ARC=17DKK1KHPMQH2W23ABI62 \
   -Ddk.skat.emcs.b2b.sample.TXID_PREFIX=ACME_01_
+  -Ddk.skat.emcs.b2b.sample.ClientCertAlias='<CHANGE_THIS>'
 ```
 
 This service returns a **response** similar to this output (in thie case PHASE 3 based document):
@@ -205,9 +207,10 @@ build process using the following command:
 
 ```sh
 $ mvn clean install \
-  -Ddk.skat.emcs.b2b.sample.P12_PASSPHRASE=<CHANGE_THIS> \
-  -Ddk.skat.emcs.b2b.sample.OIOBeskedAfvisningSamlingHent.ENDPOINT=<CHANGE_THIS>
-  -Ddk.skat.emcs.b2b.sample.TXID_PREFIX=ACME_01_
+  -Ddk.skat.emcs.b2b.sample.P12_PASSPHRASE='<CHANGE_THIS>' \
+  -Ddk.skat.emcs.b2b.sample.OIOBeskedAfvisningSamlingHent.ENDPOINT='<CHANGE_THIS>' \
+  -Ddk.skat.emcs.b2b.sample.TXID_PREFIX=ACME_01_ \
+  -Ddk.skat.emcs.b2b.sample.ClientCertAlias='<CHANGE_THIS>'
 ```
 
 The client is configured to search for documents within the last month. If there are no 704 messages found,  
@@ -225,47 +228,54 @@ the service returns a **response** similar to this output:
 ****** Advis Text: Der blev ikke fundet nogen beskeder som matcher de indikeret søgeparametre
 ```
 
-## Advanced Configuration
+## Testing with valid, expired, and revoked Certificates
 
-### Testing Expired and Revoked Certificates
+The client keystore includes 6 certificates that will allow testing different scenarios.
 
-The client keystore includes three certificates:
+<table>
+<thead>
+  <tr>
+    <th>Version</th>
+    <th>Alias</th>
+    <th>Scenario</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>OCES3</td>
+    <td>DinoVinoImport_System_Integrationstest_S1</td>
+    <td>Submit and fetch documents</td>
+  </tr>
+  <tr>
+    <td>OCES3</td>
+    <td>DinoVinoImport_Organisation_Integrationstest_O1</td>
+    <td>Cert. registered, but calls denied due to missing authorization</td>
+  </tr>
+  <tr>
+    <td>OCES3</td>
+    <td>Peter_Punktafgift</td>
+    <td>Calls denied due to cert. not registered</td>
+  </tr>
 
-1. VOCES_gyldig.p12 with alias = `valid`.
-2. VOCES_spaerret.p12 with alias = `revoked`.
-3. VOCES_udloebet.p12 with alias = `expired`.
+  <tr>
+    <td>OCES2</td>
+    <td>valid</td>
+    <td>Submit and fetch documents</td>
+  </tr>
+  <tr>
+    <td>OCES2</td>
+    <td>revoked</td>
+    <td>Call denied due to revoked certifikate</td>
+  </tr>
+  <tr>
+    <td>OCES2</td>
+    <td>expired</td>
+    <td>Call denied due to expired certifikate</td>
+  </tr>
+</tbody>
+</table>
 
-By default the client is configured to run with certificate with alias `valid`.
-
-In order to complete a test with any of the other certificates the following files must be
-changed:
-
-* File: **src/main/resources/etc/Client_Sign.properties**
-
-Change as described in the file itself:
-
-```
-# SKAT: Options =
-# - valid (default)
-# - revoked
-# - expired
-org.apache.ws.security.crypto.merlin.keystore.alias=revoked
-```
-
-File: **src/main/resources/emcs-policy.xml**
-
-Change as described in the file itself:
-
-```
-<!-- SKAT: Options =
-     - valid
-     - expired
-     - revoked
--->
-<entry key="signatureUser" value="valid"/>
-```
-
-### Installing other OCESII Certificates in the client keystore
+### Installing other Certificates in the client keystore
 
 The keystore `src/main/resources/keystore/client-keystore.jks` is already prepared with the
 necessary test certificate that is authorized to access the test environment. However, in the
@@ -280,7 +290,7 @@ $ keytool -v -importkeystore -srckeystore target/VOCES_yours.p12 -srcstoretype P
 ```
 
 Where `P12_PASSPHRASE` and `P12_CURRENT_ALIAS` are passphrase and alias of the OCESII certificate,
-respectively. The three keytool command removes the pre configured certificate, changes the the alias
+respectively. The three keytool command removes the pre configured certificate, changes the alias
 of the new certificate, and finally imports it into the keystore.
 
 ## References
