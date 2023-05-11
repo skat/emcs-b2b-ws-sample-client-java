@@ -11,3 +11,6 @@ buildNumber.properties
 *.iml
 # Do not add:
 run-*.sh
+
+app.conf-secret
+TODO.txt
