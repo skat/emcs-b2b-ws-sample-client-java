@@ -20,7 +20,7 @@ public class OIOLedsageDokumentSamlingHentClientTest extends BaseClientTest {
         if (endpointURL != null) {
 
             // The ARC number
-            String ARCnumber = System.getProperty("dk.skat.emcs.b2b.sample.ARC");
+            String ARCnumber = getConfig().getString("dk.skat.emcs.b2b.sample.ARC");
             // VAT Number of the entity sending. Rule of thumb: this number matches
             // this CVR number present in the certificate.
             String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();

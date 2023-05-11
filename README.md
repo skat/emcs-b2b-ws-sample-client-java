@@ -86,7 +86,8 @@ $ mvn clean install \
   -Ddk.skat.emcs.b2b.sample.P12_PASSPHRASE='<CHANGE_THIS>' \
   -Ddk.skat.emcs.b2b.sample.OIOLedsageDocumentOpret.ENDPOINT='<CHANGE_THIS>' \
   -Ddk.skat.emcs.b2b.sample.TXID_PREFIX=ACME_01_ \
-  -Ddk.skat.emcs.b2b.sample.ClientCertAlias='<CHANGE_THIS>
+  -Ddk.skat.emcs.b2b.sample.ClientCertAlias='<CHANGE_THIS>' \
+  -DskipTests=false
 ```
 
 The following is partial output of build and exhibits the request and response written
@@ -161,7 +162,8 @@ $ mvn clean install \
   -Ddk.skat.emcs.b2b.sample.OIOLedsageDokumentSamlingHent.ENDPOINT='<CHANGE_THIS>'
   -Ddk.skat.emcs.b2b.sample.ARC=17DKK1KHPMQH2W23ABI62 \
   -Ddk.skat.emcs.b2b.sample.TXID_PREFIX=ACME_01_
-  -Ddk.skat.emcs.b2b.sample.ClientCertAlias='<CHANGE_THIS>'
+  -Ddk.skat.emcs.b2b.sample.ClientCertAlias='<CHANGE_THIS>' \
+  -DskipTests=false
 ```
 
 This service returns a **response** similar to this output (in thie case PHASE 3 based document):
@@ -210,7 +212,8 @@ $ mvn clean install \
   -Ddk.skat.emcs.b2b.sample.P12_PASSPHRASE='<CHANGE_THIS>' \
   -Ddk.skat.emcs.b2b.sample.OIOBeskedAfvisningSamlingHent.ENDPOINT='<CHANGE_THIS>' \
   -Ddk.skat.emcs.b2b.sample.TXID_PREFIX=ACME_01_ \
-  -Ddk.skat.emcs.b2b.sample.ClientCertAlias='<CHANGE_THIS>'
+  -Ddk.skat.emcs.b2b.sample.ClientCertAlias='<CHANGE_THIS>' \
+  -DskipTests=false
 ```
 
 The client is configured to search for documents within the last month. If there are no 704 messages found,  

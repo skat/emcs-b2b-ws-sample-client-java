@@ -1,5 +1,10 @@
 package dk.skat.emcs.b2b.sample;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
+
+import java.io.File;
+
 /**
  * BaseClient - Helper methods for test clients, e.g. we're using the same VAT number for all tests.
  *
@@ -23,14 +28,6 @@ public class BaseClientTest {
     protected static final String OIO_LEDSAGE_DOKUMENT_OMDIRIGERET_ADVIS_SAMLING_HENT = "OIOLedsageDokumentOmdirigeretAdvisSamlingHent";
     protected static final String OIO_FORSENDELSE_AFBRYDELSE_BESKED_SAMLING_HENT = "OIOForsendelseAfbrydelseBeskedSamlingHent";
     protected static final String OIO_FORSINKELSE_FORKLARING_OPRET = "OIOForsinkelseForklaringOpret";
-
-
-
-    static {
-        // Comment out for running tests in IDE and change "CHANGEME" values.
-        // System.setProperty("dk.skat.emcs.b2b.sample.P12_PASSPHRASE", "CHANGEME");
-        // System.setProperty("dk.skat.emcs.b2b.sample.OIOLedsageDocumentOpret.ENDPOINT", "CHANGEME");
-    }
 
     /**
      * Get VAT number
@@ -60,8 +57,14 @@ public class BaseClientTest {
      * @return Endpoint
      */
     protected String getEndpoint(String service) {
-        String endpointURL =
-                System.getProperty("dk.skat.emcs.b2b.sample." + service + ".ENDPOINT");
+        String key = "dk.skat.emcs.b2b.sample." + service + ".ENDPOINT";
+        Config conf = getConfig();
+        if (!conf.hasPath(key)) {
+            return null;
+        }
+
+        // if 'app.conf' does not exist TypeSafa config will try out the -D param
+        String endpointURL = getConfig().getString(key);
         if (endpointURL == null) {
             System.out.println(service + ": Endpoint not provided, skipping test");
         }
@@ -71,5 +74,10 @@ public class BaseClientTest {
     protected void sleep(int minutes) throws InterruptedException {
         Thread.sleep(1000 * 60 * minutes);
     }
+
+    protected static Config getConfig() {
+        return ConfigFactory.parseFile(new File("app.conf")).withFallback(ConfigFactory.load());
+    }
+
 
 }

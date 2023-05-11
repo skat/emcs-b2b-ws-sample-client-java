@@ -18,6 +18,7 @@
  */
 package dk.skat.emcs.b2b.sample;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +27,8 @@ import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.callback.UnsupportedCallbackException;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import org.apache.wss4j.common.ext.WSPasswordCallback;
 
 /**
@@ -40,8 +43,8 @@ public class UTPasswordCallback implements CallbackHandler {
             new HashMap<String, String>();
 
     public UTPasswordCallback() {
-        String P12_ALIAS = System.getProperty("dk.skat.emcs.b2b.sample.ClientCertAlias");
-        String P12_PASSPHRASE = System.getProperty("dk.skat.emcs.b2b.sample.P12_PASSPHRASE");
+        String P12_ALIAS = getConfig().getString("dk.skat.emcs.b2b.sample.ClientCertAlias");
+        String P12_PASSPHRASE = getConfig().getString("dk.skat.emcs.b2b.sample.P12_PASSPHRASE");
         passwords.put(P12_ALIAS, P12_PASSPHRASE);
     }
 
@@ -67,4 +70,9 @@ public class UTPasswordCallback implements CallbackHandler {
     public void setAliasPassword(String alias, String password) {
         passwords.put(alias, password);
     }
+
+    private static Config getConfig() {
+        return ConfigFactory.parseFile(new File("app.conf")).withFallback(ConfigFactory.load());
+    }
+
 }
