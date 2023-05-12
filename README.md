@@ -55,37 +55,16 @@ secure transport (https) is enabled client side.
  
 ## Run clients
 
-The sample clients must be configured with JVM parameters that are necessary for the client to run and
-call the test environment of EMCS B2B Web Service Gateway. The two parameters can be obtained by contacting 
-SKAT Help Desk.
-
-The full list of parameters for running a test against the **OIOLedsageDocumentOpret** service:
-
-* **dk.skat.emcs.b2b.sample.P12_PASSPHRASE** (REQUIRED): Passphrase to the certificate used for authentication, signing (request), and encryption (response).
-* **dk.skat.emcs.b2b.sample.OIOLedsageDocumentOpret.ENDPOINT** (REQUIRED):The endpoint of the OIOLedsageDocumentOpret service being invoked.
-* **dk.skat.emcs.b2b.sample.TXID_PREFIX** (OPTIONAL): This parameter sets a custom prefix to the generated transaction id and is very useful when asking SKAT Help Desk to trace a particular request.
-
-The full list of parameters for running a test against the **OIOLedsageDokumentSamlingHent** service:
-
-* **dk.skat.emcs.b2b.sample.P12_PASSPHRASE** (REQUIRED): Passphrase to the certificate used for authentication, signing (request), and encryption (response).
-* **dk.skat.emcs.b2b.sample.OIOLedsageDokumentSamlingHent.ENDPOINT** (REQUIRED):The endpoint of the OIOLedsageDokumentSamlingHent service being invoked.
-* **dk.skat.emcs.b2b.sample.ARCX** (REQUIRED): ARC Number
-* **dk.skat.emcs.b2b.sample.TXID_PREFIX** (OPTIONAL): This parameter sets a custom prefix to the generated transaction id and is very useful when asking SKAT Help Desk to trace a particular request.
-
-The full list of parameters for running a test against the **OIOBeskedAfvisningSamlingHent** service:
-
-* **dk.skat.emcs.b2b.sample.P12_PASSPHRASE** (REQUIRED): Passphrase to the certificate used for authentication, signing (request), and encryption (response).
-* **dk.skat.emcs.b2b.sample.OIOBeskedAfvisningSamlingHent.ENDPOINT** (REQUIRED):The endpoint of the OIOBeskedAfvisningSamlingHent service being invoked.
-* **dk.skat.emcs.b2b.sample.TXID_PREFIX** (OPTIONAL): This parameter sets a custom prefix to the generated transaction id and is very useful when asking SKAT Help Desk to trace a particular request.
+The sample clients must be configured with a combination of a few JVM parameters and a config file named `app.conf` for 
+the client to run and call the test environment of EMCS B2B Web Service Gateway. 
+The parameters and the `app.conf` file can be obtained by contacting SKAT Help Desk.
 
 The client is then invoked as part of the **test phase** of the Maven build process using the following
 command:
 
 ```sh
 $ mvn clean install \
-  -Ddk.skat.emcs.b2b.sample.P12_PASSPHRASE='<CHANGE_THIS>' \
-  -Ddk.skat.emcs.b2b.sample.OIOLedsageDocumentOpret.ENDPOINT='<CHANGE_THIS>' \
-  -Ddk.skat.emcs.b2b.sample.TXID_PREFIX=ACME_01_ \
+  -Dtest="OIOLedsageDocumentOpretClientTest#invoke" \
   -Ddk.skat.emcs.b2b.sample.ClientCertAlias='<CHANGE_THIS>' \
   -DskipTests=false
 ```
@@ -158,10 +137,8 @@ build process using the following command:
 
 ```sh
 $ mvn clean install \
-  -Ddk.skat.emcs.b2b.sample.P12_PASSPHRASE='<CHANGE_THIS>' \
-  -Ddk.skat.emcs.b2b.sample.OIOLedsageDokumentSamlingHent.ENDPOINT='<CHANGE_THIS>'
+  -Dtest="OIOLedsageDokumentSamlingHentClientTest#invoke" \
   -Ddk.skat.emcs.b2b.sample.ARC=17DKK1KHPMQH2W23ABI62 \
-  -Ddk.skat.emcs.b2b.sample.TXID_PREFIX=ACME_01_
   -Ddk.skat.emcs.b2b.sample.ClientCertAlias='<CHANGE_THIS>' \
   -DskipTests=false
 ```
@@ -209,9 +186,7 @@ build process using the following command:
 
 ```sh
 $ mvn clean install \
-  -Ddk.skat.emcs.b2b.sample.P12_PASSPHRASE='<CHANGE_THIS>' \
-  -Ddk.skat.emcs.b2b.sample.OIOBeskedAfvisningSamlingHent.ENDPOINT='<CHANGE_THIS>' \
-  -Ddk.skat.emcs.b2b.sample.TXID_PREFIX=ACME_01_ \
+  -Dtest="OIOBeskedAfvisningSamlingHentClientTest" \
   -Ddk.skat.emcs.b2b.sample.ClientCertAlias='<CHANGE_THIS>' \
   -DskipTests=false
 ```

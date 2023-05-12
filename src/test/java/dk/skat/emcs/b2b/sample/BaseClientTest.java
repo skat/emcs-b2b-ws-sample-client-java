@@ -79,5 +79,12 @@ public class BaseClientTest {
         return ConfigFactory.parseFile(new File("app.conf")).withFallback(ConfigFactory.load());
     }
 
+    static {
+        String alias = System.getProperty("dk.skat.emcs.b2b.sample.ClientCertAlias");
+        if (alias == null) {
+            alias = getConfig().getString("dk.skat.emcs.b2b.sample.ClientCertAlias");
+            System.setProperty("dk.skat.emcs.b2b.sample.ClientCertAlias", alias);
+        }
+    }
 
 }

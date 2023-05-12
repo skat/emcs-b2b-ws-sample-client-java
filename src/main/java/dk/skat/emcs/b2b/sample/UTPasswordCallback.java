@@ -44,7 +44,7 @@ public class UTPasswordCallback implements CallbackHandler {
 
     public UTPasswordCallback() {
         String P12_ALIAS = getConfig().getString("dk.skat.emcs.b2b.sample.ClientCertAlias");
-        String P12_PASSPHRASE = getConfig().getString("dk.skat.emcs.b2b.sample.P12_PASSPHRASE");
+        String P12_PASSPHRASE = getConfig().getString("dk.skat.emcs.b2b.sample." + P12_ALIAS + ".P12_PASSPHRASE");
         passwords.put(P12_ALIAS, P12_PASSPHRASE);
     }
 
