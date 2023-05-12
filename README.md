@@ -221,18 +221,18 @@ The client keystore includes 6 certificates that will allow testing different sc
 <tbody>
   <tr>
     <td>OCES3</td>
-    <td>DinoVinoImport_System_Integrationstest_S1</td>
+    <td>dinovinoimport_system_integrationstest_s1</td>
     <td>Submit and fetch documents</td>
   </tr>
   <tr>
     <td>OCES3</td>
-    <td>DinoVinoImport_Organisation_Integrationstest_O1</td>
-    <td>Cert. registered, but calls denied due to missing authorization</td>
+    <td>dinovinoimport_organisation_integrationstest_o1</td>
+    <td>Cert. is registered, but calls denied due to missing authorization</td>
   </tr>
   <tr>
     <td>OCES3</td>
-    <td>Peter_Punktafgift</td>
-    <td>Calls denied due to cert. not registered</td>
+    <td>peter_punktafgift</td>
+    <td>Calls will be denied due to cert. NOT registered</td>
   </tr>
 
   <tr>
@@ -243,12 +243,12 @@ The client keystore includes 6 certificates that will allow testing different sc
   <tr>
     <td>OCES2</td>
     <td>revoked</td>
-    <td>Call denied due to revoked certifikate</td>
+    <td>Call denied due to revoked certificate</td>
   </tr>
   <tr>
     <td>OCES2</td>
     <td>expired</td>
-    <td>Call denied due to expired certifikate</td>
+    <td>Call denied due to expired certificate</td>
   </tr>
 </tbody>
 </table>

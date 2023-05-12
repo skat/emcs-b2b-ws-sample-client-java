@@ -82,9 +82,12 @@ public class BaseClientTest {
     static {
         String alias = System.getProperty("dk.skat.emcs.b2b.sample.ClientCertAlias");
         if (alias == null) {
-            alias = getConfig().getString("dk.skat.emcs.b2b.sample.ClientCertAlias");
+            // Pick default alias
+            alias = "dinovinoimport_system_integrationstest_s1";
             System.setProperty("dk.skat.emcs.b2b.sample.ClientCertAlias", alias);
         }
+
+        System.out.println("Running with alias: " + alias);
     }
 
 }
