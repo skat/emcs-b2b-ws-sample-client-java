@@ -37,7 +37,7 @@ public class BaseClientTest {
      * @return VAT number
      */
     protected String getVirksomhedSENummerIdentifikator() {
-        String virksomhedSENummerIdentifikator = "30808460";
+        String virksomhedSENummerIdentifikator = "19552101";
         return virksomhedSENummerIdentifikator;
     }
 
