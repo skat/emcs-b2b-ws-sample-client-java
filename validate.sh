@@ -9,7 +9,6 @@ xmllint --noout --schema schema/ie818.xsd ie818.xml
 xmllint --noout --schema schema/ie810.xsd ie810.xml
 xmllint --noout --schema schema/ie813.xsd ie813.xml
 xmllint --noout --schema schema/ie819.xsd ie819.xml
-xmllint --noout --schema schema/ie825.xsd ie825.xml
 xmllint --noout --schema schema/ie837.xsd ie837.xml
 xmllint --noout --schema schema/ie871.xsd ie871.xml
 

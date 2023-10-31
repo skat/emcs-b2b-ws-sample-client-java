@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ie:IE810 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE810:V3.01">
-    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.01">
+<ie:IE810 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE810:V3.13">
+    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.13">
         <tms:MessageSender>NDEA.DK</tms:MessageSender>
         <tms:MessageRecipient>NDEA.DK</tms:MessageRecipient>
         <tms:DateOfPreparation>2011-10-26</tms:DateOfPreparation>
