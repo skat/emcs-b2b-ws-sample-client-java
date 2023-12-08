@@ -169,6 +169,9 @@
                                 <wsdlOption>
                                     <wsdl>${basedir}/src/main/resources/OIOPaamindelseSamlingHent/OIOPaamindelseSamlingHent.wsdl</wsdl>
                                 </wsdlOption>
+                                <wsdlOption>
+                                    <wsdl>${basedir}/src/main/resources/OIOEksportAngivelseInvalideringNotifikationSamlingHent/OIOEksportAngivelseInvalideringNotifikationSamlingHent.wsdl</wsdl>
+                                </wsdlOption>
                             </wsdlOptions>
                         </configuration>
                         <goals>
