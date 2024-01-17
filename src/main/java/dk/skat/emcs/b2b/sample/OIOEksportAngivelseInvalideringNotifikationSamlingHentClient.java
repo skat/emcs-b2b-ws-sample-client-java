@@ -116,7 +116,7 @@ public class OIOEksportAngivelseInvalideringNotifikationSamlingHentClient extend
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
         if (!hasError(out.getHovedOplysningerSvar())) {
-            sb.append("** IE801 Messages: ").append(NEW_LINE);
+            sb.append("** IE836 Messages: ").append(NEW_LINE);
             List<String> ie801Messages = out.getEksportAngivelseInvalideringNotifikationListe().getIE836BeskedTekst();
             for (String message : ie801Messages) {
                 sb.append(message).append(NEW_LINE);
