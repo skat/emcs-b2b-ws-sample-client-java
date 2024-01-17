@@ -42,7 +42,7 @@ public class OIOEksportAngivelseInvalideringNotifikationSamlingHentClient extend
     /**
      * Constructor
      *
-     * @param endpointURL Endpoint of OIOLedsageDokumentSamlingHent service
+     * @param endpointURL Endpoint of OIOEksportAngivelseInvalideringNotifikationSamlingHentClient service
      */
     public OIOEksportAngivelseInvalideringNotifikationSamlingHentClient(String endpointURL) {
         this.endpointURL = endpointURL;
