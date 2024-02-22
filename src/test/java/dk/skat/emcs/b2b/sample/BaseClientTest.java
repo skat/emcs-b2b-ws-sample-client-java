@@ -2,6 +2,8 @@ package dk.skat.emcs.b2b.sample;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.FejlStrukturType;
+import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerSvarType;
 
 import java.io.File;
 
@@ -88,6 +90,35 @@ public class BaseClientTest {
         }
 
         System.out.println("Running with alias: " + alias);
+    }
+
+    protected boolean hasError(HovedOplysningerSvarType hovedOplysningerSvarType, int errorCode) {
+        boolean result = false;
+        if (hovedOplysningerSvarType.getSvarStruktur().getAdvisStrukturOrFejlStruktur().size() > 0) {
+            for (Object errorOrAdvis : hovedOplysningerSvarType.getSvarStruktur().getAdvisStrukturOrFejlStruktur()) {
+                if (errorOrAdvis instanceof FejlStrukturType) {
+                    FejlStrukturType fejlStrukturType = (FejlStrukturType) errorOrAdvis;
+                    if (errorCode == fejlStrukturType.getFejlIdentifikator().intValue()) {
+                        result = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    protected boolean hasError(HovedOplysningerSvarType hovedOplysningerSvarType) {
+        boolean result = false;
+        if (hovedOplysningerSvarType.getSvarStruktur().getAdvisStrukturOrFejlStruktur().size() > 0) {
+            for (Object errorOrAdvis : hovedOplysningerSvarType.getSvarStruktur().getAdvisStrukturOrFejlStruktur()) {
+                if (errorOrAdvis instanceof FejlStrukturType) {
+                    result = true;
+                    break;
+                }
+            }
+        }
+        return result;
     }
 
 }

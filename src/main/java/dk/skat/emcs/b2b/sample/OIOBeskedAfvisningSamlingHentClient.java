@@ -53,7 +53,7 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
      * @throws SAXException                   N/A
      */
 
-    public String invoke(String virksomhedSENummerIdentifikator,
+    public OIOBeskedAfvisningSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
                          String afgiftOperatoerPunktAfgiftIdentifikator,
                          Integer interval)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
@@ -63,7 +63,7 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
 
     }
 
-    public String invoke(String virksomhedSENummerIdentifikator,
+    public OIOBeskedAfvisningSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
                          String afgiftOperatoerPunktAfgiftIdentifikator)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
@@ -72,7 +72,7 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
 
     }
 
-    private String invokeit(String virksomhedSENummerIdentifikator,
+    private OIOBeskedAfvisningSamlingHentOType invokeit(String virksomhedSENummerIdentifikator,
                             String afgiftOperatoerPunktAfgiftIdentifikator,
                             Integer interval)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
@@ -121,7 +121,7 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
             }
         }
         LOGGER.info(NEW_LINE + sb.toString());
-        return sb.toString();
+        return out;
     }
 
 }
