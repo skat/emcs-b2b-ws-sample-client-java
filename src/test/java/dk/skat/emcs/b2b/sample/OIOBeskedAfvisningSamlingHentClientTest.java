@@ -21,6 +21,16 @@ public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClientTest {
         assertFalse(hasError(response.getHovedOplysningerSvar()));
     }
 
+
+    // EXCISE NUMBER DK82065873300 -> CVR 19552101 / SE 10200113
+
+    @Test
+    public void testDelegationSEDifferentFromCVR() throws Exception {
+        OIOBeskedAfvisningSamlingHentOType response =
+                doCall("10200113", getAfgiftOperatoerPunktAfgiftIdentifikator());
+        assertFalse(hasError(response.getHovedOplysningerSvar()));
+    }
+
     // The following tests demonstrate error codes
     // -------------------------------------------
 
@@ -71,12 +81,12 @@ public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClientTest {
         assertTrue(hasError(response.getHovedOplysningerSvar(), 302));
     }
 
-    // EXCISE NUMBER DK19552101200 -> CVR 19552101 / SE 19552101
-    //@Test
-    public void testCVRIdenticalToExciseNumber() throws Exception {
+    // EXCISE NUMBER DK19552101300 -> CVR 19552101 / SE 19552101
+    @Test
+    public void testCVRIdenticalToExciseNumberButNotAuthorized() throws Exception {
         OIOBeskedAfvisningSamlingHentOType response =
-                doCall(getVirksomhedSENummerIdentifikator(), "DK19552101200");
-        // assertFalse(hasError(response.getHovedOplysningerSvar()));
+                doCall(getVirksomhedSENummerIdentifikator(), "DK19552101300");
+        assertTrue(hasError(response.getHovedOplysningerSvar(), 302));
     }
 
     public OIOBeskedAfvisningSamlingHentOType doCall(String virksomhedSENummerIdentifikator, String afgiftOperatoerPunktAfgiftIdentifikator) throws Exception {
