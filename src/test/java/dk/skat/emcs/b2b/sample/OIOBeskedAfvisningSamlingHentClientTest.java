@@ -13,7 +13,7 @@ import static org.junit.Assert.assertFalse;
  */
 public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClientTest {
 
-    // EXCISE NUMBER DK82065873300 -> CVR 19552101 / SE ´
+    // EXCISE NUMBER DK82065873300 -> CVR 19552101 / SE 19552101.´
     @Test
     public void testDelegation() throws Exception {
         OIOBeskedAfvisningSamlingHentOType response =
@@ -23,7 +23,6 @@ public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClientTest {
 
 
     // EXCISE NUMBER DK82065873300 -> CVR 19552101 / SE 10200113
-
     @Test
     public void testDelegationSEDifferentFromCVR() throws Exception {
         OIOBeskedAfvisningSamlingHentOType response =
@@ -31,24 +30,28 @@ public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClientTest {
         assertFalse(hasError(response.getHovedOplysningerSvar()));
     }
 
-
-    // EXCISE NUMBER DK19552101300 / SE 19552101
+    // EXCISE NUMBER DK19552101300 -> CVR 19552101 / SE 19552101
     @Test
     public void testNoDelegationNoAccess() throws Exception {
         OIOBeskedAfvisningSamlingHentOType response =
-                doCall("19552101", "DK19552101300");
+                doCall(getVirksomhedSENummerIdentifikator(), "DK19552101300");
         assertTrue(hasError(response.getHovedOplysningerSvar(), 302));
     }
 
-    // EXCISE NUMBER DK19552101100 / SE 19552101
+    // EXCISE NUMBER DK19552101100 -> CVR 19552101 / SE 19552101
     @Test
     public void testNoDelegationAccess() throws Exception {
         OIOBeskedAfvisningSamlingHentOType response =
-                doCall("19552101", "DK19552101100");
+                doCall(getVirksomhedSENummerIdentifikator(), "DK19552101100");
         assertFalse(hasError(response.getHovedOplysningerSvar()));
     }
 
-
+    @Test
+    public void testNoDelegationSENotRelatedToCVR() throws Exception {
+        OIOBeskedAfvisningSamlingHentOType response =
+                doCall("30808460", "DK19552101300");
+        assertTrue(hasError(response.getHovedOplysningerSvar(), 302));
+    }
 
     // The following tests demonstrate error codes
     // -------------------------------------------
@@ -97,14 +100,6 @@ public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClientTest {
     public void testErrorCode302ExciseNumberHasNotDelegatedToSENumberEqualsCVR() throws Exception {
         OIOBeskedAfvisningSamlingHentOType response =
                 doCall(getVirksomhedSENummerIdentifikator(), "DK30808460300");
-        assertTrue(hasError(response.getHovedOplysningerSvar(), 302));
-    }
-
-    // EXCISE NUMBER DK19552101300 -> CVR 19552101 / SE 19552101
-    @Test
-    public void testCVRIdenticalToExciseNumberButNotAuthorized() throws Exception {
-        OIOBeskedAfvisningSamlingHentOType response =
-                doCall(getVirksomhedSENummerIdentifikator(), "DK19552101300");
         assertTrue(hasError(response.getHovedOplysningerSvar(), 302));
     }
 

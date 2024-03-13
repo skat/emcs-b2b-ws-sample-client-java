@@ -47,6 +47,23 @@ public class OIOLedsageDocumentOpretClientTest extends BaseClientTest {
     }
 
     @Test
+    public void invoke19552101() throws Exception {
+        if (endpointURL != null) {
+            // Path to where the IE815 document is located
+            File ie815 = new File("ie815-19552101.xml");
+            // VAT Number of the entity sending. Rule of thumb: this number matches
+            // this CVR number present in the certificate.
+            String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
+            // Excise number
+            String afgiftOperatoerPunktAfgiftIdentifikator = "DK19552101100";
+
+            OIOLedsageDokumentOpretClient oioLedsageDocumentClient = new OIOLedsageDokumentOpretClient(endpointURL);
+            oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,
+                    afgiftOperatoerPunktAfgiftIdentifikator, ie815);
+        }
+    }
+
+    @Test
     public void invokeAndTriggerIE917() throws Exception {
         if (endpointURL != null) {
             // Path to where the IE815 document is located
