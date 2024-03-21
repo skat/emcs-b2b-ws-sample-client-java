@@ -1,15 +1,20 @@
 package dk.skat.emcs.b2b.sample;
 
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.ws.BindingProvider;
 import oio.skat.emcs.ws._1_0.OIOLedsageDokumentDestinationSkiftSamlingHentIType;
 import oio.skat.emcs.ws._1_0.OIOLedsageDokumentDestinationSkiftSamlingHentOType;
+import oio.skat.emcs.ws._1_0.SøgeParametreStrukturType;
 import oio.skat.emcs.ws._1_0_1.OIOLedsageDokumentDestinationSkiftSamlingHentService;
 import oio.skat.emcs.ws._1_0_1.OIOLedsageDokumentDestinationSkiftSamlingHentServicePortType;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.ws.BindingProvider;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -70,16 +75,26 @@ public class OIOLedsageDokumentDestinationSkiftSamlingHentClient extends EMCSBas
 
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(response.getHovedOplysningerSvar()));
-        List<String> list = response.getLedsageDokumentDestinationSkiftSamling().getIE813BeskedTekst();
-        int i = 1;
-        for (String message : list) {
-            sb.append(NEW_LINE + "Message " + i + ":");
-            sb.append(NEW_LINE + message);
-            i++;
+
+        if (response.getLedsageDokumentDestinationSkiftSamling() != null){
+            List<String> list = response.getLedsageDokumentDestinationSkiftSamling().getIE813BeskedTekst();
+            int i = 1;
+            for (String message : list) {
+                sb.append(NEW_LINE + "Message " + i + ":");
+                sb.append(NEW_LINE + message);
+                i++;
+            }
         }
+
         LOGGER.info(NEW_LINE + sb.toString());
         return response;
     }
 
-
+    public String invoke(SamlingHentModel samlingHentModel) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
+        if (this.endpointURL == null){
+            this.endpointURL = getEndpoint("OIOLedsageDokumentDestinationSkiftSamlingHent");
+        }
+        OIOLedsageDokumentDestinationSkiftSamlingHentOType result = invoke(samlingHentModel.getVirksomhedSENummerIdentifikator(), samlingHentModel.getAfgiftOperatoerPunktAfgiftIdentifikator());
+        return SamlingHentMashalling.toString(result,"urn:oio:skat:emcs:ws:1.0.1","OIOLedsageDokumentDestinationSkiftSamlingHent_O");
+    }
 }

@@ -3,19 +3,42 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>dk.skat.emcs.b2b.sample</groupId>
     <artifactId>emcs-b2b-ws-sample-client-java</artifactId>
-    <packaging>jar</packaging>
-    <version>1.2</version>
+    <packaging>war</packaging>
+    <version>1.4</version>
     <name>emcs-b2b-ws-sample-client-java</name>
     <url>http://www.skat.dk/emcs</url>
-    <properties>
-        <cxf.version>3.3.5</cxf.version>
-        <cxf.spring.version>5.2.22.RELEASE</cxf.spring.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <slf4j.version>1.7.2</slf4j.version>
-        <skipTests>true</skipTests>
-    </properties>
+  <properties>
+    <cxf.version>4.0.0</cxf.version>
+    <cxf.spring.version>6.0.6</cxf.spring.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <slf4j.version>2.0.5</slf4j.version>
+    <skipTests>true</skipTests>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+  </properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-framework-bom</artifactId>
+        <version>6.0.10</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-bom</artifactId>
+        <type>pom</type>
+        <scope>import</scope>
+        <version>6.0.2</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>2.0.6</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
     <dependencies>
         <dependency>
             <groupId>org.apache.cxf</groupId>
@@ -36,6 +59,12 @@
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-ws-security</artifactId>
             <version>${cxf.version}</version>
+            <exclusions>
+              <exclusion>
+                <groupId>org.ehcache</groupId>
+                <artifactId>ehcache</artifactId>
+              </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
@@ -57,15 +86,36 @@
             <artifactId>spring-context</artifactId>
             <version>${cxf.spring.version}</version>
         </dependency>
+      <dependency>
+        <groupId>org.springframework.webflow</groupId>
+        <artifactId>spring-webflow</artifactId>
+        <version>3.0.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-webmvc</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-web</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-taglibs</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-config</artifactId>
+      </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
-            <version>1.7.22</version>
+            <version>2.0.5</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13.1</version>
+            <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -88,6 +138,55 @@
             <artifactId>config</artifactId>
             <version>1.4.2</version>
         </dependency>
+        <dependency>
+          <groupId>org.thymeleaf</groupId>
+          <artifactId>thymeleaf</artifactId>
+          <version>3.1.1.RELEASE</version>
+        </dependency>
+        <dependency>
+          <groupId>org.thymeleaf</groupId>
+          <artifactId>thymeleaf-spring6</artifactId>
+          <version>3.1.1.RELEASE</version>
+        </dependency>
+        <dependency>
+          <groupId>org.thymeleaf.extras</groupId>
+          <artifactId>thymeleaf-extras-springsecurity6</artifactId>
+          <version>3.1.0.RELEASE</version>
+        </dependency>
+
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>2.11.0</version>
+      </dependency>
+      <dependency>
+        <groupId>jakarta.servlet</groupId>
+        <artifactId>jakarta.servlet-api</artifactId>
+        <version>6.0.0</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>jakarta.enterprise</groupId>
+        <artifactId>jakarta.enterprise.cdi-api</artifactId>
+        <scope>provided</scope>
+        <version>4.0.0.Beta2</version>
+      </dependency>
+      <dependency>
+        <groupId>jakarta.validation</groupId>
+        <artifactId>jakarta.validation-api</artifactId>
+        <version>3.0.2</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate.validator</groupId>
+        <artifactId>hibernate-validator</artifactId>
+        <version>8.0.0.Final</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>2.11.0</version>
+      </dependency>
+
     </dependencies>
     <build>
         <plugins>
@@ -95,7 +194,7 @@
             <plugin>
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-codegen-plugin</artifactId>
-                <version>3.1.9</version>
+                <version>${cxf.version}</version>
                 <executions>
                     <execution>
                         <id>generate-sources</id>
@@ -207,6 +306,17 @@
                     <skipTests>${skipTests}</skipTests>
                 </configuration>
             </plugin>
+          <plugin>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-maven-plugin</artifactId>
+            <version>11.0.11</version>
+            <configuration>
+              <scan>1</scan>
+              <webApp>
+                <contextPath>/emcs-b2b-sample-client-gui</contextPath>
+              </webApp>
+            </configuration>
+          </plugin>
         </plugins>
     </build>
 </project>

@@ -1,10 +1,9 @@
 package dk.skat.emcs.b2b.sample;
 
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerType;
-import oio.skat.emcs.ws._1_0.IE818InputStrukturType;
-import oio.skat.emcs.ws._1_0.OIOKvitteringOpretIType;
-import oio.skat.emcs.ws._1_0.OIOKvitteringOpretOType;
-import oio.skat.emcs.ws._1_0.VirksomhedIdentifikationStrukturType;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.ws.BindingProvider;
+import oio.skat.emcs.ws._1_0.*;
 import oio.skat.emcs.ws._1_0.VirksomhedIdentifikationStrukturType.Indberetter;
 import oio.skat.emcs.ws._1_0_1.OIOKvitteringOpretService;
 import oio.skat.emcs.ws._1_0_1.OIOKvitteringOpretServicePortType;
@@ -19,7 +18,6 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.ws.BindingProvider;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -99,6 +97,13 @@ public class OIOKvitteringOpretClient extends EMCSBaseClient {
         this.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
     }
 
+    public OIOKvitteringOpretOType invokeGetObject(String virksomhedSENummerIdentifikator,
+                       String afgiftOperatoerPunktAfgiftIdentifikator,
+                       File ie818) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+        Document doc = loadIEDocument(ie818);
+        return this.invokeGetObject(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
+    }
+
 
     private String invoke(String virksomhedSENummerIdentifikator,
                             String afgiftOperatoerPunktAfgiftIdentifikator,
@@ -166,5 +171,82 @@ public class OIOKvitteringOpretClient extends EMCSBaseClient {
         boolean hasError = hasError(out.getHovedOplysningerSvar());
 
         return sb.toString();
+    }
+
+    private OIOKvitteringOpretOType invokeGetObject(String virksomhedSENummerIdentifikator,
+                          String afgiftOperatoerPunktAfgiftIdentifikator,
+                          Document doc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+
+        // Generate Transaction Id
+        final String transactionID = TransactionIdGenerator.getTransactionId();
+
+        // Generate Transaction Time
+        GregorianCalendar gregorianCalendar = new GregorianCalendar();
+        gregorianCalendar.setTime(new Date());
+        XMLGregorianCalendar transactionTime = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar);
+
+        // Build HovedOplysninger Object and set transaction id and time
+        HovedOplysningerType hovedOplysningerType = new HovedOplysningerType();
+        hovedOplysningerType.setTransaktionIdentifikator(transactionID);
+        hovedOplysningerType.setTransaktionTid(transactionTime);
+
+        // Build VirksomhedIdentifikationStruktur
+        VirksomhedIdentifikationStrukturType virksomhedIdentifikationStrukturType = new VirksomhedIdentifikationStrukturType();
+        virksomhedIdentifikationStrukturType.setAfgiftOperatoerPunktAfgiftIdentifikator(afgiftOperatoerPunktAfgiftIdentifikator);
+        Indberetter indberetter = new Indberetter();
+        indberetter.setVirksomhedSENummerIdentifikator(virksomhedSENummerIdentifikator);
+        virksomhedIdentifikationStrukturType.setIndberetter(indberetter);
+
+        resetTimeOfPreparation(doc, "/IE818/Header/TimeOfPreparation");
+        resetDateOfPreparation(doc, "/IE818/Header/DateOfPreparation");
+        resetMessageIdentifier(doc, "/IE818/Header/MessageIdentifier");
+        replaceValue(doc,"/IE818/Body/AcceptedOrRejectedReportOfReceiptExport/ConsigneeTrader/Traderid", afgiftOperatoerPunktAfgiftIdentifikator);
+        // Also reset date
+        resetDateAndTimeOfValidationOfCancellation(doc,"/IE818/Body/AcceptedOrRejectedReportOfReceiptExport/Attributes/DateAndTimeOfValidationOfReportOfReceiptExport");
+
+        IE818InputStrukturType ie818InputStrukturType = new IE818InputStrukturType();
+        ie818InputStrukturType.setAny(doc.getDocumentElement());
+
+        OIOKvitteringOpretIType oioKvitteringOpretIType = new OIOKvitteringOpretIType();
+        oioKvitteringOpretIType.setHovedOplysninger(hovedOplysningerType);
+        oioKvitteringOpretIType.setVirksomhedIdentifikationStruktur(virksomhedIdentifikationStrukturType);
+        oioKvitteringOpretIType.setIE818InputStruktur(ie818InputStrukturType);
+
+        Bus bus = new SpringBusFactory().createBus("emcs-policy.xml", false);
+        BusFactory.setDefaultBus(bus);
+
+        OIOKvitteringOpretService service = new OIOKvitteringOpretService();
+        OIOKvitteringOpretServicePortType port = service.getOIOKvitteringOpretServicePort();
+
+        // Set endpoint of service.
+        BindingProvider bp = (BindingProvider) port;
+        bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
+
+        StringBuilder sbRequest = new StringBuilder();
+        sbRequest.append(generateConsoleOutput(
+            oioKvitteringOpretIType.getHovedOplysninger(),
+            oioKvitteringOpretIType.getVirksomhedIdentifikationStruktur().getAfgiftOperatoerPunktAfgiftIdentifikator(),
+            oioKvitteringOpretIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
+        ));
+        LOGGER.info(NEW_LINE + sbRequest.toString());
+        LOGGER.info(prettyFormatDocument(doc, 2, true));
+
+        OIOKvitteringOpretOType out = port.getOIOKvitteringOpret(oioKvitteringOpretIType);
+        StringBuilder sb = new StringBuilder();
+        sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
+        LOGGER.info(NEW_LINE + sb.toString());
+
+        boolean hasError = hasError(out.getHovedOplysningerSvar());
+
+        return out;
+    }
+
+    public String invoke(SamlingHentModel samlingHentModel) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
+        if (this.endpointURL == null){
+            this.endpointURL = getEndpoint("OIOKvitteringOpret");
+        }
+        File file = new File(samlingHentModel.getFile());
+        OIOKvitteringOpretOType result = invokeGetObject(samlingHentModel.getVirksomhedSENummerIdentifikator(), samlingHentModel.getAfgiftOperatoerPunktAfgiftIdentifikator(), file);
+        return SamlingHentMashalling.toString(result,"urn:oio:skat:emcs:ws:1.0.1","OIOKvitteringOpret_O");
     }
 }

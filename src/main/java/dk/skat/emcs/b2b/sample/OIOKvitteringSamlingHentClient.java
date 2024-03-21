@@ -1,5 +1,8 @@
 package dk.skat.emcs.b2b.sample;
 
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.ws.BindingProvider;
+import oio.skat.emcs.ws._1_0.OIOBeskedAfvisningSamlingHentOType;
 import oio.skat.emcs.ws._1_0.OIOKvitteringSamlingHentIType;
 import oio.skat.emcs.ws._1_0.OIOKvitteringSamlingHentOType;
 import oio.skat.emcs.ws._1_0_1.OIOKvitteringSamlingHentService;
@@ -7,9 +10,11 @@ import oio.skat.emcs.ws._1_0_1.OIOKvitteringSamlingHentServicePortType;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.ws.BindingProvider;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -83,6 +88,14 @@ public class OIOKvitteringSamlingHentClient extends EMCSBaseClient {
         }
         LOGGER.info(NEW_LINE + sb.toString());
         return response;
+    }
+
+    public String invoke(SamlingHentModel samlingHentModel) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
+        if (this.endpointURL == null){
+            this.endpointURL = getEndpoint("OIOKvitteringSamlingHent");
+        }
+        OIOKvitteringSamlingHentOType result = invoke(samlingHentModel.getVirksomhedSENummerIdentifikator(), samlingHentModel.getAfgiftOperatoerPunktAfgiftIdentifikator(), samlingHentModel.getARCnumber());
+        return SamlingHentMashalling.toString(result,"urn:oio:skat:emcs:ws:1.0.1","OIOKvitteringSamlingHent_O");
     }
 
 

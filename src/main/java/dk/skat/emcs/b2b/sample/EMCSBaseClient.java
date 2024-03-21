@@ -1,5 +1,7 @@
 package dk.skat.emcs.b2b.sample;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.AdvisStrukturType;
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.FejlStrukturType;
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerSvarType;
@@ -40,7 +42,7 @@ import java.util.UUID;
  * @author SKAT
  * @since 1.2
  */
-public class EMCSBaseClient {
+public class EMCSBaseClient implements Serializable{
 
     protected static final String NEW_LINE = System.getProperty("line.separator");
 
@@ -69,6 +71,38 @@ public class EMCSBaseClient {
         hovedOplysningerType.setTransaktionTid(transactionTime);
         return hovedOplysningerType;
     }
+
+    // NYT START - FRA BaseClientTest.java
+    protected static Config getConfig() {
+        return ConfigFactory.parseFile(new File(System.getProperty("user.dir") + File.separator + "app.conf")).withFallback(ConfigFactory.load());
+    }
+
+    static {
+        String alias = System.getProperty("dk.skat.emcs.b2b.sample.ClientCertAlias");
+        if (alias == null) {
+            // Pick default
+            alias = "dinovinoimport_system_integrationstest_s1";
+            System.setProperty("dk.skat.emcs.b2b.sample.ClientCertAlias", alias);
+        }
+
+        System.out.println("Running with alias: " + alias);
+    }
+
+    protected String getEndpoint(String service) {
+        String key = "dk.skat.emcs.b2b.sample." + service + ".ENDPOINT";
+        Config conf = getConfig();
+        if (!conf.hasPath(key)) {
+            return null;
+        }
+
+        // if 'app.conf' does not exist TypeSafa config will try out the -D param
+        String endpointURL = getConfig().getString(key);
+        if (endpointURL == null) {
+            System.out.println(service + ": Endpoint not provided, skipping test");
+        }
+        return endpointURL;
+    }
+    // NYT SLUT
 
     protected VirksomhedIdentifikationStrukturType generateVirksomhedIdentifikationStrukturType(String virksomhedSENummerIdentifikator,
                             String afgiftOperatoerPunktAfgiftIdentifikator) {
@@ -241,7 +275,10 @@ public class EMCSBaseClient {
         } catch (XPathExpressionException e) {
             e.printStackTrace();
         }
-        node.setTextContent(value);
+        if (node != null) {
+            node.setTextContent(value);
+        }
+
     }
 
     public static String prettyFormatDocument(Document document, int indent, boolean ignoreDeclaration) {

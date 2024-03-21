@@ -1,10 +1,9 @@
 package dk.skat.emcs.b2b.sample;
 
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerType;
-import oio.skat.emcs.ws._1_0.IE871StrukturType;
-import oio.skat.emcs.ws._1_0.OIOKvitteringAfvigelseBegrundelseOpretIType;
-import oio.skat.emcs.ws._1_0.OIOKvitteringAfvigelseBegrundelseOpretOType;
-import oio.skat.emcs.ws._1_0.VirksomhedIdentifikationStrukturType;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.ws.BindingProvider;
+import oio.skat.emcs.ws._1_0.*;
 import oio.skat.emcs.ws._1_0.VirksomhedIdentifikationStrukturType.Indberetter;
 import oio.skat.emcs.ws._1_0_1.OIOKvitteringAfvigelseBegrundelseOpretService;
 import oio.skat.emcs.ws._1_0_1.OIOKvitteringAfvigelseBegrundelseOpretServicePortType;
@@ -18,7 +17,6 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.ws.BindingProvider;
 import java.io.IOException;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -137,6 +135,91 @@ public class OIOKvitteringAfvigelseBegrundelseOpretClient extends EMCSBaseClient
         sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
 
         LOGGER.info(NEW_LINE + sb.toString());
+    }
+
+    public OIOKvitteringAfvigelseBegrundelseOpretOType invokeGetObject(String virksomhedSENummerIdentifikator,
+                       String afgiftOperatoerPunktAfgiftIdentifikator,
+                       String ie871,
+                       String arc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+
+        // Generate Transaction Id
+        final String transactionID = TransactionIdGenerator.getTransactionId();
+
+        // Generate Transaction Time
+        GregorianCalendar gregorianCalendar = new GregorianCalendar();
+        gregorianCalendar.setTime(new Date());
+        XMLGregorianCalendar transactionTime = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar);
+
+        // Build HovedOplysninger Object and set transaction id and time
+        HovedOplysningerType hovedOplysningerType = new HovedOplysningerType();
+        hovedOplysningerType.setTransaktionIdentifikator(transactionID);
+        hovedOplysningerType.setTransaktionTid(transactionTime);
+
+        // Build VirksomhedIdentifikationStruktur
+        VirksomhedIdentifikationStrukturType virksomhedIdentifikationStrukturType = new VirksomhedIdentifikationStrukturType();
+        virksomhedIdentifikationStrukturType.setAfgiftOperatoerPunktAfgiftIdentifikator(afgiftOperatoerPunktAfgiftIdentifikator);
+        Indberetter indberetter = new Indberetter();
+        indberetter.setVirksomhedSENummerIdentifikator(virksomhedSENummerIdentifikator);
+        virksomhedIdentifikationStrukturType.setIndberetter(indberetter);
+
+        // Load IE815 document
+        Document doc = loadIEDocument(ie871);
+
+        resetTimeOfPreparation(doc, "/IE871/Header/TimeOfPreparation");
+        resetDateOfPreparation(doc, "/IE871/Header/DateOfPreparation");
+        resetMessageIdentifier(doc, "/IE871/Header/MessageIdentifier");
+        if (arc != null) {
+            replaceValue(doc,"/IE871/Body/ExplanationOnReasonForShortage/ExciseMovement/AdministrativeReferenceCode", arc);
+        }
+        // Also reset date
+        resetDateAndTimeOfValidationOfCancellation(doc,"/IE871/Body/ExplanationOnReasonForShortage/Attributes/DateAndTimeOfValidationOfExplanationOnShortage");
+
+        LOGGER.info(NEW_LINE + this.prettyFormatDocument(doc, 2, true));
+
+        // Build IE815StrukturType
+        IE871StrukturType ie815StrukturType = new IE871StrukturType();
+        // Set ie815 document
+        ie815StrukturType.setAny(doc.getDocumentElement());
+
+        OIOKvitteringAfvigelseBegrundelseOpretIType oioKvitteringAfvigelseBegrundelseOpretIType = new OIOKvitteringAfvigelseBegrundelseOpretIType();
+        oioKvitteringAfvigelseBegrundelseOpretIType.setHovedOplysninger(hovedOplysningerType);
+        oioKvitteringAfvigelseBegrundelseOpretIType.setVirksomhedIdentifikationStruktur(virksomhedIdentifikationStrukturType);
+        oioKvitteringAfvigelseBegrundelseOpretIType.setIE871Struktur(ie815StrukturType);
+
+        Bus bus = new SpringBusFactory().createBus("emcs-policy.xml", false);
+        BusFactory.setDefaultBus(bus);
+
+        OIOKvitteringAfvigelseBegrundelseOpretService service = new OIOKvitteringAfvigelseBegrundelseOpretService();
+        OIOKvitteringAfvigelseBegrundelseOpretServicePortType port = service.getOIOKvitteringAfvigelseBegrundelseOpretServicePort();
+
+        // Set endpoint of service.
+        BindingProvider bp = (BindingProvider)port;
+        bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
+
+        StringBuilder sbRequest = new StringBuilder();
+        sbRequest.append(generateConsoleOutput(
+            oioKvitteringAfvigelseBegrundelseOpretIType.getHovedOplysninger(),
+            oioKvitteringAfvigelseBegrundelseOpretIType.getVirksomhedIdentifikationStruktur().getAfgiftOperatoerPunktAfgiftIdentifikator(),
+            oioKvitteringAfvigelseBegrundelseOpretIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
+        ));
+        LOGGER.info(NEW_LINE + sbRequest.toString());
+
+
+        OIOKvitteringAfvigelseBegrundelseOpretOType out = port.getOIOKvitteringAfvigelseBegrundelseOpret(oioKvitteringAfvigelseBegrundelseOpretIType);
+        StringBuilder sb = new StringBuilder();
+        sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
+
+        LOGGER.info(NEW_LINE + sb.toString());
+
+        return out;
+    }
+
+    public String invoke(SamlingHentModel samlingHentModel) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
+        if (this.endpointURL == null){
+            this.endpointURL = getEndpoint("OIOKvitteringAfvigelseBegrundelseOpret");
+        }
+        OIOKvitteringAfvigelseBegrundelseOpretOType result = invokeGetObject(samlingHentModel.getVirksomhedSENummerIdentifikator(), samlingHentModel.getAfgiftOperatoerPunktAfgiftIdentifikator(), samlingHentModel.getFile(), samlingHentModel.getARCnumber());
+        return SamlingHentMashalling.toString(result,"urn:oio:skat:emcs:ws:1.0.1","OIOKvitteringAfvigelseBegrundelseOpret_O");
     }
 
 }

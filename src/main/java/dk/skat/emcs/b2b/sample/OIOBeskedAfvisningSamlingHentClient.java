@@ -1,5 +1,7 @@
 package dk.skat.emcs.b2b.sample;
 
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.ws.BindingProvider;
 import oio.skat.emcs.ws._1_0.*;
 import oio.skat.emcs.ws._1_0_1.OIOBeskedAfvisningSamlingHentService;
 import oio.skat.emcs.ws._1_0_1.OIOBeskedAfvisningSamlingHentServicePortType;
@@ -10,7 +12,6 @@ import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.ws.BindingProvider;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
@@ -21,7 +22,7 @@ import java.util.logging.Logger;
  * @author SKAT
  * @since 1.2
  */
-public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
+public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient{
 
     private static final Logger LOGGER = Logger.getLogger(OIOBeskedAfvisningSamlingHentClient.class.getName());
 
@@ -67,9 +68,16 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
                          String afgiftOperatoerPunktAfgiftIdentifikator)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
+        System.out.println("afgift = " + afgiftOperatoerPunktAfgiftIdentifikator + ", virksomhed = " + virksomhedSENummerIdentifikator);
         return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, 1);
+    }
 
-
+    public String invoke(SamlingHentModel samlingHentModel) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
+        if (this.endpointURL == null){
+            this.endpointURL = getEndpoint("OIOBeskedAfvisningSamlingHent");
+        }
+        OIOBeskedAfvisningSamlingHentOType result = invokeit(samlingHentModel.getVirksomhedSENummerIdentifikator(), samlingHentModel.getAfgiftOperatoerPunktAfgiftIdentifikator(), 1);
+        return SamlingHentMashalling.toString(result,"urn:oio:skat:emcs:ws:1.0.1","OIOBeskedAfvisningSamlingHent_O");
     }
 
     private OIOBeskedAfvisningSamlingHentOType invokeit(String virksomhedSENummerIdentifikator,
@@ -104,6 +112,7 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
         sbRequest.append("*******************************************************************").append(NEW_LINE);
         LOGGER.info(NEW_LINE + sbRequest.toString());
 
+        System.out.println("user.dir property = " + System.getProperty("user.dir"));
         OIOBeskedAfvisningSamlingHentOType out = port.getOIOBeskedAfvisningSamlingHent(oioBeskedAfvisningSamlingHentIType);
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
@@ -123,5 +132,4 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
         LOGGER.info(NEW_LINE + sb.toString());
         return out;
     }
-
 }

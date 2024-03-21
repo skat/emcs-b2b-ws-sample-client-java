@@ -1,6 +1,8 @@
 package dk.skat.emcs.b2b.sample;
 
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerType;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.ws.BindingProvider;
 import oio.skat.emcs.ws._1_0.IE813InputStrukturType;
 import oio.skat.emcs.ws._1_0.OIOLedsageDokumentDestinationSkiftOpretIType;
 import oio.skat.emcs.ws._1_0.OIOLedsageDokumentDestinationSkiftOpretOType;
@@ -20,7 +22,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.ws.BindingProvider;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -66,7 +67,7 @@ public class OIOLedsageDokumentDestinationSkiftOpretClient extends EMCSBaseClien
      * @throws IOException N/A
      * @throws SAXException N/A
      */
-    public void invoke(String virksomhedSENummerIdentifikator,
+    public String invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        String ie813, String arc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
@@ -138,6 +139,90 @@ public class OIOLedsageDokumentDestinationSkiftOpretClient extends EMCSBaseClien
         sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
 
         LOGGER.info(NEW_LINE + sb.toString());
+        return sb.toString();
+    }
+
+    public OIOLedsageDokumentDestinationSkiftOpretOType invokeGetObject(String virksomhedSENummerIdentifikator,
+                         String afgiftOperatoerPunktAfgiftIdentifikator,
+                         String ie813, String arc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+
+        // Generate Transaction Id
+        final String transactionID = TransactionIdGenerator.getTransactionId();
+
+        // Generate Transaction Time
+        GregorianCalendar gregorianCalendar = new GregorianCalendar();
+        gregorianCalendar.setTime(new Date());
+        XMLGregorianCalendar transactionTime = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar);
+
+        // Build HovedOplysninger Object and set transaction id and time
+        HovedOplysningerType hovedOplysningerType = new HovedOplysningerType();
+        hovedOplysningerType.setTransaktionIdentifikator(transactionID);
+        hovedOplysningerType.setTransaktionTid(transactionTime);
+
+        // Build VirksomhedIdentifikationStruktur
+        VirksomhedIdentifikationStrukturType virksomhedIdentifikationStrukturType = new VirksomhedIdentifikationStrukturType();
+        virksomhedIdentifikationStrukturType.setAfgiftOperatoerPunktAfgiftIdentifikator(afgiftOperatoerPunktAfgiftIdentifikator);
+        Indberetter indberetter = new Indberetter();
+        indberetter.setVirksomhedSENummerIdentifikator(virksomhedSENummerIdentifikator);
+        virksomhedIdentifikationStrukturType.setIndberetter(indberetter);
+
+        // Load IE815 document
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        File file = new File(ie813);
+        Document doc = db.parse(file);
+
+        resetTimeOfPreparation(doc, "/IE813/Header/TimeOfPreparation");
+        resetDateOfPreparation(doc, "/IE813/Header/DateOfPreparation");
+        resetMessageIdentifier(doc, "/IE813/Header/MessageIdentifier");
+        resetDateAndTimeOfValidationOfCancellation(doc, "/IE813/Body/ChangeOfDestination/Attributes/DateAndTimeOfValidationOfChangeOfDestination");
+        if (arc != null) {
+            replaceValue(doc, "/IE813/Body/ChangeOfDestination/UpdateEadEsad/AdministrativeReferenceCode", arc);
+        }
+        // Build IE813InputStrukturType
+        IE813InputStrukturType IE813InputStrukturType = new IE813InputStrukturType();
+        // Set ie813 document
+        IE813InputStrukturType.setAny(doc.getDocumentElement());
+
+        OIOLedsageDokumentDestinationSkiftOpretIType oioLedsageDokumentDestinationSkiftOpretIType = new OIOLedsageDokumentDestinationSkiftOpretIType();
+        oioLedsageDokumentDestinationSkiftOpretIType.setHovedOplysninger(hovedOplysningerType);
+        oioLedsageDokumentDestinationSkiftOpretIType.setVirksomhedIdentifikationStruktur(virksomhedIdentifikationStrukturType);
+        oioLedsageDokumentDestinationSkiftOpretIType.setIE813InputStruktur(IE813InputStrukturType);
+
+        Bus bus = new SpringBusFactory().createBus("emcs-policy.xml", false);
+        BusFactory.setDefaultBus(bus);
+
+        OIOLedsageDokumentDestinationSkiftOpretService service = new OIOLedsageDokumentDestinationSkiftOpretService();
+        OIOLedsageDokumentDestinationSkiftOpretServicePortType port = service.getOIOLedsageDokumentDestinationSkiftOpretServicePort();
+
+        // Set endpoint of service.
+        BindingProvider bp = (BindingProvider)port;
+        bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
+
+        StringBuilder sbRequest = new StringBuilder();
+        sbRequest.append(generateConsoleOutput(
+            oioLedsageDokumentDestinationSkiftOpretIType.getHovedOplysninger(),
+            oioLedsageDokumentDestinationSkiftOpretIType.getVirksomhedIdentifikationStruktur().getAfgiftOperatoerPunktAfgiftIdentifikator(),
+            oioLedsageDokumentDestinationSkiftOpretIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
+        ));
+        LOGGER.info(NEW_LINE + sbRequest.toString());
+        LOGGER.info("IE813:");
+        LOGGER.info(prettyFormatDocument(doc, 2, true));
+
+        OIOLedsageDokumentDestinationSkiftOpretOType out = port.getOIOLedsageDokumentDestinationSkiftOpret(oioLedsageDokumentDestinationSkiftOpretIType);
+        StringBuilder sb = new StringBuilder();
+        sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
+
+        LOGGER.info(NEW_LINE + sb.toString());
+        return out;
+    }
+
+    public String invoke(SamlingHentModel samlingHentModel) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
+        if (this.endpointURL == null){
+            this.endpointURL = getEndpoint("OIOLedsageDokumentDestinationSkiftOpret");
+        }
+        OIOLedsageDokumentDestinationSkiftOpretOType result = invokeGetObject(samlingHentModel.getVirksomhedSENummerIdentifikator(), samlingHentModel.getAfgiftOperatoerPunktAfgiftIdentifikator(), samlingHentModel.getFile(), samlingHentModel.getARCnumber());
+        return SamlingHentMashalling.toString(result,"urn:oio:skat:emcs:ws:1.0.1","OIOLedsageDokumentDestinationSkiftOpret_O");
     }
 
 }

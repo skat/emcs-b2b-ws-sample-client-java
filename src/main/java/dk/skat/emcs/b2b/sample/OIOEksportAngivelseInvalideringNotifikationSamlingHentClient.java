@@ -1,6 +1,8 @@
 package dk.skat.emcs.b2b.sample;
 
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerType;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.ws.BindingProvider;
 import oio.skat.emcs.ws._1_0.*;
 import oio.skat.emcs.ws._1_0_1.OIOEksportAngivelseInvalideringNotifikationSamlingHentService;
 import oio.skat.emcs.ws._1_0_1.OIOEksportAngivelseInvalideringNotifikationSamlingHentServicePortType;
@@ -13,7 +15,6 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.ws.BindingProvider;
 import java.io.IOException;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -59,7 +60,7 @@ public class OIOEksportAngivelseInvalideringNotifikationSamlingHentClient extend
      * @throws IOException N/A
      * @throws SAXException N/A
      */
-    public String invoke(String virksomhedSENummerIdentifikator,
+    public OIOEksportAngivelseInvalideringNotifikationSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        String ARCnummer) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
@@ -125,7 +126,14 @@ public class OIOEksportAngivelseInvalideringNotifikationSamlingHentClient extend
         }
 
         LOGGER.info(NEW_LINE + sb.toString());
-        return sb.toString();
+        return out;
     }
 
+    public String invoke(SamlingHentModel samlingHentModel) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
+        if (this.endpointURL == null){
+            this.endpointURL = getEndpoint("OIOEksportAngivelseInvalideringNotifikationSamlingHent");
+        }
+        OIOEksportAngivelseInvalideringNotifikationSamlingHentOType result = invoke(samlingHentModel.getVirksomhedSENummerIdentifikator(), samlingHentModel.getAfgiftOperatoerPunktAfgiftIdentifikator(), samlingHentModel.getARCnumber());
+        return SamlingHentMashalling.toString(result,"urn:oio:skat:emcs:ws:1.0.1","OIOEksportAngivelseInvalideringNotifikationSamlingHent_O");
+    }
 }
