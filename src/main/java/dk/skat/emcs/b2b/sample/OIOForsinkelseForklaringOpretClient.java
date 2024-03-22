@@ -10,6 +10,7 @@ import oio.skat.emcs.ws._1_0_1.OIOForsinkelseForklaringOpretServicePortType;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.springframework.binding.message.MessageContext;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -227,12 +228,13 @@ public class OIOForsinkelseForklaringOpretClient extends EMCSBaseClient {
         return out;
     }
 
-    public String invoke(SamlingHentModel samlingHentModel) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
+    public String invoke(SamlingHentModel samlingHentModel, MessageContext context) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
         if (this.endpointURL == null){
             this.endpointURL = getEndpoint("OIOForsinkelseForklaringOpret");
         }
 
         OIOForsinkelseForklaringOpretOType result = invokeGetObejct(samlingHentModel.getVirksomhedSENummerIdentifikator(), samlingHentModel.getAfgiftOperatoerPunktAfgiftIdentifikator(), samlingHentModel.getFile(), samlingHentModel.getARCnumber(), samlingHentModel.getAfgiftOperatoerPunktAfgiftIdentifikator());
+        addMessages(result.getHovedOplysningerSvar(), context);
         return SamlingHentMashalling.toString(result,"urn:oio:skat:emcs:ws:1.0.1","OIOForsinkelseForklaringOpret_O");
     }
 }

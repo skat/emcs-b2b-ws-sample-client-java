@@ -11,6 +11,7 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.springframework.binding.message.MessageContext;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -241,12 +242,13 @@ public class OIOKvitteringOpretClient extends EMCSBaseClient {
         return out;
     }
 
-    public String invoke(SamlingHentModel samlingHentModel) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
+    public String invoke(SamlingHentModel samlingHentModel, MessageContext context) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
         if (this.endpointURL == null){
             this.endpointURL = getEndpoint("OIOKvitteringOpret");
         }
         File file = new File(samlingHentModel.getFile());
         OIOKvitteringOpretOType result = invokeGetObject(samlingHentModel.getVirksomhedSENummerIdentifikator(), samlingHentModel.getAfgiftOperatoerPunktAfgiftIdentifikator(), file);
+        addMessages(result.getHovedOplysningerSvar(), context);
         return SamlingHentMashalling.toString(result,"urn:oio:skat:emcs:ws:1.0.1","OIOKvitteringOpret_O");
     }
 }

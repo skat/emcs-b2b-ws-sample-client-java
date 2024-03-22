@@ -10,6 +10,7 @@ import oio.skat.emcs.ws._1_0_1.OIOHaendelseRapportSamlingHentServicePortType;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.springframework.binding.message.MessageContext;
 import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -90,11 +91,12 @@ public class OIOHaendelseRapportSamlingHentClient extends EMCSBaseClient {
         return response;
     }
 
-    public String invoke(SamlingHentModel samlingHentModel) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
+    public String invoke(SamlingHentModel samlingHentModel, MessageContext context) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
         if (this.endpointURL == null){
             this.endpointURL = getEndpoint("OIOHaendelseRapportSamlingHent");
         }
         OIOHaendelseRapportSamlingHentOType result = invoke(samlingHentModel.getVirksomhedSENummerIdentifikator(), samlingHentModel.getAfgiftOperatoerPunktAfgiftIdentifikator());
+        addMessages(result.getHovedOplysningerSvar(), context);
         return SamlingHentMashalling.toString(result,"urn:oio:skat:emcs:ws:1.0.1","OIOHaendelseRapportSamlingHent_O");
     }
 

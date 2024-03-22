@@ -17,7 +17,7 @@
 
   <view-state id="indexflow" model="hentModel" view="views/index.html">
     <transition on="test" to="indexflow" >
-      <evaluate expression="handler.makeServiceCall(hentModel)" result="hentResult"/>
+      <evaluate expression="handler.makeServiceCall(hentModel, messageContext)" result="hentResult"/>
     </transition>
     <transition on="doc" to="dokumentflow"/>
     <transition on="eu" to="euflow"/>
@@ -26,7 +26,7 @@
 
   <view-state id="dokumentflow" model="docModel" view="views/dokumentflow.html">
     <transition on="test" to="dokumentflow" >
-      <evaluate expression="handler.makeServiceCall(docModel)" result="docResult"/>
+      <evaluate expression="handler.makeServiceCall(docModel, messageContext)" result="docResult"/>
     </transition>
     <transition on="hent" to="indexflow"/>
     <transition on="eu" to="euflow"/>
@@ -34,7 +34,7 @@
 
   <view-state id="euflow" model="euModel" view="views/eu.html">
     <transition on="test" to="euflow" >
-      <evaluate expression="handler.makeServiceCall(euModel)" result="euResult"/>
+      <evaluate expression="handler.makeServiceCall(euModel, messageContext)" result="euResult"/>
     </transition>
     <transition on="hent" to="indexflow"/>
     <transition on="doc" to="dokumentflow"/>

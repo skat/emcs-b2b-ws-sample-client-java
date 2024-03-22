@@ -10,6 +10,7 @@ import oio.skat.emcs.ws._1_0_1.OIOKvitteringSamlingHentServicePortType;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.springframework.binding.message.MessageContext;
 import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -79,22 +80,25 @@ public class OIOKvitteringSamlingHentClient extends EMCSBaseClient {
 
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(response.getHovedOplysningerSvar()));
-        List<String> list = response.getKvitteringSamling().getIE818BeskedTekst();
-        int i = 1;
-        for (String message : list) {
-            sb.append(NEW_LINE + "Message " + i + ":");
-            sb.append(NEW_LINE + message);
-            i++;
+        if (response.getKvitteringSamling() != null){
+            List<String> list = response.getKvitteringSamling().getIE818BeskedTekst();
+            int i = 1;
+            for (String message : list) {
+                sb.append(NEW_LINE + "Message " + i + ":");
+                sb.append(NEW_LINE + message);
+                i++;
+            }
         }
         LOGGER.info(NEW_LINE + sb.toString());
         return response;
     }
 
-    public String invoke(SamlingHentModel samlingHentModel) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
+    public String invoke(SamlingHentModel samlingHentModel, MessageContext context) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
         if (this.endpointURL == null){
             this.endpointURL = getEndpoint("OIOKvitteringSamlingHent");
         }
         OIOKvitteringSamlingHentOType result = invoke(samlingHentModel.getVirksomhedSENummerIdentifikator(), samlingHentModel.getAfgiftOperatoerPunktAfgiftIdentifikator(), samlingHentModel.getARCnumber());
+        addMessages(result.getHovedOplysningerSvar(), context);
         return SamlingHentMashalling.toString(result,"urn:oio:skat:emcs:ws:1.0.1","OIOKvitteringSamlingHent_O");
     }
 

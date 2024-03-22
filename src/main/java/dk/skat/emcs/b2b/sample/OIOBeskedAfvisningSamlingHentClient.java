@@ -8,6 +8,7 @@ import oio.skat.emcs.ws._1_0_1.OIOBeskedAfvisningSamlingHentServicePortType;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.springframework.binding.message.MessageContext;
 import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -72,11 +73,12 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient{
         return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, 1);
     }
 
-    public String invoke(SamlingHentModel samlingHentModel) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
+    public String invoke(SamlingHentModel samlingHentModel, MessageContext context) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
         if (this.endpointURL == null){
             this.endpointURL = getEndpoint("OIOBeskedAfvisningSamlingHent");
         }
         OIOBeskedAfvisningSamlingHentOType result = invokeit(samlingHentModel.getVirksomhedSENummerIdentifikator(), samlingHentModel.getAfgiftOperatoerPunktAfgiftIdentifikator(), 1);
+        addMessages(result.getHovedOplysningerSvar(), context);
         return SamlingHentMashalling.toString(result,"urn:oio:skat:emcs:ws:1.0.1","OIOBeskedAfvisningSamlingHent_O");
     }
 
@@ -129,6 +131,7 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient{
                 sb.append("*******************************************************************").append(NEW_LINE);
             }
         }
+
         LOGGER.info(NEW_LINE + sb.toString());
         return out;
     }

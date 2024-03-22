@@ -8,6 +8,8 @@ import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysnin
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerType;
 import oio.skat.emcs.ws._1_0.SøgeParametreStrukturType;
 import oio.skat.emcs.ws._1_0.VirksomhedIdentifikationStrukturType;
+import org.springframework.binding.message.MessageBuilder;
+import org.springframework.binding.message.MessageContext;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
@@ -31,10 +33,7 @@ import javax.xml.xpath.XPathFactory;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * EMCSBaseClient
@@ -306,6 +305,33 @@ public class EMCSBaseClient implements Serializable{
             return prettyFormatDocument(document, indent, ignoreDeclaration);
         } catch (Exception e) {
             throw new RuntimeException("Error occurs when pretty-printing xml:" + xmlString, e);
+        }
+    }
+
+    public void addMessages(HovedOplysningerSvarType hovedOplysningerSvarType, MessageContext context) {
+        List<Object> advisStrukturOrFejlStruktur = hovedOplysningerSvarType.getSvarStruktur().getAdvisStrukturOrFejlStruktur();
+        int count = 0;
+        for (Object o : advisStrukturOrFejlStruktur) {
+            if (o instanceof AdvisStrukturType) {
+                AdvisStrukturType advisStrukturType = (AdvisStrukturType) o;
+                String advisId = advisStrukturType.getAdvisIdentifikator().toString();
+                String advisText = advisStrukturType.getAdvisTekst();
+                context.addMessage(new MessageBuilder().info().source("INFO")
+                    .defaultText(advisId + " - " + advisText).build());
+                count++;
+            }
+            if (o instanceof FejlStrukturType) {
+                FejlStrukturType fejlStrukturType = (FejlStrukturType) o;
+                String fejlId = fejlStrukturType.getFejlIdentifikator().toString();
+                String fejlText = fejlStrukturType.getFejlTekst();
+                context.addMessage(new MessageBuilder().info().source("ERROR")
+                    .defaultText(fejlId + " - " + fejlText).build());
+                count++;
+            }
+        }
+        if (count == 0) {
+            context.addMessage(new MessageBuilder().info().source("SUCCESS")
+                .defaultText("Call success").build());
         }
     }
 

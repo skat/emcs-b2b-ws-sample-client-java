@@ -10,6 +10,7 @@ import oio.skat.emcs.ws._1_0.VirksomhedIdentifikationStrukturType.Indberetter;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.springframework.binding.message.MessageContext;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -268,12 +269,13 @@ public class OIOLedsageDokumentOpretClient extends EMCSBaseClient {
         return out;
     }
 
-    public String invoke(SamlingHentModel samlingHentModel) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
+    public String invoke(SamlingHentModel samlingHentModel, MessageContext context) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
         if (this.endpointURL == null){
             this.endpointURL = getEndpoint("OIOLedsageDocumentOpret");
         }
         File file = new File(samlingHentModel.getFile());
         OIOLedsageDokumentOpretOType result = invokeGetObejct(samlingHentModel.getVirksomhedSENummerIdentifikator(), samlingHentModel.getAfgiftOperatoerPunktAfgiftIdentifikator(), file);
+        addMessages(result.getHovedOplysningerSvar(), context);
         return SamlingHentMashalling.toString(result,"urn:oio:skat:emcs:ws:1.0.1","OIOLedsageDokumentOpret_O");
     }
 }
