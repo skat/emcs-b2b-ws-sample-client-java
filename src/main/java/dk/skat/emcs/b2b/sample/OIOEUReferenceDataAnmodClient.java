@@ -1,17 +1,19 @@
 package dk.skat.emcs.b2b.sample;
 
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.ws.BindingProvider;
 import oio.skat.emcs.ws._1_0.*;
 import oio.skat.emcs.ws._1_0_1.OIOEUReferenceDataAnmodService;
 import oio.skat.emcs.ws._1_0_1.OIOEUReferenceDataAnmodServicePortType;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.springframework.binding.message.MessageContext;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.ws.BindingProvider;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -83,6 +85,15 @@ public class OIOEUReferenceDataAnmodClient extends EMCSBaseClient {
 
         LOGGER.info(NEW_LINE + sb.toString());
         return response;
+    }
+
+    public String invoke(SamlingHentModel samlingHentModel, MessageContext context) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
+        if (this.endpointURL == null){
+            this.endpointURL = getEndpoint("OIOEUReferenceDataAnmod");
+        }
+        OIOEUReferenceDataAnmodOType result = invoke(samlingHentModel.getVirksomhedSENummerIdentifikator(), samlingHentModel.getAfgiftOperatoerPunktAfgiftIdentifikator(), samlingHentModel.getFile(), samlingHentModel.getARCnumber());
+        addMessages(result.getHovedOplysningerSvar(), context);
+        return SamlingHentMashalling.toString(result,"urn:oio:skat:emcs:ws:1.0.1","OIOEUReferenceDataAnmod_O");
     }
 
 

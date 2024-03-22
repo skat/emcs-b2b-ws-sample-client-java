@@ -106,6 +106,7 @@ public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClientTest {
     public OIOBeskedAfvisningSamlingHentOType doCall(String virksomhedSENummerIdentifikator, String afgiftOperatoerPunktAfgiftIdentifikator) throws Exception {
         String endpointURL = getEndpoint("OIOBeskedAfvisningSamlingHent");
         if (endpointURL != null) {
+            System.out.println("end = " + endpointURL);
             OIOBeskedAfvisningSamlingHentClient oioBeskedAfvisningSamlingHentClient = new OIOBeskedAfvisningSamlingHentClient(endpointURL);
             return oioBeskedAfvisningSamlingHentClient.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator);

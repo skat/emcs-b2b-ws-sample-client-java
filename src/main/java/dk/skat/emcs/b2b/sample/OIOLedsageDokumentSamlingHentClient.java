@@ -1,19 +1,21 @@
 package dk.skat.emcs.b2b.sample;
 
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerType;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.ws.BindingProvider;
 import oio.skat.emcs.ws._1_0.*;
 import oio.skat.emcs.ws._1_0_1.OIOLedsageDokumentSamlingHentService;
 import oio.skat.emcs.ws._1_0_1.OIOLedsageDokumentSamlingHentServicePortType;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.springframework.binding.message.MessageContext;
 import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.ws.BindingProvider;
 import java.io.IOException;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -59,7 +61,7 @@ public class OIOLedsageDokumentSamlingHentClient extends EMCSBaseClient {
      * @throws IOException N/A
      * @throws SAXException N/A
      */
-    public String invoke(String virksomhedSENummerIdentifikator,
+    public OIOLedsageDokumentSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        String ARCnummer) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
@@ -125,7 +127,16 @@ public class OIOLedsageDokumentSamlingHentClient extends EMCSBaseClient {
         }
 
         LOGGER.info(NEW_LINE + sb.toString());
-        return sb.toString();
+        return out;
+    }
+
+    public String invoke(SamlingHentModel samlingHentModel, MessageContext context) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
+        if (this.endpointURL == null){
+            this.endpointURL = getEndpoint("OIOLedsageDokumentSamlingHent");
+        }
+        OIOLedsageDokumentSamlingHentOType result = invoke(samlingHentModel.getVirksomhedSENummerIdentifikator(), samlingHentModel.getAfgiftOperatoerPunktAfgiftIdentifikator(), samlingHentModel.getARCnumber());
+        addMessages(result.getHovedOplysningerSvar(), context);
+        return SamlingHentMashalling.toString(result,"urn:oio:skat:emcs:ws:1.0.1","OIOLedsageDokumentSamlingHent_O");
     }
 
 }

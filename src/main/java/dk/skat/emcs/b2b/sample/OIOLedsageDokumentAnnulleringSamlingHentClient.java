@@ -1,19 +1,21 @@
 package dk.skat.emcs.b2b.sample;
 
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerType;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.ws.BindingProvider;
 import oio.skat.emcs.ws._1_0.*;
 import oio.skat.emcs.ws._1_0_1.OIOLedsageDokumentAnnulleringSamlingHentService;
 import oio.skat.emcs.ws._1_0_1.OIOLedsageDokumentAnnulleringSamlingHentServicePortType;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.springframework.binding.message.MessageContext;
 import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.ws.BindingProvider;
 import java.io.IOException;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -60,7 +62,7 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClie
      * @throws SAXException                   N/A
      */
 
-    public String invoke(String virksomhedSENummerIdentifikator,
+    public OIOLedsageDokumentAnnulleringSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
                          String afgiftOperatoerPunktAfgiftIdentifikator,
                          Integer interval)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
@@ -73,7 +75,7 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClie
     }
 
 
-    public String invoke(String virksomhedSENummerIdentifikator,
+    public OIOLedsageDokumentAnnulleringSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
                          String afgiftOperatoerPunktAfgiftIdentifikator,
                          String arcnumber)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
@@ -84,7 +86,7 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClie
     }
 
 
-    private String invokeit(String virksomhedSENummerIdentifikator,
+    private OIOLedsageDokumentAnnulleringSamlingHentOType invokeit(String virksomhedSENummerIdentifikator,
                             String afgiftOperatoerPunktAfgiftIdentifikator,
                             SøgeParametreStrukturType søgeParametreStrukturType
     )
@@ -158,8 +160,16 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClie
         }
 
         LOGGER.info(NEW_LINE + sb.toString());
-        return sb.toString();
+        return out;
     }
 
-
+    public String invoke(SamlingHentModel samlingHentModel, MessageContext context) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException, JAXBException {
+        if (this.endpointURL == null){
+            this.endpointURL = getEndpoint("OIOLedsageDokumentAnnulleringSamlingHent");
+        }
+        SøgeParametreStrukturType søgeparameter = getSøgeParametreStrukturType(samlingHentModel.getARCnumber());
+        OIOLedsageDokumentAnnulleringSamlingHentOType result = invokeit(samlingHentModel.getVirksomhedSENummerIdentifikator(), samlingHentModel.getAfgiftOperatoerPunktAfgiftIdentifikator(),søgeparameter);
+        addMessages(result.getHovedOplysningerSvar(), context);
+        return SamlingHentMashalling.toString(result,"urn:oio:skat:emcs:ws:1.0.1","OIOLedsageDokumentAnnulleringSamlingHent_O");
+    }
 }

@@ -5,27 +5,27 @@
 Sample clients for the EMCS B2B Web Service Gateway developed in Java and using open source libraries.
 
 **IMPORTANT NOTICE**: SKAT does not provide any kind of support for the code in this repository.
-This Java-client is just one example of how a B2B web service can be accessed. The client must not be 
+This Java-client is just one example of how a B2B web service can be accessed. The client must not be
 perceived as a piece of production code but more as an example one can take inspiration from and can use
-to quickly get started to test whether your company can implement a successful call to one of the B2B web 
+to quickly get started to test whether your company can implement a successful call to one of the B2B web
 service using the company's digital signature. SKAT can not be held responsible if a company uses this client
-or parts of it in their own systems. 
+or parts of it in their own systems.
 
 **VIGTIG MEDDELELSE**: SKAT yder ikke support på kildekoden i nærværende kodebibliotek.
-Denne Java-klient er kun et eksempel på hvordan B2B webservicene kan tilgås. Klienten skal således ikke 
-opfattes som et stykke produktionskode men mere som en eksempel man kan lade sig inspirere af og kan bruge 
-til hurtigt at komme i gang og få afprøvet om ens virksomhed kan gennemføre et succesfuldt kald til en af 
+Denne Java-klient er kun et eksempel på hvordan B2B webservicene kan tilgås. Klienten skal således ikke
+opfattes som et stykke produktionskode men mere som en eksempel man kan lade sig inspirere af og kan bruge
+til hurtigt at komme i gang og få afprøvet om ens virksomhed kan gennemføre et succesfuldt kald til en af
 B2B webservicene ved at bruge virksomhedens digitale signatur. SKAT kan ikke stå til ansvar hvis en virksomhed
-anvender klienten eller dele af denne i deres egne systemer. 
+anvender klienten eller dele af denne i deres egne systemer.
 
 ## About the client
 
 The sample clients are implemented based on the [Apache CXF](http://cxf.apache.org/) framework,
-the Spring Framework, and Java 8. See `pom.xml` file in this repo for details regarding 
+the Spring Framework, and Java 8. See `pom.xml` file in this repo for details regarding
 the current versions of the mentioned frameworks in use.
- 
+
 The sample clients currently implements calls to the services:
- 
+
 * **OIOLedsageDocumentOpret** : Submit IE815 document
 * **OIOLedsageDokumentSamlingHent** : Fetch IE801 document related to ARC number
 * **OIOBeskedAfvisningSamlingHent** : Search for IE704 documents within the last month
@@ -48,15 +48,15 @@ The fulfillment of policies required to invoke EMCS B2B Web Services is configur
 
 [emcs-policy.xml](src/main/resources/emcs-policy.xml)
 
-Fulfillment of WS Policy requirements is achieved using CXF's in and out interceptor framework and 
-the `emcs-policy.xml` file details which parts are to be signed and encrypted, and how to present 
+Fulfillment of WS Policy requirements is achieved using CXF's in and out interceptor framework and
+the `emcs-policy.xml` file details which parts are to be signed and encrypted, and how to present
 certificate for authentication on the server side. This configuration file also demonstrates how
 secure transport (https) is enabled client side.
- 
+
 ## Run clients
 
-The sample clients must be configured with a combination of a few JVM parameters and a config file named `app.conf` for 
-the client to run and call the test environment of EMCS B2B Web Service Gateway. 
+The sample clients must be configured with a combination of a few JVM parameters and a config file named `app.conf` for
+the client to run and call the test environment of EMCS B2B Web Service Gateway.
 The parameters and the `app.conf` file can be obtained by contacting SKAT Help Desk.
 
 The client is then invoked as part of the **test phase** of the Maven build process using the following
@@ -75,7 +75,7 @@ to the log:
 **Request**:
 ```
 Apr 12, 2017 11:07:23 AM dk.skat.emcs.b2b.sample.OIOLedsageDocumentOpretClient invoke
-INFO: 
+INFO:
 *******************************************************************
 ** HovedOplysninger
 **** Transaction Id: ACME_01_f57b8c74-31eb-482c-a481-966531930aea
@@ -89,7 +89,7 @@ INFO:
 **Response**:
 ```
 Apr 12, 2017 11:07:27 AM dk.skat.emcs.b2b.sample.OIOLedsageDocumentOpretClient invoke
-INFO: 
+INFO:
 *******************************************************************
 ** HovedOplysningerSvar
 **** Transaction Id: ACME_01_f57b8c74-31eb-482c-a481-966531930aea
@@ -128,10 +128,10 @@ Ledsagedokument ARC Identifikator: 17DKK1KHPMQH2W23ABI62
 ## Fetch IE801 documents using OIOLedsageDokumentSamlingHent
 
 The service **OIOLedsageDokumentSamlingHent** returns IE801 documents and in the following
-sample we call this service using as search input the ARC number received in the sample response 
+sample we call this service using as search input the ARC number received in the sample response
 above (`Ledsagedokument ARC Identifikator: 17DKK1KHPMQH2W23ABI62`).
 
-The client for **OIOLedsageDokumentSamlingHent** is invoked as part of the **test phase** of the Maven 
+The client for **OIOLedsageDokumentSamlingHent** is invoked as part of the **test phase** of the Maven
 build process using the following command:
 
 
@@ -152,7 +152,7 @@ This service returns a **response** similar to this output (in thie case PHASE 3
 **** Transaction Time: 2017-11-20T12:24:39.425+01:00
 **** Service Identification: FS2_OIOLedsageDokumentSamlingHent
 *******************************************************************
-** IE 801 Messages: 
+** IE 801 Messages:
 <IE801 xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
        xmlns:client="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:IE801:V1.76"
        xmlns="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE3:IE801:V1.76">
@@ -181,7 +181,7 @@ This service returns a **response** similar to this output (in thie case PHASE 3
 
 ## Fetch IE704 documents using OIOBeskedAfvisningSamlingHent
 
-The client for **OIOBeskedAfvisningSamlingHent** is invoked as part of the **test phase** of the Maven 
+The client for **OIOBeskedAfvisningSamlingHent** is invoked as part of the **test phase** of the Maven
 build process using the following command:
 
 ```sh
@@ -191,7 +191,7 @@ $ mvn clean install \
   -DskipTests=false
 ```
 
-The client is configured to search for documents within the last month. If there are no 704 messages found,  
+The client is configured to search for documents within the last month. If there are no 704 messages found,
 the service returns a **response** similar to this output:
 
 ```
