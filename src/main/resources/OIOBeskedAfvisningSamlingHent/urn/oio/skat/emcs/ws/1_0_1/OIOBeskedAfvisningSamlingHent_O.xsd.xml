@@ -1,0 +1,28 @@
+<urn:OIOBeskedAfvisningSamlingHent_O xmlns:urn="urn:oio:skat:emcs:ws:1.0.1" xmlns:ns="http://rep.oio.dk/skat.dk/basis/kontekst/xml/schemas/2006/09/01/" xmlns:urn1="urn:oio:skat:emcs:1.0.1">
+  <ns:HovedOplysningerSvar>
+    <!--Optional:-->
+    <ns:TransaktionIdentifikator>string</ns:TransaktionIdentifikator>
+    <!--Optional:-->
+    <ns:ServiceIdentifikator>string</ns:ServiceIdentifikator>
+    <!--Optional:-->
+    <ns:TransaktionTid>2008-09-29T03:49:45</ns:TransaktionTid>
+    <ns:SvarStruktur>
+      <!--You have a CHOICE of the next 2 items at this level-->
+      <ns:AdvisStruktur>
+        <ns:AdvisIdentifikator>100</ns:AdvisIdentifikator>
+        <!--Optional:-->
+        <ns:AdvisTekst>string</ns:AdvisTekst>
+      </ns:AdvisStruktur>
+      <ns:FejlStruktur>
+        <ns:FejlIdentifikator>100</ns:FejlIdentifikator>
+        <!--Optional:-->
+        <ns:FejlTekst>string</ns:FejlTekst>
+      </ns:FejlStruktur>
+    </ns:SvarStruktur>
+  </ns:HovedOplysningerSvar>
+  <!--Optional:-->
+  <urn:BeskedAfvisningSamling>
+    <!--Zero or more repetitions:-->
+    <urn1:IE704BeskedTekst>string</urn1:IE704BeskedTekst>
+  </urn:BeskedAfvisningSamling>
+</urn:OIOBeskedAfvisningSamlingHent_O>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>EMCS Sample GUI</title>
+
+  <!-- Bootstrap core CSS -->
+  <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+
+  <style>
+    #loader {
+      display: none;
+      border: 16px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 16px solid #3498db;
+      width: 120px;
+      height: 120px;
+      -webkit-animation: spin 2s linear infinite; /* Safari */
+      animation: spin 2s linear infinite;
+    }
+
+    #spinner-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Safari */
+    @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+
+    .autocomplete {
+      position: relative;
+      display: inline-block;
+    }
+
+    .autocomplete-items {
+      position: absolute;
+      border: 1px solid #d4d4d4;
+      border-bottom: none;
+      border-top: none;
+      z-index: 99;
+      /*position the autocomplete items to be the same width as the container:*/
+      top: 100%;
+      left: 0;
+      right: 0;
+    }
+
+    .autocomplete-items div {
+      padding: 10px;
+      cursor: pointer;
+      background-color: #fff;
+      border-bottom: 1px solid #d4d4d4;
+    }
+
+    /*when hovering an item:*/
+    .autocomplete-items div:hover {
+      background-color: #e9e9e9;
+    }
+
+    /*when navigating through the items using the arrow keys:*/
+    .autocomplete-active {
+      background-color: DodgerBlue !important;
+      color: #ffffff;
+    }
+  </style>
+
+</head>
+
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">EMCS Sample GUI - SamlingHent services</a>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+    </ul>
+    <form action="" method="post">
+      <input class="btn btn-primary" type="submit" href="index.html" value="SamlingHent services"/>
+      <input class="btn btn-primary" type="submit" name="_eventId_doc" value="Dokument services" />
+      <input class="btn btn-primary" type="submit" name="_eventId_eu"  value="EU services" />
+    </form>
+  </div>
+</nav>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-12">&nbsp;
+    </div>
+  </div>
+
+  <div id="spinner-container">
+    <div id="loader"></div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-6">
+
+      <div class="card">
+
+        <div class="card-header">
+          <b>Service Request</b>
+        </div>
+        <div class="card-body">
+
+          <form action="" method="post">
+
+            <div class="form-group">
+              <label class="col-form-label" for="serviceDropDown">Service navn</label>
+              <select class="form-control" th:field="*{hentModel.serviceName}" id="serviceDropDown">
+                <option th:value="OIOBeskedAfvisningSamlingHentClient">OIOBeskedAfvisningSamlingHentClient</option>
+                <option th:value="OIOEksportAfvisningSamlingHentClient">OIOEksportAfvisningSamlingHentClient</option>
+                <option th:value="OIOEksportAngivelseInvalideringNotifikationSamlingHentClient">OIOEksportAngivelseInvalideringNotifikationSamlingHentClient</option>
+                <option th:value="OIOEksportGodkendelseSamlingHentClient">OIOEksportGodkendelseSamlingHentClient</option>
+                <option th:value="OIOForsendelseAfbrydelseBeskedSamlingHentClient">OIOForsendelseAfbrydelseBeskedSamlingHentClient</option>
+                <option th:value="OIOHaendelseRapportSamlingHentClient">OIOHaendelseRapportSamlingHentClient</option>
+                <option th:value="OIOLedsageDokumentAnnulleringSamlingHentClient">OIOLedsageDokumentAnnulleringSamlingHentClient</option>
+                <option th:value="OIOLedsageDokumentDestinationSkiftSamlingHentClient">OIOLedsageDokumentDestinationSkiftSamlingHentClient</option>
+                <option th:value="OIOLedsageDokumentNotifikationSamlingHentClient">OIOLedsageDokumentNotifikationSamlingHentClient</option>
+                <option th:value="OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient">OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient</option>
+                <option th:value="OIOLedsageDokumentSamlingHentClient">OIOLedsageDokumentSamlingHentClient</option>
+                <option th:value="OIOPaamindelseSamlingHentClient">OIOPaamindelseSamlingHentClient</option>
+                <option th:value="OIOKvitteringSamlingHentClient">OIOKvitteringSamlingHentClient</option>
+              </select>
+            </div>
+            <div class="form-group">
+                <label class="col-form-label" for="virksomhedSENummerIdentifikator">SE nummer</label>
+                <input class="form-control autocomplete" required th:field="*{hentModel.virksomhedSENummerIdentifikator}" id="virksomhedSENummerIdentifikator"/>
+            </div>
+            <div class="form-group">
+                <label class="col-form-label" for="afgiftOperatoerPunktAfgiftIdentifikator">Afgift ID</label>
+                <input class="form-control" required th:field="*{hentModel.afgiftOperatoerPunktAfgiftIdentifikator}" id="afgiftOperatoerPunktAfgiftIdentifikator"/>
+            </div>
+            <div class="form-group">
+              <label class="col-form-label" for="arcnumber">Ark nummer</label>
+              <input class="form-control" th:field="*{hentModel.ARCnumber}" id="arcnumber"/>
+            </div>
+            <input th:onclick="getSpinner()" type="submit" name="_eventId_test" value="Test" class="btn btn-primary"/>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <b>Service Response</b>
+        </div>
+        <div class="card-body">
+
+          <div th:if="${#arrays.length(flowRequestContext.messageContext.getMessagesBySource('ERROR'))>0}">
+            <div class="alert alert-danger" role="alert" th:each="err : ${flowRequestContext.messageContext.getMessagesBySource('ERROR')}">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <span th:text="${err.text}" th:remove="tag"></span>
+            </div>
+          </div>
+          <div th:if="${#arrays.length(flowRequestContext.messageContext.getMessagesBySource('INFO'))>0}">
+            <div class="alert alert-info" role="alert" th:each="info : ${flowRequestContext.messageContext.getMessagesBySource('INFO')}">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <span th:text="${info.text}" th:remove="tag"></span>
+            </div>
+          </div>
+          <div th:if="${#arrays.length(flowRequestContext.messageContext.getMessagesBySource('SUCCESS'))>0}">
+            <div class="alert alert-success" role="alert" th:each="info : ${flowRequestContext.messageContext.getMessagesBySource('SUCCESS')}">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <span th:text="${info.text}" th:remove="tag"></span>
+            </div>
+          </div>
+
+
+          <form name="response" action="#" method="get">
+            <textarea class="form-control" id="response" rows="24" th:if="${hentResult != null}" th:text="${hentResult}"></textarea>
+          </form>
+        </div>
+  </div>
+</div>
+  </div>
+  <br>
+  <br>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+  <script th:src="@{/assets/js/jquery-3.2.1.slim.min.js}"
+          integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+          crossorigin="anonymous"></script>
+  <script th:src="@{/assets/js/bootstrap.min.js}"></script>
+
+  <script>
+    function getSpinner(){
+      var spinner = document.getElementById('loader');
+      var spinnerContainer = document.getElementById('spinner-container');
+      var seNumber = document.getElementById('virksomhedSENummerIdentifikator').value;
+      var afgiftNumber = document.getElementById('afgiftOperatoerPunktAfgiftIdentifikator').value;
+      console.log(seNumber + " og " + afgiftNumber)
+      if (seNumber !== '' && afgiftNumber !== ''){
+        spinner.style.display = 'block';
+        spinnerContainer.style.display = 'flex';
+        spinnerContainer.style.zIndex = 9999;
+        spinnerContainer.style.backgroundColor = rgba(255, 255, 255, 0.5);
+      }
+    }
+
+    function autocomplete(inp, arr) {
+      /*the autocomplete function takes two arguments,
+      the text field element and an array of possible autocompleted values:*/
+      var currentFocus;
+      /*execute a function when someone writes in the text field:*/
+      inp.addEventListener("input", function(e) {
+        var a, b, i, val = this.value;
+        /*close any already open lists of autocompleted values*/
+        closeAllLists();
+        if (!val) { return false;}
+        currentFocus = -1;
+        /*create a DIV element that will contain the items (values):*/
+        a = document.createElement("DIV");
+        a.setAttribute("id", this.id + "autocomplete-list");
+        a.setAttribute("class", "autocomplete-items");
+        /*append the DIV element as a child of the autocomplete container:*/
+        this.parentNode.appendChild(a);
+        /*for each item in the array...*/
+        for (i = 0; i < arr.length; i++) {
+          /*check if the item starts with the same letters as the text field value:*/
+          if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+            /*create a DIV element for each matching element:*/
+            b = document.createElement("DIV");
+            /*make the matching letters bold:*/
+            b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+            b.innerHTML += arr[i].substr(val.length);
+            /*insert a input field that will hold the current array item's value:*/
+            b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+            /*execute a function when someone clicks on the item value (DIV element):*/
+            b.addEventListener("click", function(e) {
+              /*insert the value for the autocomplete text field:*/
+              inp.value = this.getElementsByTagName("input")[0].value;
+              /*close the list of autocompleted values,
+              (or any other open lists of autocompleted values:*/
+              closeAllLists();
+            });
+            a.appendChild(b);
+          }
+        }
+      });
+      /*execute a function presses a key on the keyboard:*/
+      inp.addEventListener("keydown", function(e) {
+        var x = document.getElementById(this.id + "autocomplete-list");
+        if (x) x = x.getElementsByTagName("div");
+        if (e.keyCode == 40) {
+          /*If the arrow DOWN key is pressed,
+          increase the currentFocus variable:*/
+          currentFocus++;
+          /*and and make the current item more visible:*/
+          addActive(x);
+        } else if (e.keyCode == 38) { //up
+          /*If the arrow UP key is pressed,
+          decrease the currentFocus variable:*/
+          currentFocus--;
+          /*and and make the current item more visible:*/
+          addActive(x);
+        } else if (e.keyCode == 13) {
+          /*If the ENTER key is pressed, prevent the form from being submitted,*/
+          e.preventDefault();
+          if (currentFocus > -1) {
+            /*and simulate a click on the "active" item:*/
+            if (x) x[currentFocus].click();
+          }
+        }
+      });
+      function addActive(x) {
+        /*a function to classify an item as "active":*/
+        if (!x) return false;
+        /*start by removing the "active" class on all items:*/
+        removeActive(x);
+        if (currentFocus >= x.length) currentFocus = 0;
+        if (currentFocus < 0) currentFocus = (x.length - 1);
+        /*add class "autocomplete-active":*/
+        x[currentFocus].classList.add("autocomplete-active");
+      }
+      function removeActive(x) {
+        /*a function to remove the "active" class from all autocomplete items:*/
+        for (var i = 0; i < x.length; i++) {
+          x[i].classList.remove("autocomplete-active");
+        }
+      }
+      function closeAllLists(elmnt) {
+        /*close all autocomplete lists in the document,
+        except the one passed as an argument:*/
+        var x = document.getElementsByClassName("autocomplete-items");
+        for (var i = 0; i < x.length; i++) {
+          if (elmnt != x[i] && elmnt != inp) {
+            x[i].parentNode.removeChild(x[i]);
+          }
+        }
+      }
+      /*execute a function when someone clicks in the document:*/
+      document.addEventListener("click", function (e) {
+        closeAllLists(e.target);
+      });
+    };
+
+    var autocompleteGroupsJS =["hej", "hejsa", "ja", "jaaa","nej", "123123"];
+
+    var autocompletionGroups = autocompleteGroupsJS;
+
+    autocomplete(document.getElementById("virksomhedSENummerIdentifikator"), autocompletionGroups);
+  </script>
+
+</div>
+</body>
+</html>

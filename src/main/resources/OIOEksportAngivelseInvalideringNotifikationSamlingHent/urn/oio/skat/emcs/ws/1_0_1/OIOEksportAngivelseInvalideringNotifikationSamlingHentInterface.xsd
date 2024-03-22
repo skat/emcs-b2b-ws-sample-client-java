@@ -1,4 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xs:schema [
+  <!ELEMENT xs:schema (xs:annotation|xs:include|xs:element|xs:complexType)*>
+  <!ATTLIST xs:schema
+    xmlns:struct CDATA #REQUIRED
+    xmlns:xs CDATA #REQUIRED
+    targetNamespace CDATA #REQUIRED
+    elementFormDefault CDATA #REQUIRED
+    attributeFormDefault CDATA #REQUIRED
+    version CDATA #REQUIRED>
+  <!ELEMENT xs:annotation (xs:documentation)*>
+  <!ELEMENT xs:documentation (#PCDATA)>
+  <!ELEMENT xs:include (#PCDATA)>
+  <!ATTLIST xs:include
+    schemaLocation CDATA #REQUIRED>
+  <!ELEMENT xs:element (#PCDATA)>
+  <!ATTLIST xs:element
+    name CDATA #IMPLIED
+    ref CDATA #IMPLIED
+    type CDATA #IMPLIED>
+  <!ELEMENT xs:complexType (xs:choice)*>
+  <!ATTLIST xs:complexType
+    name CDATA #REQUIRED>
+  <!ELEMENT xs:choice (xs:element)*>
+  ]>
 <xs:schema xmlns:struct="urn:oio:skat:emcs:ws:1.0.1" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:oio:skat:emcs:ws:1.0.1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
 	<xs:annotation>
 		<xs:documentation>OIO-udgave af tilsvarende forretningsservice.  Servicen benyttes til af forespørge på ledsagedokumenter.</xs:documentation>

@@ -19,7 +19,6 @@ public class OIOEksportAfvisningSamlingHentClientTest extends BaseClientTest {
     public void invoke() throws DatatypeConfigurationException {
         String endpointURL =
                 getEndpoint("OIOEksportAfvisningSamlingHent");
-
         if (endpointURL != null) {
             // VAT Number of the entity sending. Rule of thumb: this number matches
             // this CVR number present in the certificate.

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>EMCS Sample GUI</title>
+
+  <!-- Bootstrap core CSS -->
+  <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+
+  <style>
+    #loader {
+      display: none;
+      border: 16px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 16px solid #3498db;
+      width: 120px;
+      height: 120px;
+      -webkit-animation: spin 2s linear infinite; /* Safari */
+      animation: spin 2s linear infinite;
+    }
+
+    #spinner-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Safari */
+    @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">EMCS Sample GUI - EU services</a>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+    </ul>
+    <form action="" method="post">
+      <input class="btn btn-primary" type="submit" name="_eventId_hent" value="SamlingHent services"/>
+      <input class="btn btn-primary" type="submit" name="_eventId_doc"  value="Dokument services" />
+      <input class="btn btn-primary" type="submit" href="eu.html"  value="EU services" />
+    </form>
+  </div>
+</nav>
+<div class="container">
+  <div class="row">
+    <div class="col-12">&nbsp;
+    </div>
+  </div>
+
+  <div id="spinner-container">
+    <div id="loader"></div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-6">
+
+      <div class="card">
+
+        <div class="card-header">
+          <b>Service Request</b>
+        </div>
+        <div class="card-body">
+
+          <form action="" method="post">
+            <div class="form-group">
+              <label class="col-form-label" for="dokumentDropDown">Service navn</label>
+              <select class="form-control" th:field="*{euModel.serviceName}" id="dokumentDropDown">
+                <option th:value="OIOEUReferenceDataAnmodClient">OIOEUReferenceDataAnmodClient</option>
+                <option th:value="OIOEUReferenceDataHentClient">OIOEUReferenceDataHentClient</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="col-form-label" for="file">Dokument</label>
+              <select class="form-control" th:field="*{euModel.file}" id="file">
+                <option th:value="ie705.xml">ie705</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="col-form-label" for="virksomhedSENummerIdentifikator">SE nummer</label>
+              <input class="form-control"  required th:field="*{euModel.virksomhedSENummerIdentifikator}" id="virksomhedSENummerIdentifikator"/>
+            </div>
+            <div class="form-group">
+              <label class="col-form-label" for="afgiftOperatoerPunktAfgiftIdentifikator">Afgift ID</label>
+              <input class="form-control"  required th:field="*{euModel.afgiftOperatoerPunktAfgiftIdentifikator}" id="afgiftOperatoerPunktAfgiftIdentifikator"/>
+            </div>
+            <div class="form-group">
+              <label class="col-form-label" for="arcnumber">beskedIdentifikatorr</label>
+              <input class="form-control" th:field="*{euModel.ARCnumber}" id="arcnumber"/>
+            </div>
+            <input th:onclick="getSpinner()" type="submit" name="_eventId_test" value="Test" class="btn btn-primary"/>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <b>Service Response</b>
+        </div>
+        <div class="card-body">
+
+          <div th:if="${#arrays.length(flowRequestContext.messageContext.getMessagesBySource('ERROR'))>0}">
+            <div class="alert alert-danger" role="alert" th:each="err : ${flowRequestContext.messageContext.getMessagesBySource('ERROR')}">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <span th:text="${err.text}" th:remove="tag"></span>
+            </div>
+          </div>
+          <div th:if="${#arrays.length(flowRequestContext.messageContext.getMessagesBySource('INFO'))>0}">
+            <div class="alert alert-info" role="alert" th:each="info : ${flowRequestContext.messageContext.getMessagesBySource('INFO')}">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <span th:text="${info.text}" th:remove="tag"></span>
+            </div>
+          </div>
+          <div th:if="${#arrays.length(flowRequestContext.messageContext.getMessagesBySource('SUCCESS'))>0}">
+            <div class="alert alert-success" role="alert" th:each="info : ${flowRequestContext.messageContext.getMessagesBySource('SUCCESS')}">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <span th:text="${info.text}" th:remove="tag"></span>
+            </div>
+          </div>
+
+          <form name="response" action="#" method="get">
+            <textarea class="form-control" id="response" rows="24" th:if="${euResult != null}" th:text="${euResult}"></textarea>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+
+
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script th:src="@{/assets/js/jquery-3.2.1.slim.min.js}"
+          integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+          crossorigin="anonymous"></script>
+  <script th:src="@{/assets/js/bootstrap.min.js}"></script>
+
+  <script>
+    function getSpinner(){
+      var spinner = document.getElementById('loader');
+      var spinnerContainer = document.getElementById('spinner-container');
+      var seNumber = document.getElementById('virksomhedSENummerIdentifikator').value;
+      var afgiftNumber = document.getElementById('afgiftOperatoerPunktAfgiftIdentifikator').value;
+      console.log(seNumber + " og " + afgiftNumber)
+      if (seNumber !== '' && afgiftNumber !== ''){
+        spinner.style.display = 'block';
+        spinnerContainer.style.display = 'flex';
+        spinnerContainer.style.zIndex = 9999;
+        spinnerContainer.style.backgroundColor = rgba(255, 255, 255, 0.5);
+      }
+    }
+  </script>
+
+</div>
+</body>
+</html>

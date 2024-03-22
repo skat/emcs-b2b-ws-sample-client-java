@@ -20,6 +20,7 @@ package dk.skat.emcs.b2b.sample;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,11 +46,12 @@ public class UTPasswordCallback implements CallbackHandler {
     public UTPasswordCallback() {
         String P12_ALIAS = getConfig().getString("dk.skat.emcs.b2b.sample.ClientCertAlias");
         String P12_PASSPHRASE = getConfig().getString("dk.skat.emcs.b2b.sample." + P12_ALIAS + ".P12_PASSPHRASE");
+        System.out.println(P12_ALIAS + ", " + P12_PASSPHRASE);
         passwords.put(P12_ALIAS, P12_PASSPHRASE);
     }
 
     /**
-     * Here, we attempt to get the password from the private 
+     * Here, we attempt to get the password from the private
      * alias/passwords map.
      */
     public void handle(Callback[] callbacks) throws IOException, UnsupportedCallbackException {
@@ -72,7 +74,7 @@ public class UTPasswordCallback implements CallbackHandler {
     }
 
     private static Config getConfig() {
-        return ConfigFactory.parseFile(new File("app.conf")).withFallback(ConfigFactory.load());
+        return ConfigFactory.parseFile(new File(System.getProperty("user.dir") + File.separator + "app.conf")).withFallback(ConfigFactory.load());
     }
 
 }

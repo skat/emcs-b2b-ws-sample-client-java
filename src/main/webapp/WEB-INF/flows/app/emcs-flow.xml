@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          https://www.springframework.org/schema/webflow/spring-webflow.xsd">
+
+  <var name="handler" class="dk.skat.emcs.b2b.sample.ServiceController"/>
+
+  <var name="hentModel" class="dk.skat.emcs.b2b.sample.SamlingHentModel"/>
+  <var name="hentResult" class="java.lang.String"/>
+
+  <var name="docModel" class="dk.skat.emcs.b2b.sample.SamlingHentModel"/>
+  <var name="docResult" class="java.lang.String"/>
+
+  <var name="euModel" class="dk.skat.emcs.b2b.sample.SamlingHentModel"/>
+  <var name="euResult" class="java.lang.String"/>
+
+  <view-state id="indexflow" model="hentModel" view="views/index.html">
+    <transition on="test" to="indexflow" >
+      <evaluate expression="handler.makeServiceCall(hentModel, messageContext)" result="hentResult"/>
+    </transition>
+    <transition on="doc" to="dokumentflow"/>
+    <transition on="eu" to="euflow"/>
+  </view-state>
+
+
+  <view-state id="dokumentflow" model="docModel" view="views/dokumentflow.html">
+    <transition on="test" to="dokumentflow" >
+      <evaluate expression="handler.makeServiceCall(docModel, messageContext)" result="docResult"/>
+    </transition>
+    <transition on="hent" to="indexflow"/>
+    <transition on="eu" to="euflow"/>
+  </view-state>
+
+  <view-state id="euflow" model="euModel" view="views/eu.html">
+    <transition on="test" to="euflow" >
+      <evaluate expression="handler.makeServiceCall(euModel, messageContext)" result="euResult"/>
+    </transition>
+    <transition on="hent" to="indexflow"/>
+    <transition on="doc" to="dokumentflow"/>
+  </view-state>
+
+</flow>
