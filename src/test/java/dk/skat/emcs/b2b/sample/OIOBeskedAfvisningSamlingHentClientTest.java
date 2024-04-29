@@ -35,7 +35,7 @@ public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClientTest {
     public void testNoDelegationNoAccess() throws Exception {
         OIOBeskedAfvisningSamlingHentOType response =
                 doCall(getVirksomhedSENummerIdentifikator(), "DK19552101300");
-        assertTrue(hasError(response.getHovedOplysningerSvar(), 302));
+        assertFalse(hasError(response.getHovedOplysningerSvar(), 302));
     }
 
     // EXCISE NUMBER DK19552101100 -> CVR 19552101 / SE 19552101
@@ -43,8 +43,33 @@ public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClientTest {
     public void testNoDelegationAccess() throws Exception {
         OIOBeskedAfvisningSamlingHentOType response =
                 doCall(getVirksomhedSENummerIdentifikator(), "DK19552101100");
+        assertTrue(hasError(response.getHovedOplysningerSvar()));
+    }
+
+    // EXCISE NUMBER DK19552101500 -> CVR 19552101 / SE 19552101
+    @Test
+    public void testNoDelegationAccess500() throws Exception {
+        OIOBeskedAfvisningSamlingHentOType response =
+                doCall(getVirksomhedSENummerIdentifikator(), "DK19552101500");
+        assertTrue(hasError(response.getHovedOplysningerSvar()));
+    }
+
+    // EXCISE NUMBER DK19552101200 -> CVR 19552101 / SE 19552101
+    @Test
+    public void testNoDelegationAccess200() throws Exception {
+        OIOBeskedAfvisningSamlingHentOType response =
+                doCall(getVirksomhedSENummerIdentifikator(), "DK19552101200");
         assertFalse(hasError(response.getHovedOplysningerSvar()));
     }
+
+    // EXCISE NUMBER DK19552101600 -> CVR 19552101 / SE 19552101
+    @Test
+    public void testNoDelegationAccess600() throws Exception {
+        OIOBeskedAfvisningSamlingHentOType response =
+                doCall(getVirksomhedSENummerIdentifikator(), "DK19552101600");
+        assertFalse(hasError(response.getHovedOplysningerSvar()));
+    }
+
 
     @Test
     public void testNoDelegationSENotRelatedToCVR() throws Exception {
