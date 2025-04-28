@@ -1,6 +1,7 @@
 package dk.skat.emcs.b2b.sample;
 
 import oio.skat.emcs.ws._1_0.OIOLedsageDokumentOmdirigeretAdvisSamlingHentOType;
+import oio.skat.emcs.ws._1_0.OIOLedsageDokumentOpretOType;
 import oio.skat.emcs.ws._1_0.OIOLedsageDokumentOpsplitningOpretOType;
 import org.junit.Test;
 
@@ -42,9 +43,11 @@ public class OIOLedsageDokumentOpsplitningOpretClientTest extends BaseClientTest
             // -------
             File ie815 = new File("split-ie815.xml");
             OIOLedsageDokumentOpretClient oioLedsageDocumentClient = new OIOLedsageDokumentOpretClient(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
-            String arc = oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,
+            OIOLedsageDokumentOpretOType response1 = oioLedsageDocumentClient.invoke2(virksomhedSENummerIdentifikator,
                     consignor, ie815);
+            assertFalse(hasError(response1.getHovedOplysningerSvar()));
 
+            String arc = response1.getOutput().getLedsageDokument().getLedsagedokumentARCIdentifikator();
             assertNotNull("Did not receive ARC number. Exiting.", arc);
 
             LOGGER.info("Received ARC = " + arc);
