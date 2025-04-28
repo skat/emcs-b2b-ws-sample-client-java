@@ -65,7 +65,7 @@ public class OIOKvitteringAfvigelseBegrundelseOpretClient extends EMCSBaseClient
      * @throws IOException N/A
      * @throws SAXException N/A
      */
-    public void invoke(String virksomhedSENummerIdentifikator,
+    public OIOKvitteringAfvigelseBegrundelseOpretOType invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        String ie871,
                        String arc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
@@ -139,6 +139,7 @@ public class OIOKvitteringAfvigelseBegrundelseOpretClient extends EMCSBaseClient
         sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
 
         LOGGER.info(NEW_LINE + sb.toString());
+        return out;
     }
 
 }
