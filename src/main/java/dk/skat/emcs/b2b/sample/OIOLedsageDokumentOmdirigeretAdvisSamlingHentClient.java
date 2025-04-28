@@ -54,7 +54,7 @@ public class OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient extends EMCSBas
      * @throws IOException N/A
      * @throws SAXException N/A
      */
-    public void invoke(String virksomhedSENummerIdentifikator,
+    public OIOLedsageDokumentOmdirigeretAdvisSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
         OIOLedsageDokumentOmdirigeretAdvisSamlingHentIType request = new OIOLedsageDokumentOmdirigeretAdvisSamlingHentIType();
@@ -94,6 +94,7 @@ public class OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient extends EMCSBas
             i++;
         }
         LOGGER.info(NEW_LINE + sb.toString());
+        return response;
     }
 
 }

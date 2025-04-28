@@ -1,21 +1,26 @@
 package dk.skat.emcs.b2b.sample;
 
+import oio.skat.emcs.ws._1_0.OIOLedsageDokumentOmdirigeretAdvisSamlingHentOType;
+import oio.skat.emcs.ws._1_0.OIOLedsageDokumentOpsplitningOpretOType;
 import org.junit.Test;
 
 import java.io.File;
 import java.util.logging.Logger;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+
 /**
  * OIOLedsageDokumentOpsplitningOpret Test (IE825 as request)
- *
+ * <p>
  * Purpose: Verify submit of IE825
- *
+ * <p>
  * Test case design steps:
- *
+ * <p>
  * Step 1: Submit IE815 (using OIOLedsageDokumentOpret).
  * Step 2: Submit IE825 (using OIOLedsageDokumentOpsplitningOpret).
  * Step 3: Fetch IE803 (using OIOLedsageDokumentOmdirigeretAdvisSamlingHent).
- *
+ * <p>
  * @author SKAT
  * @since 1.2
  */
@@ -40,30 +45,30 @@ public class OIOLedsageDokumentOpsplitningOpretClientTest extends BaseClientTest
             String arc = oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,
                     consignor, ie815);
 
-            if (arc == null) {
-                LOGGER.warning("Did not receive ARC number. Exiting");
-                return;
-            }
+            assertNotNull("Did not receive ARC number. Exiting.", arc);
+
             LOGGER.info("Received ARC = " + arc);
-            LOGGER.info("Sleeping 2 minutes to allow EMCS process the IE815.");
+
             sleep(2);
 
             // Step 2:
             // -------
             String ie825 = "split-ie825.xml";
             OIOLedsageDokumentOpsplitningOpretClient oioLedsageDokumentOpsplitningOpretClient = new OIOLedsageDokumentOpsplitningOpretClient(getEndpoint(OIO_LEDSAGE_DOKUMENT_OPSPLITNING_OPRET));
-            oioLedsageDokumentOpsplitningOpretClient.invoke(virksomhedSENummerIdentifikator,
+            OIOLedsageDokumentOpsplitningOpretOType response2 = oioLedsageDokumentOpsplitningOpretClient.invoke(virksomhedSENummerIdentifikator,
                     consignor, ie825,arc);
+            assertFalse(hasError(response2.getHovedOplysningerSvar()));
+            assertFalse(response2.getOutput().getLedsageDokumentSamling().getLedsageDokument().isEmpty());
 
-            LOGGER.info("Sleeping 2 minutes to allow EMCS fetching IE803.");
             sleep(2);
 
             // Step 3:
             // -------
             OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient client = new OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient(getEndpoint(OIO_LEDSAGE_DOKUMENT_OMDIRIGERET_ADVIS_SAMLING_HENT));
-            client.invoke(virksomhedSENummerIdentifikator,
+            OIOLedsageDokumentOmdirigeretAdvisSamlingHentOType response3 = client.invoke(virksomhedSENummerIdentifikator,
                     consignor);
-
+            assertFalse(hasError(response3.getHovedOplysningerSvar()));
+            assertFalse(response3.getLedsageDokumentOmdirigeretAdvisSamling().getIE803BeskedTekst().isEmpty());
         }
     }
 
