@@ -6,6 +6,7 @@ import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.FejlStrukturT
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerSvarType;
 
 import java.io.File;
+import java.util.logging.Logger;
 
 /**
  * BaseClient - Helper methods for test clients, e.g. we're using the same VAT number for all tests.
@@ -14,6 +15,8 @@ import java.io.File;
  * @since 1.2
  */
 public class BaseClientTest {
+
+    private static final Logger LOGGER = Logger.getLogger(BaseClientTest.class.getName());
 
     protected static final String OIO_PAAMINDELSE_SAMLING_HENT = "OIOPaamindelseSamlingHent";
     protected static final String OIO_EUREFERENCE_DATA_ANMOD = "OIOEUReferenceDataAnmod";
@@ -74,7 +77,12 @@ public class BaseClientTest {
     }
 
     protected void sleep(int minutes) throws InterruptedException {
-        Thread.sleep(1000 * 60 * minutes);
+        LOGGER.info("Sleeping " + minutes + " minutes.");
+        for (int i = 1; i <= minutes; i++) {
+            LOGGER.info((minutes + 1) - i + " minute(s) remaining...");
+            Thread.sleep(1000 * 60);
+        }
+        LOGGER.info("Awake.");
     }
 
     protected static Config getConfig() {

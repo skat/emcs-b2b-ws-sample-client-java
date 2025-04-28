@@ -67,7 +67,7 @@ public class OIOForsinkelseForklaringOpretClient extends EMCSBaseClient {
      * @throws IOException N/A
      * @throws SAXException N/A
      */
-    public void invoke(String virksomhedSENummerIdentifikator,
+    public OIOForsinkelseForklaringOpretOType invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        String ie837, String arc, String submitterIdentification) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
@@ -147,6 +147,7 @@ public class OIOForsinkelseForklaringOpretClient extends EMCSBaseClient {
         }
 
         LOGGER.info(NEW_LINE + sb.toString());
+        return out;
     }
 
 }

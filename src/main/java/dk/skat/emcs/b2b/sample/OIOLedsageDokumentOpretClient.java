@@ -71,14 +71,29 @@ public class OIOLedsageDokumentOpretClient extends EMCSBaseClient {
             replaceValue(doc, "/IE815/Body/SubmittedDraftOfEADESAD/EadEsadDraft/LocalReferenceNumber", result);
         }
 
-        return this.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
-
-
+        OIOLedsageDokumentOpretOType out =  this.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
+        return out.getOutput().getLedsageDokument().getLedsagedokumentARCIdentifikator();
     }
 
     public String invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        File ie815) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+        // Load IE815 document
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        Document doc = db.parse(ie815);
+        resetDateOfPreparation(doc, "/IE815/Header/DateOfPreparation");
+        resetTimeOfPreparation(doc, "/IE815/Header/TimeOfPreparation");
+        resetMessageIdentifier(doc, "/IE815/Header/MessageIdentifier");
+        String result = RandomStringUtils.random(7, false, true);
+        replaceValue(doc, "/IE815/Body/SubmittedDraftOfEADESAD/EadEsadDraft/LocalReferenceNumber", result);
+        OIOLedsageDokumentOpretOType out = this.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
+        return out.getOutput().getLedsageDokument().getLedsagedokumentARCIdentifikator();
+    }
+
+    public OIOLedsageDokumentOpretOType invoke2(String virksomhedSENummerIdentifikator,
+                         String afgiftOperatoerPunktAfgiftIdentifikator,
+                         File ie815) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
         // Load IE815 document
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
@@ -103,7 +118,7 @@ public class OIOLedsageDokumentOpretClient extends EMCSBaseClient {
      * @throws IOException                    N/A
      * @throws SAXException                   N/A
      */
-    private String invoke(String virksomhedSENummerIdentifikator,
+    private OIOLedsageDokumentOpretOType invoke(String virksomhedSENummerIdentifikator,
                           String afgiftOperatoerPunktAfgiftIdentifikator,
                           Document doc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
@@ -177,7 +192,7 @@ public class OIOLedsageDokumentOpretClient extends EMCSBaseClient {
         sb.append("*******************************************************************").append(NEW_LINE);
 
         LOGGER.info(NEW_LINE + sb.toString());
-        return arc;
+        return out;
     }
 
 

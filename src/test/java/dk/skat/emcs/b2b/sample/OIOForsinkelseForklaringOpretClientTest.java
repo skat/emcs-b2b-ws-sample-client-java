@@ -1,9 +1,13 @@
 package dk.skat.emcs.b2b.sample;
 
+import oio.skat.emcs.ws._1_0.OIOForsinkelseForklaringOpretOType;
+import oio.skat.emcs.ws._1_0.OIOLedsageDokumentOpretOType;
 import org.junit.Test;
 
 import java.io.File;
 import java.util.logging.Logger;
+
+import static org.junit.Assert.*;
 
 /**
  * OIOForsinkelseForklaringOpret Test
@@ -33,18 +37,16 @@ public class OIOForsinkelseForklaringOpretClientTest extends BaseClientTest {
 
             // Step 1:
             // -------
-            String arc;
             File ie815 = new File("ie815.xml");
             OIOLedsageDokumentOpretClient oioLedsageDocumentClient = new OIOLedsageDokumentOpretClient(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
-            arc = oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,
+            OIOLedsageDokumentOpretOType response1 = oioLedsageDocumentClient.invoke2(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator, ie815);
+            assertFalse(hasError(response1.getHovedOplysningerSvar()));
 
-            if (arc == null) {
-                LOGGER.warning("Did not receive ARC number. Exiting");
-                return;
-            }
+            String arc = response1.getOutput().getLedsageDokument().getLedsagedokumentARCIdentifikator();
 
-            LOGGER.info("Sleeping 2 minutes to allow EMCS process the IE815.");
+            assertNotNull("Did not receive ARC number. Exiting.", arc);
+
             sleep(2);
 
             // Step 2:
@@ -52,8 +54,9 @@ public class OIOForsinkelseForklaringOpretClientTest extends BaseClientTest {
             // Path to where the IE837 document is located
             String ie837 = "ie837.xml";
             OIOForsinkelseForklaringOpretClient oioForsinkelseForklaringClient = new OIOForsinkelseForklaringOpretClient(endpointURL);
-            oioForsinkelseForklaringClient.invoke(virksomhedSENummerIdentifikator,
+            OIOForsinkelseForklaringOpretOType response2 = oioForsinkelseForklaringClient.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator, ie837, arc, afgiftOperatoerPunktAfgiftIdentifikator);
+            assertFalse(hasError(response2.getHovedOplysningerSvar()));
         }
     }
 
