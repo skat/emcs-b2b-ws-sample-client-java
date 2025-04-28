@@ -12,6 +12,7 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.apache.cxf.frontend.ClientProxy;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -148,6 +149,7 @@ public class OIOKvitteringOpretClient extends EMCSBaseClient {
         // Set endpoint of service.
         BindingProvider bp = (BindingProvider) port;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
+        addCleartextLogging(ClientProxy.getClient(port));
 
         StringBuilder sbRequest = new StringBuilder();
         sbRequest.append(generateConsoleOutput(

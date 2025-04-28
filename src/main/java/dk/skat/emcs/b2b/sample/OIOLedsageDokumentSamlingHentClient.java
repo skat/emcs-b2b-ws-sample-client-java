@@ -7,6 +7,7 @@ import oio.skat.emcs.ws._1_0_1.OIOLedsageDokumentSamlingHentServicePortType;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.apache.cxf.frontend.ClientProxy;
 import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -101,6 +102,7 @@ public class OIOLedsageDokumentSamlingHentClient extends EMCSBaseClient {
         // Set endpoint of service.
         BindingProvider bp = (BindingProvider)port;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
+        addCleartextLogging(ClientProxy.getClient(port));
 
         StringBuilder sbRequest = new StringBuilder();
         sbRequest.append(generateConsoleOutput(

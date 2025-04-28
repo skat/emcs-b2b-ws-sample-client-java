@@ -11,6 +11,7 @@ import oio.skat.emcs.ws._1_0_1.OIOLedsageDokumentAnnulleringOpretServicePortType
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.apache.cxf.frontend.ClientProxy;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -122,6 +123,7 @@ public class OIOLedsageDokumentAnnulleringOpretClient extends EMCSBaseClient {
         // Set endpoint of service.
         BindingProvider bp = (BindingProvider)port;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
+        addCleartextLogging(ClientProxy.getClient(port));
 
         StringBuilder sbRequest = new StringBuilder();
         sbRequest.append(generateConsoleOutput(
