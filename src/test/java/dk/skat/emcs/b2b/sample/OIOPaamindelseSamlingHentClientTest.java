@@ -1,8 +1,11 @@
 package dk.skat.emcs.b2b.sample;
 
+import oio.skat.emcs.ws._1_0.OIOPåmindelseSamlingHentOType;
 import org.junit.Test;
 
 import javax.xml.datatype.DatatypeConfigurationException;
+
+import static org.junit.Assert.assertFalse;
 
 /**
  * OIOPaamindelseSamlingHent Test
@@ -27,10 +30,12 @@ public class OIOPaamindelseSamlingHentClientTest extends BaseClientTest {
     public void invoke() throws DatatypeConfigurationException {
 
         if (getEndpoint(OIO_PAAMINDELSE_SAMLING_HENT) != null) {
-            String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
-            String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
             OIOPaamindelseSamlingHentClient client = new OIOPaamindelseSamlingHentClient(getEndpoint(OIO_PAAMINDELSE_SAMLING_HENT));
-            client.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator);
+            OIOPåmindelseSamlingHentOType response = client.invoke(
+                    getVirksomhedSENummerIdentifikator(),
+                    getAfgiftOperatoerPunktAfgiftIdentifikator());
+            assertFalse(hasError(response.getHovedOplysningerSvar()));
+            assertFalse(response.getPåmindelseSamling().getIE802BeskedTekst().isEmpty());
         }
     }
 }
