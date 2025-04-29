@@ -60,7 +60,7 @@ public class OIOLedsageDokumentSamlingHentClient extends EMCSBaseClient {
      * @throws IOException N/A
      * @throws SAXException N/A
      */
-    public String invoke(String virksomhedSENummerIdentifikator,
+    public OIOLedsageDokumentSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        String ARCnummer) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
@@ -127,7 +127,7 @@ public class OIOLedsageDokumentSamlingHentClient extends EMCSBaseClient {
         }
 
         LOGGER.info(NEW_LINE + sb.toString());
-        return sb.toString();
+        return out;
     }
 
 }

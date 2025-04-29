@@ -67,7 +67,7 @@ public class OIOKvitteringOpretClient extends EMCSBaseClient {
      * @throws SAXException                   N/A
      */
 
-    public String invoke(String virksomhedSENummerIdentifikator,
+    public OIOKvitteringOpretOType invoke(String virksomhedSENummerIdentifikator,
                          String afgiftOperatoerPunktAfgiftIdentifikator,
                          String ie818,boolean override) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
@@ -91,17 +91,17 @@ public class OIOKvitteringOpretClient extends EMCSBaseClient {
         this.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
     }
 
-    public void invoke(String virksomhedSENummerIdentifikator,
+    public OIOKvitteringOpretOType invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        File ie818,
                        String arc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
         Document doc = loadIEDocument(ie818);
         this.replaceValue(doc, "/IE818/Body/AcceptedOrRejectedReportOfReceiptExport/ExciseMovement/AdministrativeReferenceCode", arc);
-        this.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
+        return this.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
     }
 
 
-    private String invoke(String virksomhedSENummerIdentifikator,
+    private OIOKvitteringOpretOType invoke(String virksomhedSENummerIdentifikator,
                             String afgiftOperatoerPunktAfgiftIdentifikator,
                             Document doc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
@@ -165,8 +165,6 @@ public class OIOKvitteringOpretClient extends EMCSBaseClient {
         sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
         LOGGER.info(NEW_LINE + sb.toString());
 
-        boolean hasError = hasError(out.getHovedOplysningerSvar());
-
-        return sb.toString();
+        return out;
     }
 }

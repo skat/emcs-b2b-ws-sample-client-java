@@ -2,6 +2,7 @@ package dk.skat.emcs.b2b.sample;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.AdvisStrukturType;
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.FejlStrukturType;
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerSvarType;
 
@@ -128,5 +129,22 @@ public class BaseClientTest {
         }
         return result;
     }
+
+    protected boolean hasAdvis(HovedOplysningerSvarType hovedOplysningerSvarType, int advisCode) {
+        boolean result = false;
+        if (!hovedOplysningerSvarType.getSvarStruktur().getAdvisStrukturOrFejlStruktur().isEmpty()) {
+            for (Object errorOrAdvis : hovedOplysningerSvarType.getSvarStruktur().getAdvisStrukturOrFejlStruktur()) {
+                if (errorOrAdvis instanceof AdvisStrukturType) {
+                    AdvisStrukturType advisStrukturType = (AdvisStrukturType) errorOrAdvis;
+                    if (advisCode == advisStrukturType.getAdvisIdentifikator().intValue()) {
+                        result = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
 
 }
