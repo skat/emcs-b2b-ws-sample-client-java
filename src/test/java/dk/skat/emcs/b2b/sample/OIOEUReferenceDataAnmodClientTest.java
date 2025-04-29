@@ -17,7 +17,7 @@ import java.util.UUID;
  * <p>
  * Step 1: Submit IE705 (using OIOEUReferenceDataAnmod)
  * <p>
- * IMPORTANT: OIOEUReferenceDataHent is also tested as part of {@link OIOEUReferenceDataHentClientTest#invoke()}
+ * IMPORTANT: OIOEUReferenceDataHent is also tested as part of {@link OIOEUReferenceDataHentClientTest#scenario()}
  *
  * @author SKAT
  * @since 1.2
@@ -27,7 +27,7 @@ public class OIOEUReferenceDataAnmodClientTest extends BaseClientTest {
     @Test
     public void invoke() throws DatatypeConfigurationException, ParserConfigurationException, SAXException, IOException {
         String endpointURL =
-                getEndpoint("OIOEUReferenceDataAnmod");
+                getEndpoint(OIO_EUREFERENCE_DATA_ANMOD);
 
         if (endpointURL != null) {
             // VAT Number of the entity sending. Rule of thumb: this number matches
