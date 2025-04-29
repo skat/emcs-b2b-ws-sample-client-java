@@ -87,7 +87,7 @@ public class OIOLedsageDokumentNotifikationOpretClient extends EMCSBaseClient {
          * @throws IOException N/A
          * @throws SAXException N/A
          */
-    public void invoke(String virksomhedSENummerIdentifikator,
+    public OIOLedsageDokumentNotifikationOpretOType invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        String ie819,
                        String arc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
@@ -162,6 +162,7 @@ public class OIOLedsageDokumentNotifikationOpretClient extends EMCSBaseClient {
         sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
 
         LOGGER.info(NEW_LINE + sb.toString());
+        return out;
     }
 
 }
