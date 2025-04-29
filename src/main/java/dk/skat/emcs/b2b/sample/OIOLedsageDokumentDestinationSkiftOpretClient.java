@@ -67,7 +67,7 @@ public class OIOLedsageDokumentDestinationSkiftOpretClient extends EMCSBaseClien
      * @throws IOException N/A
      * @throws SAXException N/A
      */
-    public void invoke(String virksomhedSENummerIdentifikator,
+    public OIOLedsageDokumentDestinationSkiftOpretOType invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        String ie813, String arc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
@@ -140,6 +140,7 @@ public class OIOLedsageDokumentDestinationSkiftOpretClient extends EMCSBaseClien
         sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
 
         LOGGER.info(NEW_LINE + sb.toString());
+        return out;
     }
 
 }

@@ -1,5 +1,8 @@
 package dk.skat.emcs.b2b.sample;
 
+import oio.skat.emcs.ws._1_0.OIOLedsageDokumentDestinationSkiftOpretOType;
+import oio.skat.emcs.ws._1_0.OIOLedsageDokumentDestinationSkiftSamlingHentOType;
+import oio.skat.emcs.ws._1_0.OIOLedsageDokumentOpretOType;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
@@ -8,6 +11,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
+
+import static org.junit.Assert.*;
 
 /**
  * OIOLedsageDokumentDestinationSkiftSamlingHent Test
@@ -28,7 +33,7 @@ public class OIOLedsageDokumentDestinationSkiftSamlingHentClientTest extends Bas
     private static final Logger LOGGER = Logger.getLogger(OIOLedsageDokumentDestinationSkiftSamlingHentClientTest.class.getName());
 
     @Test
-    public void invoke() throws DatatypeConfigurationException, ParserConfigurationException, SAXException, IOException, InterruptedException {
+    public void scenario() throws DatatypeConfigurationException, ParserConfigurationException, SAXException, IOException, InterruptedException {
         String endpointURL =
                 getEndpoint("OIOLedsageDokumentDestinationSkiftSamlingHent");
 
@@ -37,44 +42,35 @@ public class OIOLedsageDokumentDestinationSkiftSamlingHentClientTest extends Bas
             // Excise number
             String afgiftOperatoerPunktAfgiftIdentifikator = "DK31175143300";
 
-            String arc;
-            // Step 1:
+            // Step 1: OIOLedsageDokumentOpret
             // -------
-            {
                 File ie815 = new File("change-dest-ie815.xml");
-                OIOLedsageDokumentOpretClient client = new OIOLedsageDokumentOpretClient(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
-                arc = client.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, ie815);
-            }
-
-            if (arc == null) {
-                LOGGER.warning("Did not receive ARC number. Exiting");
-                return;
-            }
-
+            OIOLedsageDokumentOpretClient client1 = new OIOLedsageDokumentOpretClient(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
+            OIOLedsageDokumentOpretOType response1 = client1.invoke2(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, ie815);
+            assertFalse(hasError(response1.getHovedOplysningerSvar()));
+            String arc = response1.getOutput().getLedsageDokument().getLedsagedokumentARCIdentifikator();
+            assertNotNull("Did not receive ARC number. Exiting.", arc);
             LOGGER.info("Received ARC = " + arc);
-            LOGGER.info("Sleeping 2 minutes to allow EMCS process the IE815 message.");
 
             sleep(2);
 
-            // Step 2:
+            // Step 2: OIOLedsageDokumentDestinationSkiftOpret
             // -------
-            {
-                String ie813 = "change-dest-ie813.xml";
-                OIOLedsageDokumentDestinationSkiftOpretClient client = new OIOLedsageDokumentDestinationSkiftOpretClient(getEndpoint("OIOLedsageDokumentDestinationSkiftOpret"));
-                client.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, ie813, arc);
-            }
+            String ie813 = "change-dest-ie813.xml";
+            OIOLedsageDokumentDestinationSkiftOpretClient client2 = new OIOLedsageDokumentDestinationSkiftOpretClient(getEndpoint("OIOLedsageDokumentDestinationSkiftOpret"));
+            OIOLedsageDokumentDestinationSkiftOpretOType response2 = client2.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, ie813, arc);
+            assertFalse(hasError(response2.getHovedOplysningerSvar()));
 
-            LOGGER.info("Sleeping 2 minutes to allow EMCS process the IE810 message.");
             sleep(2);
 
-            // Step 3:
+            // Step 3: OIOLedsageDokumentDestinationSkiftSamlingHent
             // -------
-            {
-                OIOLedsageDokumentDestinationSkiftSamlingHentClient client = new OIOLedsageDokumentDestinationSkiftSamlingHentClient(endpointURL);
-                client.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator);
-
-            }
-
+            OIOLedsageDokumentDestinationSkiftSamlingHentClient client3 = new OIOLedsageDokumentDestinationSkiftSamlingHentClient(endpointURL);
+            OIOLedsageDokumentDestinationSkiftSamlingHentOType response3 = client3.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator);
+            assertFalse(hasError(response3.getHovedOplysningerSvar()));
+            assertFalse(response3.getLedsageDokumentDestinationSkiftSamling().getIE813BeskedTekst().isEmpty());
+            assertTrue(response3.getLedsageDokumentDestinationSkiftSamling().getIE813BeskedTekst()
+                    .stream().anyMatch(e -> (e.contains(arc))));
         }
 
     }
