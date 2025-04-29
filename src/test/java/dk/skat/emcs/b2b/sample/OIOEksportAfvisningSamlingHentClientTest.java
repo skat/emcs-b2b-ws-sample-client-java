@@ -1,8 +1,11 @@
 package dk.skat.emcs.b2b.sample;
 
+import oio.skat.emcs.ws._1_0.OIOEksportAfvisningSamlingHentOType;
 import org.junit.Test;
 
 import javax.xml.datatype.DatatypeConfigurationException;
+
+import static org.junit.Assert.assertFalse;
 
 /**
  * OIOEksportAfvisningSamlingHent Test (IE839 as response)
@@ -27,8 +30,10 @@ public class OIOEksportAfvisningSamlingHentClientTest extends BaseClientTest {
             // Excise number
             String afgiftOperatoerPunktAfgiftIdentifikator = "DK31175143300";
             OIOEksportAfvisningSamlingHentClient client = new OIOEksportAfvisningSamlingHentClient(endpointURL);
-            client.invoke(virksomhedSENummerIdentifikator,
+            OIOEksportAfvisningSamlingHentOType response = client.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator);
+            assertFalse(hasError(response.getHovedOplysningerSvar()));
+            assertFalse(!response.getEksportAfvisningSamling().getIE839BeskedTekst().isEmpty());
         }
     }
 }
