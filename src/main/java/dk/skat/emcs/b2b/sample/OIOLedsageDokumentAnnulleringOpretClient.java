@@ -64,7 +64,7 @@ public class OIOLedsageDokumentAnnulleringOpretClient extends EMCSBaseClient {
      * @throws IOException N/A
      * @throws SAXException N/A
      */
-    public String  invoke(String virksomhedSENummerIdentifikator,
+    public OIOLedsageDokumentAnnulleringOpretOType invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        String ie810, String arc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
         Document doc = loadIEDocument(ie810);
@@ -79,7 +79,7 @@ public class OIOLedsageDokumentAnnulleringOpretClient extends EMCSBaseClient {
     }
 
 
-    private String invokeit(String virksomhedSENummerIdentifikator,
+    private OIOLedsageDokumentAnnulleringOpretOType invokeit(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        Document doc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
@@ -139,7 +139,7 @@ public class OIOLedsageDokumentAnnulleringOpretClient extends EMCSBaseClient {
         sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
 
         LOGGER.info(NEW_LINE + sb.toString());
-        return sb.toString();
+        return out;
     }
 
 
