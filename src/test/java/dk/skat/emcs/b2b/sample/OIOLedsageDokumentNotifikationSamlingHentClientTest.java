@@ -12,8 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 /**
  * 1. Call OIOLedsageDokumentOpret (IE815)
@@ -77,7 +76,8 @@ public class OIOLedsageDokumentNotifikationSamlingHentClientTest extends BaseCli
             OIOLedsageDokumentNotifikationSamlingHentOType response3 = client3.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator);
             assertFalse(hasError(response3.getHovedOplysningerSvar()));
             assertFalse(response3.getLedsageDokumentNotifikationSamling().getIE819BeskedTekst().isEmpty());
-
+            assertTrue(response3.getLedsageDokumentNotifikationSamling().getIE819BeskedTekst()
+                    .stream().anyMatch(e -> (e.contains(arc))));
         }
     }
 }
