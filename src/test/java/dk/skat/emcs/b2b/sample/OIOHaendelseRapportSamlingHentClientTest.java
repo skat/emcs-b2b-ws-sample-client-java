@@ -1,15 +1,18 @@
 package dk.skat.emcs.b2b.sample;
 
+import oio.skat.emcs.ws._1_0.OIOHaendelseRapportSamlingHentOType;
 import org.junit.Test;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 
+import static org.junit.Assert.assertFalse;
+
 /**
  * OIOHaendelseRapportSamlingHent Test (IE840 as response)
- *
+ * <p>
  * IMPORTANT: This test case can first be run following steps completed
  * in the test system by the Danish Customs and Tax Administration.
- *
+ * <p>
  * Contact help desk and request test data for the service: OIOHaendelseRapportSamlingHent
  *
  */
@@ -27,8 +30,9 @@ public class OIOHaendelseRapportSamlingHentClientTest extends BaseClientTest {
             // Excise number
             String afgiftOperatoerPunktAfgiftIdentifikator =  "DK99025875300";
             OIOHaendelseRapportSamlingHentClient client = new OIOHaendelseRapportSamlingHentClient(endpointURL);
-            client.invoke(virksomhedSENummerIdentifikator,
+            OIOHaendelseRapportSamlingHentOType response = client.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator);
+            assertFalse(hasError(response.getHovedOplysningerSvar()));
         }
 
     }
