@@ -1,5 +1,6 @@
 package dk.skat.emcs.b2b.sample;
 
+import oio.skat.emcs.ws._1_0.OIOEUReferenceDataAnmodOType;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
@@ -7,6 +8,8 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.UUID;
+
+import static org.junit.Assert.assertFalse;
 
 /**
  * OIOEUReferenceDataAnmod Test (IE705 as request)
@@ -37,8 +40,9 @@ public class OIOEUReferenceDataAnmodClientTest extends BaseClientTest {
             String afgiftOperatoerPunktAfgiftIdentifikator = "DK82070486100";
             final String beskedIdentifikator = UUID.randomUUID().toString();
             OIOEUReferenceDataAnmodClient client = new OIOEUReferenceDataAnmodClient(endpointURL);
-            client.invoke(virksomhedSENummerIdentifikator,
+            OIOEUReferenceDataAnmodOType response = client.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator, "ie705.xml", beskedIdentifikator);
+            assertFalse(hasError(response.getHovedOplysningerSvar()));
         }
     }
 }
