@@ -21,7 +21,6 @@ public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClientTest {
         assertFalse(hasError(response.getHovedOplysningerSvar()));
     }
 
-
     // EXCISE NUMBER DK82065873300 -> CVR 19552101 / SE 10200113
     @Test
     public void testDelegationSEDifferentFromCVR() throws Exception {
@@ -70,17 +69,16 @@ public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClientTest {
         assertFalse(hasError(response.getHovedOplysningerSvar()));
     }
 
-
+    // EXCISE NUMBER DK19552101300 -> CVR 19552101 / SE 30808460
     @Test
     public void testNoDelegationSENotRelatedToCVR() throws Exception {
         OIOBeskedAfvisningSamlingHentOType response =
                 doCall("30808460", "DK19552101300");
-        assertTrue(hasError(response.getHovedOplysningerSvar(), 302));
+        assertTrue(hasError(response.getHovedOplysningerSvar(), 300));
     }
 
-    // The following tests demonstrate error codes
-    // -------------------------------------------
 
+    // EXCISE NUMBER DK3117514300 -> CVR 19552101 / SE 19552101
     @Test
     public void testErrorCode102WrongExciseNumberFormat() throws Exception {
         OIOBeskedAfvisningSamlingHentOType response =
@@ -88,13 +86,13 @@ public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClientTest {
         assertTrue(hasError(response.getHovedOplysningerSvar(), 102));
     }
 
+    // EXCISE NUMBER DK31175143999 -> CVR 19552101 / SE 19552101
     @Test
     public void testErrorCode301WrongExciseNumberSuffixCode() throws Exception {
         OIOBeskedAfvisningSamlingHentOType response =
                 doCall(getVirksomhedSENummerIdentifikator(), "DK31175143999");
         assertTrue(hasError(response.getHovedOplysningerSvar(), 301));
     }
-
 
     // EXCISE NUMBER DK31175143500 -> CVR 19552101 / SE 19552101
     @Test
@@ -120,7 +118,7 @@ public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClientTest {
         assertTrue(hasError(response.getHovedOplysningerSvar(), 302));
     }
 
-    // EXCISE NUMBER DK30808460300 -> CVR 19552101 / SE 31038421
+    // EXCISE NUMBER DK30808460300 -> CVR 19552101 / SE 19552101
     @Test
     public void testErrorCode302ExciseNumberHasNotDelegatedToSENumberEqualsCVR() throws Exception {
         OIOBeskedAfvisningSamlingHentOType response =
