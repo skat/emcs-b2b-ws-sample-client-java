@@ -77,9 +77,11 @@ public class OIOEUReferenceDataHentClient extends EMCSBaseClient {
 
 
         LOGGER.info(NEW_LINE + sb.toString());
-        String ie733 = prettyFormatDocument(response.getIE733BeskedTekst(), 2, true);
-        LOGGER.info("IE733:");
-        LOGGER.info(ie733);
+        if (response.getIE733BeskedTekst() != null) {
+            String ie733 = prettyFormatDocument(response.getIE733BeskedTekst(), 2, true);
+            LOGGER.info("IE733:");
+            LOGGER.info(ie733);
+        }
         return response;
     }
 
