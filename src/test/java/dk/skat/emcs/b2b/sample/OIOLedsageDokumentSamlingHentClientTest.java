@@ -1,11 +1,14 @@
 package dk.skat.emcs.b2b.sample;
 
+import oio.skat.emcs.ws._1_0.OIOLedsageDokumentSamlingHentOType;
 import org.junit.Test;
+
+import static org.junit.Assert.assertFalse;
 
 /**
  * OIOLedsageDokumentSamlingHent Test
- *
- * IMPORTANT: OIOLedsageDokumentSamlingHent is also tested as part of {@link OIOKvitteringSamlingHentClientTest#invoke()}
+ * <p>
+ * IMPORTANT: OIOLedsageDokumentSamlingHent is also tested as part of {@link OIOKvitteringSamlingHentClientTest#testScenario()}
  *
  * @author SKAT
  * @since 1.2
@@ -27,9 +30,10 @@ public class OIOLedsageDokumentSamlingHentClientTest extends BaseClientTest {
             // Excise number
             String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
 
-            OIOLedsageDokumentSamlingHentClient ledsageDokumentSamlingHentClient = new OIOLedsageDokumentSamlingHentClient(endpointURL);
-            ledsageDokumentSamlingHentClient.invoke(virksomhedSENummerIdentifikator,
+            OIOLedsageDokumentSamlingHentClient client = new OIOLedsageDokumentSamlingHentClient(endpointURL);
+            OIOLedsageDokumentSamlingHentOType response = client.invoke(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator, ARCnumber);
+            assertFalse(hasError(response.getHovedOplysningerSvar()));
         }
     }
 
