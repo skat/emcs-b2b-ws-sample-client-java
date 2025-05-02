@@ -60,7 +60,7 @@ public class OIOEksportAngivelseInvalideringNotifikationSamlingHentClient extend
      * @throws IOException N/A
      * @throws SAXException N/A
      */
-    public String invoke(String virksomhedSENummerIdentifikator,
+    public OIOEksportAngivelseInvalideringNotifikationSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        String ARCnummer) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
@@ -127,7 +127,7 @@ public class OIOEksportAngivelseInvalideringNotifikationSamlingHentClient extend
         }
 
         LOGGER.info(NEW_LINE + sb.toString());
-        return sb.toString();
+        return out;
     }
 
 }

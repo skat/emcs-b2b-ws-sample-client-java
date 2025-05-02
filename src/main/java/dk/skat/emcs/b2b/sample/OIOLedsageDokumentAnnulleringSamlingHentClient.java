@@ -61,7 +61,7 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClie
      * @throws SAXException                   N/A
      */
 
-    public String invoke(String virksomhedSENummerIdentifikator,
+    OIOLedsageDokumentAnnulleringSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
                          String afgiftOperatoerPunktAfgiftIdentifikator,
                          Integer interval)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
@@ -74,7 +74,7 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClie
     }
 
 
-    public String invoke(String virksomhedSENummerIdentifikator,
+    public OIOLedsageDokumentAnnulleringSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
                          String afgiftOperatoerPunktAfgiftIdentifikator,
                          String arcnumber)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
@@ -85,7 +85,7 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClie
     }
 
 
-    private String invokeit(String virksomhedSENummerIdentifikator,
+    private OIOLedsageDokumentAnnulleringSamlingHentOType invokeit(String virksomhedSENummerIdentifikator,
                             String afgiftOperatoerPunktAfgiftIdentifikator,
                             SøgeParametreStrukturType søgeParametreStrukturType
     )
@@ -160,7 +160,7 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClie
         }
 
         LOGGER.info(NEW_LINE + sb.toString());
-        return sb.toString();
+        return out;
     }
 
 
