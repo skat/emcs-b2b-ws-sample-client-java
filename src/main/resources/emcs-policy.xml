@@ -124,34 +124,4 @@
         </cxf:outInterceptors>
     </cxf:bus>
 
-    <!-- This part is only relevant if the client consumes the effective WSDL of the
-         running web service. That is, fetches the WSDL from the running system and
-         in that case we have to ignore certain polices as CXF does not have native
-         handlers for these policies.
-
-         In this sample: the wsdl is fetched locally from the resources directory.
-    -->
-    <bean class="org.apache.cxf.ws.policy.IgnorablePolicyInterceptorProvider">
-        <constructor-arg>
-            <!-- the list of assertion types that can be ignored -->
-            <list>
-                <bean class="javax.xml.namespace.QName">
-                    <constructor-arg value="http://www.bea.com/wls90/security/policy"/>
-                    <constructor-arg value="Confidentiality"/>
-                </bean>
-                <bean class="javax.xml.namespace.QName">
-                    <constructor-arg value="http://www.bea.com/wls90/security/policy"/>
-                    <constructor-arg value="Identity"/>
-                </bean>
-                <bean class="javax.xml.namespace.QName">
-                    <constructor-arg value="http://www.bea.com/wls90/security/policy"/>
-                    <constructor-arg value="Integrity"/>
-                </bean>
-                <bean class="javax.xml.namespace.QName">
-                    <constructor-arg value="http://www.bea.com/wls90/security/policy"/>
-                    <constructor-arg value="MessageAge"/>
-                </bean>
-            </list>
-        </constructor-arg>
-    </bean>
 </beans>
