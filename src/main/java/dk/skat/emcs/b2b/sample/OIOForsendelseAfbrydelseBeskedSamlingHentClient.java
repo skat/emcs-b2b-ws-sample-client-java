@@ -72,12 +72,14 @@ public class OIOForsendelseAfbrydelseBeskedSamlingHentClient extends EMCSBaseCli
 
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(response.getHovedOplysningerSvar()));
-        List<String> list = response.getForsendelseAfbrydelseBeskedSamling().getIE807BeskedTekst();
-        int i = 1;
-        for (String message : list) {
-            sb.append(NEW_LINE + "Message " + i + ":");
-            sb.append(NEW_LINE + message);
-            i++;
+        if (response.getForsendelseAfbrydelseBeskedSamling() != null) {
+            List<String> list = response.getForsendelseAfbrydelseBeskedSamling().getIE807BeskedTekst();
+            int i = 1;
+            for (String message : list) {
+                sb.append(NEW_LINE + "Message " + i + ":");
+                sb.append(NEW_LINE + message);
+                i++;
+            }
         }
         LOGGER.info(NEW_LINE + sb.toString());
         return response;

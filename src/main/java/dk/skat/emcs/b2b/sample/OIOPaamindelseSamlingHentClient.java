@@ -71,12 +71,14 @@ public class OIOPaamindelseSamlingHentClient extends EMCSBaseClient {
 
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(response.getHovedOplysningerSvar()));
-        List<String> list = response.getPåmindelseSamling().getIE802BeskedTekst();
-        int i = 1;
-        for (String message : list) {
-            sb.append(NEW_LINE + "Message " + i + ":");
-            sb.append(NEW_LINE + prettyFormatDocument(message, 2, true));
-            i++;
+        if (response.getPåmindelseSamling() != null) {
+            List<String> list = response.getPåmindelseSamling().getIE802BeskedTekst();
+            int i = 1;
+            for (String message : list) {
+                sb.append(NEW_LINE + "Message " + i + ":");
+                sb.append(NEW_LINE + prettyFormatDocument(message, 2, true));
+                i++;
+            }
         }
 
         LOGGER.info(NEW_LINE + sb.toString());

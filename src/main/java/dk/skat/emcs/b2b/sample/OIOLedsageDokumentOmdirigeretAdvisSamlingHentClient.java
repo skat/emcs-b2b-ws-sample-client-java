@@ -84,14 +84,15 @@ public class OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient extends EMCSBas
         OIOLedsageDokumentOmdirigeretAdvisSamlingHentOType response = port.getOIOLedsageDokumentOmdirigeretAdvisSamlingHent(request);
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(response.getHovedOplysningerSvar()));
-        List<String> list = response.getLedsageDokumentOmdirigeretAdvisSamling().getIE803BeskedTekst();
-        int i = 1;
-        for (String message : list) {
-            sb.append(NEW_LINE + "Message " + i + ":");
-            sb.append(NEW_LINE);
-            sb.append(prettyFormatDocument(message, 2, true)).append(NEW_LINE);
-
-            i++;
+        if (response.getLedsageDokumentOmdirigeretAdvisSamling() != null) {
+            List<String> list = response.getLedsageDokumentOmdirigeretAdvisSamling().getIE803BeskedTekst();
+            int i = 1;
+            for (String message : list) {
+                sb.append(NEW_LINE + "Message " + i + ":");
+                sb.append(NEW_LINE);
+                sb.append(prettyFormatDocument(message, 2, true)).append(NEW_LINE);
+                i++;
+            }
         }
         LOGGER.info(NEW_LINE + sb.toString());
         return response;

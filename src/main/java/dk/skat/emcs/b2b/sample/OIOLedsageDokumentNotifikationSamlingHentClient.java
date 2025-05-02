@@ -72,12 +72,14 @@ public class OIOLedsageDokumentNotifikationSamlingHentClient extends EMCSBaseCli
 
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(response.getHovedOplysningerSvar()));
-        List<String> list = response.getLedsageDokumentNotifikationSamling().getIE819BeskedTekst();
-        int i = 1;
-        for (String message : list) {
-            sb.append(NEW_LINE + "Message " + i + ":");
-            sb.append(NEW_LINE + message);
-            i++;
+        if (response.getLedsageDokumentNotifikationSamling() != null) {
+            List<String> list = response.getLedsageDokumentNotifikationSamling().getIE819BeskedTekst();
+            int i = 1;
+            for (String message : list) {
+                sb.append(NEW_LINE + "Message " + i + ":");
+                sb.append(NEW_LINE + message);
+                i++;
+            }
         }
         LOGGER.info(NEW_LINE + sb.toString());
         return response;

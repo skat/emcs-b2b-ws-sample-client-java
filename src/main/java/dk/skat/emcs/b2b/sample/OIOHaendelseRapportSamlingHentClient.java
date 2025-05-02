@@ -72,12 +72,14 @@ public class OIOHaendelseRapportSamlingHentClient extends EMCSBaseClient {
 
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(response.getHovedOplysningerSvar()));
-        List<String> list = response.getHændelseRapportSamling().getIE840BeskedTekst();
-        int i = 1;
-        for (String message : list) {
-            sb.append(NEW_LINE + "Message " + i + ":");
-            sb.append(NEW_LINE + message);
-            i++;
+        if (response.getHændelseRapportSamling() != null) {
+            List<String> list = response.getHændelseRapportSamling().getIE840BeskedTekst();
+            int i = 1;
+            for (String message : list) {
+                sb.append(NEW_LINE + "Message " + i + ":");
+                sb.append(NEW_LINE + message);
+                i++;
+            }
         }
         LOGGER.info(NEW_LINE + sb.toString());
         return response;
