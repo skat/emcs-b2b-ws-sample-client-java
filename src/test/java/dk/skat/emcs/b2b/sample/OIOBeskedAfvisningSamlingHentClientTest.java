@@ -126,6 +126,22 @@ public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClientTest {
         assertTrue(hasError(response.getHovedOplysningerSvar(), 302));
     }
 
+    @Test
+    public void transactionIDReuse() throws Exception { // 7
+        String endpointURL = getEndpoint("OIOBeskedAfvisningSamlingHent");
+        if (endpointURL != null) {
+            // Generate transaction id
+            final String transactionID = TransactionIdGenerator.getTransactionId();
+            // First call
+            OIOBeskedAfvisningSamlingHentClient oioBeskedAfvisningSamlingHentClient = new OIOBeskedAfvisningSamlingHentClient(endpointURL);
+            OIOBeskedAfvisningSamlingHentOType response = oioBeskedAfvisningSamlingHentClient.invoke(getVirksomhedSENummerIdentifikator(), getAfgiftOperatoerPunktAfgiftIdentifikator(), 1, transactionID);
+            assertFalse(hasError(response.getHovedOplysningerSvar()));
+            // Now try again
+            OIOBeskedAfvisningSamlingHentOType response2 = oioBeskedAfvisningSamlingHentClient.invoke(getVirksomhedSENummerIdentifikator(), getAfgiftOperatoerPunktAfgiftIdentifikator(), 1, transactionID);
+            assertTrue(hasError(response2.getHovedOplysningerSvar(), 500));
+        }
+    }
+
     public OIOBeskedAfvisningSamlingHentOType doCall(String virksomhedSENummerIdentifikator, String afgiftOperatoerPunktAfgiftIdentifikator) throws Exception {
         String endpointURL = getEndpoint("OIOBeskedAfvisningSamlingHent");
         if (endpointURL != null) {

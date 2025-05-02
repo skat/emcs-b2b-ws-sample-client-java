@@ -43,6 +43,19 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
         this.endpointURL = endpointURL;
     }
 
+
+    public OIOBeskedAfvisningSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
+                                                     String afgiftOperatoerPunktAfgiftIdentifikator,
+                                                     Integer interval,
+                                                     String txID)
+            throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+
+        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, interval, txID);
+
+
+    }
+
+
     /**
      * Call OIOBeskedAfvisningSamlingHent service
      *
@@ -59,7 +72,7 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
                          Integer interval)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
-        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, interval);
+        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, interval, null);
 
 
     }
@@ -68,18 +81,22 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
                          String afgiftOperatoerPunktAfgiftIdentifikator)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
-        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, 1);
+        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, 1, null);
 
 
     }
 
     private OIOBeskedAfvisningSamlingHentOType invokeit(String virksomhedSENummerIdentifikator,
                             String afgiftOperatoerPunktAfgiftIdentifikator,
-                            Integer interval)
+                            Integer interval, String txId)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
         OIOBeskedAfvisningSamlingHentIType oioBeskedAfvisningSamlingHentIType = new OIOBeskedAfvisningSamlingHentIType();
-        oioBeskedAfvisningSamlingHentIType.setHovedOplysninger(generateHovedOplysningerType());
+        if (txId == null) {
+            oioBeskedAfvisningSamlingHentIType.setHovedOplysninger(generateHovedOplysningerType());
+        } else {
+            oioBeskedAfvisningSamlingHentIType.setHovedOplysninger(generateHovedOplysningerType(txId));
+        }
         oioBeskedAfvisningSamlingHentIType.setVirksomhedIdentifikationStruktur(generateVirksomhedIdentifikationStrukturType(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator));
         SøgeParametreStrukturType soegeParametreStrukturType = getSøgeParametreStrukturType(interval);
         oioBeskedAfvisningSamlingHentIType.setSøgeParametreStruktur(soegeParametreStrukturType);
