@@ -34,6 +34,12 @@ public class BaseClientTest {
     protected static final String OIO_LEDSAGE_DOKUMENT_OMDIRIGERET_ADVIS_SAMLING_HENT = "OIOLedsageDokumentOmdirigeretAdvisSamlingHent";
     protected static final String OIO_FORSENDELSE_AFBRYDELSE_BESKED_SAMLING_HENT = "OIOForsendelseAfbrydelseBeskedSamlingHent";
     protected static final String OIO_FORSINKELSE_FORKLARING_OPRET = "OIOForsinkelseForklaringOpret";
+    protected static final String OIO_EKSPORT_AFVISNING_SAMLING_HENT = "OIOEksportAfvisningSamlingHent";
+    protected static final String OIO_EKSPORT_ANGIVELSE_INVALIDERING_NOTIFIKATION_SAMLING_HENT = "OIOEksportAngivelseInvalideringNotifikationSamlingHent";
+    protected static final String OIO_EKSPORT_GODKENDELSE_SAMLING_HENT = "OIOEksportGodkendelseSamlingHent";
+    protected static final String OIO_HAENDELSE_RAPPORT_SAMLING_HENT = "OIOHaendelseRapportSamlingHent";
+    protected static final String OIO_LEDSAGE_DOKUMENT_DESTINATION_SKIFT_SAMLING_HENT = "OIOLedsageDokumentDestinationSkiftSamlingHent";
+    protected static final String OIO_LEDSAGE_DOKUMENT_NOTIFIKATION_SAMLING_HENT = "OIOLedsageDokumentNotifikationSamlingHent";
 
     /**
      * Get VAT number
@@ -87,7 +93,7 @@ public class BaseClientTest {
     }
 
     protected static Config getConfig() {
-        return ConfigFactory.parseFile(new File("app.conf")).withFallback(ConfigFactory.load());
+        return ConfigFactory.parseFile(new File("app.conf")).withFallback(ConfigFactory.load()).resolve();
     }
 
     static {
