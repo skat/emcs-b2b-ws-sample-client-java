@@ -67,6 +67,10 @@ public class EMCSBaseClient {
     protected HovedOplysningerType generateHovedOplysningerType() throws DatatypeConfigurationException {
         // Generate Transaction Id
         final String transactionID = TransactionIdGenerator.getTransactionId();
+        return generateHovedOplysningerType(transactionID);
+    }
+
+    protected HovedOplysningerType generateHovedOplysningerType(String transactionID) throws DatatypeConfigurationException {
         // Generate Transaction Time
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
         gregorianCalendar.setTime(new Date());
