@@ -1,8 +1,11 @@
 package dk.skat.emcs.b2b.sample;
 
+import oio.skat.emcs.ws._1_0.OIOLedsageDokumentOpretOType;
 import org.junit.Test;
 
 import java.io.File;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * OIOLedsageDocumentOpretClient Test
@@ -179,8 +182,9 @@ public class OIOLedsageDocumentOpretClientTest extends BaseClientTest {
             String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
 
             OIOLedsageDokumentOpretClient client = new OIOLedsageDokumentOpretClient(endpointURL);
-            client.invoke(virksomhedSENummerIdentifikator,
+            OIOLedsageDokumentOpretOType response = client.invoke2(virksomhedSENummerIdentifikator,
                     afgiftOperatoerPunktAfgiftIdentifikator, ie815);
+            assertTrue(hasError(response.getHovedOplysningerSvar(), 104));
         }
     }
 
