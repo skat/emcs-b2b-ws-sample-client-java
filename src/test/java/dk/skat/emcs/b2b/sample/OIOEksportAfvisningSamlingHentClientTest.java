@@ -29,7 +29,7 @@ public class OIOEksportAfvisningSamlingHentClientTest extends BaseClientTest {
         OIOEksportAfvisningSamlingHentOType response = client.invoke(getVirksomhedSENummerIdentifikator(),
                 afgiftOperatoerPunktAfgiftIdentifikator);
         assertFalse(hasError(response.getHovedOplysningerSvar()));
-        assertFalse(!response.getEksportAfvisningSamling().getIE839BeskedTekst().isEmpty());
+        assertFalse(response.getEksportAfvisningSamling().getIE839BeskedTekst().isEmpty());
     }
 
     @Test
