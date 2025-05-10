@@ -165,7 +165,14 @@ public class BaseClientTest {
         Date startDate = cal.getTime();
         cal.add(Calendar.MONTH,1);
         Date endDate = cal.getTime();
-        return  SøgeParametreStrukturTypeHelper.getSøgeParametreStrukturType(startDate, endDate);
+        return SøgeParametreStrukturTypeHelper.getSøgeParametreStrukturType(startDate, endDate);
+    }
+
+    protected SøgeParametreStrukturType getSearchPeriodLastNMonths(Integer interval) {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -interval);
+        Date startDate = cal.getTime();
+        return SøgeParametreStrukturTypeHelper.getSøgeParametreStrukturType(startDate, new Date());
     }
 
 }

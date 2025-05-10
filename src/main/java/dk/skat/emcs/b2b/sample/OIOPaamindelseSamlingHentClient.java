@@ -34,6 +34,11 @@ public class OIOPaamindelseSamlingHentClient extends EMCSBaseClient {
         this.endpointURL = endpointURL;
     }
 
+    public OIOPåmindelseSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
+                                                String afgiftOperatoerPunktAfgiftIdentifikator) throws DatatypeConfigurationException {
+        return invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, getSøgeParametreStrukturType(10));
+    }
+
     /**
      *
      * @param virksomhedSENummerIdentifikator VAT number of entity calling entity
@@ -42,12 +47,13 @@ public class OIOPaamindelseSamlingHentClient extends EMCSBaseClient {
      * @throws DatatypeConfigurationException
      */
     public OIOPåmindelseSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
-                                                String afgiftOperatoerPunktAfgiftIdentifikator) throws DatatypeConfigurationException {
+                                                String afgiftOperatoerPunktAfgiftIdentifikator,
+                                                SøgeParametreStrukturType spst) throws DatatypeConfigurationException {
 
         OIOPåmindelseSamlingHentIType request = new OIOPåmindelseSamlingHentIType();
         request.setHovedOplysninger(generateHovedOplysningerType());
         request.setVirksomhedIdentifikationStruktur(generateVirksomhedIdentifikationStrukturType(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator));
-        request.setSøgeParametreStruktur(getSøgeParametreStrukturType(10));
+        request.setSøgeParametreStruktur(spst);
 
         Bus bus = new SpringBusFactory().createBus("emcs-policy.xml", false);
         BusFactory.setDefaultBus(bus);

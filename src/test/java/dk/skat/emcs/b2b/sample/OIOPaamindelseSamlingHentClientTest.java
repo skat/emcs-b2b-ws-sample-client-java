@@ -6,6 +6,8 @@ import org.junit.Test;
 import javax.xml.datatype.DatatypeConfigurationException;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeNotNull;
 
 /**
  * OIOPaamindelseSamlingHent Test
@@ -28,14 +30,24 @@ public class OIOPaamindelseSamlingHentClientTest extends BaseClientTest {
 
     @Test
     public void invoke() throws DatatypeConfigurationException {
+        assumeNotNull(getEndpoint(OIO_PAAMINDELSE_SAMLING_HENT));
+        OIOPaamindelseSamlingHentClient client = new OIOPaamindelseSamlingHentClient(getEndpoint(OIO_PAAMINDELSE_SAMLING_HENT));
+        OIOPåmindelseSamlingHentOType response = client.invoke(
+                getVirksomhedSENummerIdentifikator(),
+                getAfgiftOperatoerPunktAfgiftIdentifikator(),
+                getSearchPeriodLastNMonths(10));
+        assertFalse(hasError(response.getHovedOplysningerSvar()));
+        assertFalse(response.getPåmindelseSamling().getIE802BeskedTekst().isEmpty());
+    }
 
-        if (getEndpoint(OIO_PAAMINDELSE_SAMLING_HENT) != null) {
-            OIOPaamindelseSamlingHentClient client = new OIOPaamindelseSamlingHentClient(getEndpoint(OIO_PAAMINDELSE_SAMLING_HENT));
-            OIOPåmindelseSamlingHentOType response = client.invoke(
-                    getVirksomhedSENummerIdentifikator(),
-                    getAfgiftOperatoerPunktAfgiftIdentifikator());
-            assertFalse(hasError(response.getHovedOplysningerSvar()));
-            assertFalse(response.getPåmindelseSamling().getIE802BeskedTekst().isEmpty());
-        }
+    @Test
+    public void testAdvisCode130() throws DatatypeConfigurationException {
+        assumeNotNull(getEndpoint(OIO_PAAMINDELSE_SAMLING_HENT));
+        OIOPaamindelseSamlingHentClient client = new OIOPaamindelseSamlingHentClient(getEndpoint(OIO_PAAMINDELSE_SAMLING_HENT));
+        OIOPåmindelseSamlingHentOType response = client.invoke(
+                getVirksomhedSENummerIdentifikator(),
+                getAfgiftOperatoerPunktAfgiftIdentifikator(),
+                getSearchPeriodInFuture());
+        assertTrue(hasAdvis(response.getHovedOplysningerSvar(), 130));
     }
 }
