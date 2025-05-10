@@ -5,8 +5,11 @@ import com.typesafe.config.ConfigFactory;
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.AdvisStrukturType;
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.FejlStrukturType;
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerSvarType;
+import oio.skat.emcs.ws._1_0.SøgeParametreStrukturType;
 
 import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Logger;
 
 /**
@@ -152,5 +155,17 @@ public class BaseClientTest {
         return result;
     }
 
+    /**
+     * Generate a search with start and end date im the future
+     * @return
+     */
+    protected SøgeParametreStrukturType getSearchPeriodInFuture() {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH,6);
+        Date startDate = cal.getTime();
+        cal.add(Calendar.MONTH,1);
+        Date endDate = cal.getTime();
+        return  SøgeParametreStrukturTypeHelper.getSøgeParametreStrukturType(startDate, endDate);
+    }
 
 }
