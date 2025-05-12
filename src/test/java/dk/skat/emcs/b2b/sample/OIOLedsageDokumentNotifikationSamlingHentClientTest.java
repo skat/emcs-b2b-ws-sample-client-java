@@ -32,7 +32,7 @@ public class OIOLedsageDokumentNotifikationSamlingHentClientTest extends BaseCli
             String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
             String afgiftOperatoerPunktAfgiftIdentifikator = "DK31175143300";
             OIOLedsageDokumentNotifikationSamlingHentClient client = new OIOLedsageDokumentNotifikationSamlingHentClient(endpointURL);
-            OIOLedsageDokumentNotifikationSamlingHentOType response = client.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator);
+            OIOLedsageDokumentNotifikationSamlingHentOType response = client.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, SøgeParametreStrukturTypeHelper.getSøgeParametreStrukturType(10));
             assertFalse(hasError(response.getHovedOplysningerSvar()));
             assertFalse(response.getLedsageDokumentNotifikationSamling().getIE819BeskedTekst().isEmpty());
         }
@@ -73,10 +73,24 @@ public class OIOLedsageDokumentNotifikationSamlingHentClientTest extends BaseCli
             // Step 3:
             // -------
             OIOLedsageDokumentNotifikationSamlingHentClient client3 = new OIOLedsageDokumentNotifikationSamlingHentClient(endpointURL);
-            OIOLedsageDokumentNotifikationSamlingHentOType response3 = client3.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator);
+            OIOLedsageDokumentNotifikationSamlingHentOType response3 = client3.invoke(
+                    virksomhedSENummerIdentifikator,
+                    afgiftOperatoerPunktAfgiftIdentifikator,
+                    SøgeParametreStrukturTypeHelper.getSøgeParametreStrukturType(10));
             assertFalse(hasError(response3.getHovedOplysningerSvar()));
             assertFalse(response3.getLedsageDokumentNotifikationSamling().getIE819BeskedTekst().isEmpty());
             assertTrue(response3.getLedsageDokumentNotifikationSamling().getIE819BeskedTekst()
+                    .stream().anyMatch(e -> (e.contains(arc))));
+
+            // Step 4:
+            // -------
+            OIOLedsageDokumentNotifikationSamlingHentOType response4 = client3.invoke(
+                    virksomhedSENummerIdentifikator,
+                    afgiftOperatoerPunktAfgiftIdentifikator,
+                    SøgeParametreStrukturTypeHelper.getSøgeParametreStrukturType(arc));
+            assertFalse(hasError(response4.getHovedOplysningerSvar()));
+            assertFalse(response4.getLedsageDokumentNotifikationSamling().getIE819BeskedTekst().isEmpty());
+            assertTrue(response4.getLedsageDokumentNotifikationSamling().getIE819BeskedTekst()
                     .stream().anyMatch(e -> (e.contains(arc))));
         }
     }
