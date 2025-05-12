@@ -43,6 +43,7 @@ public class BaseClientTest {
     protected static final String OIO_HAENDELSE_RAPPORT_SAMLING_HENT = "OIOHaendelseRapportSamlingHent";
     protected static final String OIO_LEDSAGE_DOKUMENT_DESTINATION_SKIFT_SAMLING_HENT = "OIOLedsageDokumentDestinationSkiftSamlingHent";
     protected static final String OIO_LEDSAGE_DOKUMENT_NOTIFIKATION_SAMLING_HENT = "OIOLedsageDokumentNotifikationSamlingHent";
+    protected static final String OIO_LEDSAGE_DOKUMENT_DESTINATION_SKIFT_OPRET = "OIOLedsageDokumentDestinationSkiftOpret";
 
     /**
      * Get VAT number
