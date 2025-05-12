@@ -20,7 +20,7 @@ import static org.junit.Assume.assumeNotNull;
 public class OIOHaendelseRapportSamlingHentClientTest extends BaseClientTest {
 
     @Test
-    public void invoke() throws DatatypeConfigurationException {
+    public void searchNumberOfMonthsBack() throws DatatypeConfigurationException {
         assumeNotNull(getEndpoint(OIO_HAENDELSE_RAPPORT_SAMLING_HENT));
         String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
         String afgiftOperatoerPunktAfgiftIdentifikator = "DK99025875300";
@@ -28,6 +28,32 @@ public class OIOHaendelseRapportSamlingHentClientTest extends BaseClientTest {
         OIOHaendelseRapportSamlingHentOType response = client.invoke(virksomhedSENummerIdentifikator,
                 afgiftOperatoerPunktAfgiftIdentifikator,
                 getSøgeParametreStrukturType(20));
+        assertFalse(hasError(response.getHovedOplysningerSvar()));
+        assertFalse(response.getHændelseRapportSamling().getIE840BeskedTekst().isEmpty());
+    }
+
+    @Test
+    public void searchByDateRange() throws DatatypeConfigurationException {
+        assumeNotNull(getEndpoint(OIO_HAENDELSE_RAPPORT_SAMLING_HENT));
+        String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
+        String afgiftOperatoerPunktAfgiftIdentifikator = "DK99025875300";
+        OIOHaendelseRapportSamlingHentClient client = new OIOHaendelseRapportSamlingHentClient(getEndpoint(OIO_HAENDELSE_RAPPORT_SAMLING_HENT));
+        OIOHaendelseRapportSamlingHentOType response = client.invoke(virksomhedSENummerIdentifikator,
+                afgiftOperatoerPunktAfgiftIdentifikator,
+                getSøgeParametreStrukturType("2024-05-01","2024-06-01"));
+        assertFalse(hasError(response.getHovedOplysningerSvar()));
+        assertFalse(response.getHændelseRapportSamling().getIE840BeskedTekst().isEmpty());
+    }
+
+    @Test
+    public void searchByARC() throws DatatypeConfigurationException {
+        assumeNotNull(getEndpoint(OIO_HAENDELSE_RAPPORT_SAMLING_HENT));
+        String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
+        String afgiftOperatoerPunktAfgiftIdentifikator = "DK99025875300";
+        OIOHaendelseRapportSamlingHentClient client = new OIOHaendelseRapportSamlingHentClient(getEndpoint(OIO_HAENDELSE_RAPPORT_SAMLING_HENT));
+        OIOHaendelseRapportSamlingHentOType response = client.invoke(virksomhedSENummerIdentifikator,
+                afgiftOperatoerPunktAfgiftIdentifikator,
+                getSøgeParametreStrukturType("24DK82N22KKJH5U8DBB10"));
         assertFalse(hasError(response.getHovedOplysningerSvar()));
         assertFalse(response.getHændelseRapportSamling().getIE840BeskedTekst().isEmpty());
     }

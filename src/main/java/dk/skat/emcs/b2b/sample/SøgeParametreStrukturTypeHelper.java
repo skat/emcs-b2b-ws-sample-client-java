@@ -5,11 +5,25 @@ import oio.skat.emcs.ws._1_0.SøgeParametreStrukturType;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class SøgeParametreStrukturTypeHelper {
+
+    public static SøgeParametreStrukturType getSøgeParametreStrukturType(String startDate, String endDate){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        SøgeParametreStrukturType s = null;
+        try {
+            s = getSøgeParametreStrukturType(formatter.parse(startDate), formatter.parse(endDate));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        return s;
+    }
 
     public static SøgeParametreStrukturType getSøgeParametreStrukturType(Date startDate, Date endDate){
         SøgeParametreStrukturType soegeParametreStrukturType = new SøgeParametreStrukturType();
