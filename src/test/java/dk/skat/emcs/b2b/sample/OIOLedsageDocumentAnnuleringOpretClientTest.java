@@ -9,6 +9,7 @@ import java.io.File;
 import java.util.logging.Logger;
 
 import static org.junit.Assert.*;
+import static org.junit.Assume.assumeNotNull;
 
 /**
  * @author SKAT
@@ -20,13 +21,13 @@ public class OIOLedsageDocumentAnnuleringOpretClientTest extends BaseClientTest 
 
     /**
      * OIOLedsageDokumentAnnulleringOpret Test (IE810 as request)
-     *
+     * <p>
      * Purpose: Verify submit of IE810.
-     *
+     * <p>
      * Test case design steps:
-     *
+     * <p>
      * Step 1: Submit IE810 (using OIOLedsageDokumentAnnulleringOpret)
-     *
+     * <p>
      * IMPORTANT: OIOLedsageDokumentAnnulleringOpret is also tested as part of {@link OIOLedsageDokumentAnnulleringSamlingHentClientTest#invoke()}
      *
      * @author SKAT
@@ -34,26 +35,23 @@ public class OIOLedsageDocumentAnnuleringOpretClientTest extends BaseClientTest 
      */
     @Test
     public void invoke() throws Exception {
-        String endpointURL = getEndpoint(OIO_LEDSAGEDOKUMENT_ANNULLERING_OPRET);
+        assumeNotNull(getEndpoint(OIO_LEDSAGEDOKUMENT_ANNULLERING_OPRET));
+        String ie810 = "ie810.xml";
+        String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
+        // Excise number
+        String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
 
-        if (endpointURL != null) {
-
-            String ie810 = "ie810.xml";
-            String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
-            // Excise number
-            String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
-
-            OIOLedsageDokumentAnnulleringOpretClient oioLedsageDocumentAnnulleringOpretClient = new OIOLedsageDokumentAnnulleringOpretClient(endpointURL);
-            oioLedsageDocumentAnnulleringOpretClient.invoke(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator, ie810, null);
-        }
+        String arc = "REPLACE_ME";
+        OIOLedsageDokumentAnnulleringOpretClient oioLedsageDocumentAnnulleringOpretClient = new OIOLedsageDokumentAnnulleringOpretClient(getEndpoint(OIO_LEDSAGEDOKUMENT_ANNULLERING_OPRET));
+        oioLedsageDocumentAnnulleringOpretClient.invoke(virksomhedSENummerIdentifikator,
+                afgiftOperatoerPunktAfgiftIdentifikator, ie810, arc);
     }
 
     /**
      * Purpose: Verify submit of duplicate IE810 triggers IE704
-     *
+     * <p>
      * Test case design steps:
-     *
+     * <p>
      * Step 1: Submit IE815 (using OIOLedsageDokumentOpret)
      * Steo 2: Submit IE810 (using OIOLedsageDokumentAnnulleringOpret)
      * Step 3: Submit IE810 (using OIOLedsageDokumentAnnulleringOpret) to trigger IE704
@@ -61,56 +59,49 @@ public class OIOLedsageDocumentAnnuleringOpretClientTest extends BaseClientTest 
      */
     @Test
     public void scenario() throws Exception {
-        String endpointURL =
-                getEndpoint(OIO_LEDSAGEDOKUMENT_ANNULLERING_OPRET);
+        assumeNotNull(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
+        assumeNotNull(getEndpoint(OIO_LEDSAGEDOKUMENT_ANNULLERING_OPRET));
+        assumeNotNull(getEndpoint(OIO_BESKED_AFVISNING_SAMLING_HENT));
 
-        if (endpointURL != null) {
-            String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
-            // Excise number
-            String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
+        String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
+        // Excise number
+        String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
 
-            // Step 1:
-            // -------
-            File ie815 = new File("ie815.xml");
-            OIOLedsageDokumentOpretClient client1 = new OIOLedsageDokumentOpretClient(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
-            OIOLedsageDokumentOpretOType response1 = client1.invoke2(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator, ie815);
-            assertFalse(hasError(response1.getHovedOplysningerSvar()));
-            String arc = response1.getOutput().getLedsageDokument().getLedsagedokumentARCIdentifikator();
+        LOGGER.info("----- Step 1: OIOLedsageDokumentOpret");
+        File ie815 = new File("ie815.xml");
+        OIOLedsageDokumentOpretClient client1 = new OIOLedsageDokumentOpretClient(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
+        OIOLedsageDokumentOpretOType response1 = client1.invoke2(virksomhedSENummerIdentifikator,
+                afgiftOperatoerPunktAfgiftIdentifikator, ie815);
+        assertFalse(hasError(response1.getHovedOplysningerSvar()));
+        String arc = response1.getOutput().getLedsageDokument().getLedsagedokumentARCIdentifikator();
 
-            assertNotNull("Did not receive ARC number. Exiting.", arc);
-            LOGGER.info("Received ARC = " + arc);
+        assertNotNull("Did not receive ARC number. Exiting.", arc);
+        LOGGER.info("Received ARC = " + arc);
 
-            sleep(2);
+        sleep(2);
 
-            // Step 2:
-            // -------
-            String ie810 = "ie810.xml";
-            OIOLedsageDokumentAnnulleringOpretClient client2 = new OIOLedsageDokumentAnnulleringOpretClient(getEndpoint(OIO_LEDSAGEDOKUMENT_ANNULLERING_OPRET));
-            OIOLedsageDokumentAnnulleringOpretOType response2 = client2.invoke(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator, ie810, arc);
-            assertFalse(hasError(response2.getHovedOplysningerSvar()));
+        LOGGER.info("----- Step 2: OIOLedsageDokumentAnnulleringOpret");
+        String ie810 = "ie810.xml";
+        OIOLedsageDokumentAnnulleringOpretClient client2 = new OIOLedsageDokumentAnnulleringOpretClient(getEndpoint(OIO_LEDSAGEDOKUMENT_ANNULLERING_OPRET));
+        OIOLedsageDokumentAnnulleringOpretOType response2 = client2.invoke(virksomhedSENummerIdentifikator,
+                afgiftOperatoerPunktAfgiftIdentifikator, ie810, arc);
+        assertFalse(hasError(response2.getHovedOplysningerSvar()));
 
-            sleep(2);
+        sleep(2);
 
-            // Step 3:
-            // -------
-            // Now trigger 704 - we have already cancelled the IE815 in the previous call.
-            OIOLedsageDokumentAnnulleringOpretOType response3 = client2.invoke(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator, ie810, arc);
-            assertTrue(hasError(response3.getHovedOplysningerSvar(), 491));
+        LOGGER.info("----- Step 3: OIOLedsageDokumentAnnulleringOpret");
+        // Now trigger 704 - we have already cancelled the IE815 in the previous call.
+        OIOLedsageDokumentAnnulleringOpretOType response3 = client2.invoke(virksomhedSENummerIdentifikator,
+                afgiftOperatoerPunktAfgiftIdentifikator, ie810, arc);
+        assertTrue(hasError(response3.getHovedOplysningerSvar(), 491));
 
-            // Step 4:
-            // -------
-            // Get the 704 and expect error to be "Message out of sequence"
-            OIOBeskedAfvisningSamlingHentClient client3 = new OIOBeskedAfvisningSamlingHentClient(getEndpoint(OIO_BESKED_AFVISNING_SAMLING_HENT));
-            OIOBeskedAfvisningSamlingHentOType response4 = client3.invoke(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator, 1);
-            assertTrue(response4.getBeskedAfvisningSamling().getIE704BeskedTekst()
-                    .stream().anyMatch(e -> (e.contains(arc) && e.contains("Message out of sequence"))));
-        }
-
+        LOGGER.info("----- Step 4: OIOBeskedAfvisningSamlingHent");
+        // Get the 704 and expect error to be "Message out of sequence"
+        OIOBeskedAfvisningSamlingHentClient client3 = new OIOBeskedAfvisningSamlingHentClient(getEndpoint(OIO_BESKED_AFVISNING_SAMLING_HENT));
+        OIOBeskedAfvisningSamlingHentOType response4 = client3.invoke(virksomhedSENummerIdentifikator,
+                afgiftOperatoerPunktAfgiftIdentifikator, 1);
+        assertTrue(response4.getBeskedAfvisningSamling().getIE704BeskedTekst()
+                .stream().anyMatch(e -> (e.contains(arc) && e.contains("Message out of sequence"))));
     }
-
 
 }
