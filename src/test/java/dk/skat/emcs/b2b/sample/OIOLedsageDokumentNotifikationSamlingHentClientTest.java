@@ -17,7 +17,8 @@ import static org.junit.Assert.*;
 /**
  * 1. Call OIOLedsageDokumentOpret (IE815)
  * 2. Call OIOLedsageDokumentNotifikationOpret (IE819)
- * 3. Call OIOLedsageDokumentNotifikationSamlingHent (IE819)
+ * 3. Call OIOLedsageDokumentNotifikationSamlingHent (IE819) using date range as search param
+ * 4.  Call OIOLedsageDokumentNotifikationSamlingHent (IE819) using ARC as search param
  */
 public class OIOLedsageDokumentNotifikationSamlingHentClientTest extends BaseClientTest {
 
