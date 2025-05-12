@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 
+import static dk.skat.emcs.b2b.sample.SøgeParametreStrukturTypeHelper.getSøgeParametreStrukturType;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeNotNull;
@@ -29,13 +30,25 @@ import static org.junit.Assume.assumeNotNull;
 public class OIOPaamindelseSamlingHentClientTest extends BaseClientTest {
 
     @Test
-    public void invoke() throws DatatypeConfigurationException {
+    public void searchByDateRange() throws DatatypeConfigurationException {
         assumeNotNull(getEndpoint(OIO_PAAMINDELSE_SAMLING_HENT));
         OIOPaamindelseSamlingHentClient client = new OIOPaamindelseSamlingHentClient(getEndpoint(OIO_PAAMINDELSE_SAMLING_HENT));
         OIOPåmindelseSamlingHentOType response = client.invoke(
                 getVirksomhedSENummerIdentifikator(),
                 getAfgiftOperatoerPunktAfgiftIdentifikator(),
-                getSearchPeriodLastNMonths(10));
+                getSøgeParametreStrukturType("2025-04-01", "2025-05-01"));
+        assertFalse(hasError(response.getHovedOplysningerSvar()));
+        assertFalse(response.getPåmindelseSamling().getIE802BeskedTekst().isEmpty());
+    }
+
+    @Test
+    public void searchByARC() throws DatatypeConfigurationException {
+        assumeNotNull(getEndpoint(OIO_PAAMINDELSE_SAMLING_HENT));
+        OIOPaamindelseSamlingHentClient client = new OIOPaamindelseSamlingHentClient(getEndpoint(OIO_PAAMINDELSE_SAMLING_HENT));
+        OIOPåmindelseSamlingHentOType response = client.invoke(
+                getVirksomhedSENummerIdentifikator(),
+                getAfgiftOperatoerPunktAfgiftIdentifikator(),
+                getSøgeParametreStrukturType("25DKWEBLDTMGNKR6T2E18"));
         assertFalse(hasError(response.getHovedOplysningerSvar()));
         assertFalse(response.getPåmindelseSamling().getIE802BeskedTekst().isEmpty());
     }
