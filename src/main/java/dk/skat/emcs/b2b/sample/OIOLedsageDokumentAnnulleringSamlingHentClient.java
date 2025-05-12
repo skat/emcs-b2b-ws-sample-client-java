@@ -68,7 +68,7 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClie
         SøgeParametreStrukturType søgeparameter = getSøgeParametreStrukturType(interval);
 
 
-        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, søgeparameter);
+        return this.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, søgeparameter);
 
 
     }
@@ -79,15 +79,15 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClie
                          String arcnumber)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
         SøgeParametreStrukturType søgeparameter = getSøgeParametreStrukturType(arcnumber);
-        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, søgeparameter);
+        return this.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, søgeparameter);
 
 
     }
 
 
-    private OIOLedsageDokumentAnnulleringSamlingHentOType invokeit(String virksomhedSENummerIdentifikator,
+    public OIOLedsageDokumentAnnulleringSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
                             String afgiftOperatoerPunktAfgiftIdentifikator,
-                            SøgeParametreStrukturType søgeParametreStrukturType
+                            SøgeParametreStrukturType spst
     )
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
@@ -116,7 +116,7 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClie
         oioLedsageDokumentAnnulleringSamlingHentIType.setHovedOplysninger(hovedOplysningerType);
         oioLedsageDokumentAnnulleringSamlingHentIType.setVirksomhedIdentifikationStruktur(virksomhedIdentifikationStrukturType);
 
-        oioLedsageDokumentAnnulleringSamlingHentIType.setSøgeParametreStruktur(søgeParametreStrukturType);
+        oioLedsageDokumentAnnulleringSamlingHentIType.setSøgeParametreStruktur(spst);
 
         Bus bus = new SpringBusFactory().createBus("emcs-policy.xml", false);
         BusFactory.setDefaultBus(bus);
