@@ -33,7 +33,7 @@ public class OIOLedsageDokumentOmdirigeretAdvisSamlingHentClientTest extends Bas
             String afgiftOperatoerPunktAfgiftIdentifikator = "DK31175143300";
             OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient client = new OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient(getEndpoint(OIO_LEDSAGE_DOKUMENT_OMDIRIGERET_ADVIS_SAMLING_HENT));
             OIOLedsageDokumentOmdirigeretAdvisSamlingHentOType response = client.invoke(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator);
+                    afgiftOperatoerPunktAfgiftIdentifikator, SøgeParametreStrukturTypeHelper.getSøgeParametreStrukturType(10));
             assertFalse(hasError(response.getHovedOplysningerSvar()));
         }
     }

@@ -55,12 +55,13 @@ public class OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient extends EMCSBas
      * @throws SAXException N/A
      */
     public OIOLedsageDokumentOmdirigeretAdvisSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
-                       String afgiftOperatoerPunktAfgiftIdentifikator) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+                       String afgiftOperatoerPunktAfgiftIdentifikator,
+                        SøgeParametreStrukturType spst) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
         OIOLedsageDokumentOmdirigeretAdvisSamlingHentIType request = new OIOLedsageDokumentOmdirigeretAdvisSamlingHentIType();
         request.setHovedOplysninger(generateHovedOplysningerType());
         request.setVirksomhedIdentifikationStruktur(generateVirksomhedIdentifikationStrukturType(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator));
-        request.setSøgeParametreStruktur(getSøgeParametreStrukturType(10));
+        request.setSøgeParametreStruktur(spst);
 
         Bus bus = new SpringBusFactory().createBus("emcs-policy.xml", false);
         BusFactory.setDefaultBus(bus);
