@@ -37,8 +37,8 @@ public class OIOForsinkelseForklaringOpretClientTest extends BaseClientTest {
 
         LOGGER.info("----- Step 1: OIOLedsageDokumentOpret");
         File ie815 = new File("ie815.xml");
-        OIOLedsageDokumentOpretClient oioLedsageDocumentClient = new OIOLedsageDokumentOpretClient(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
-        OIOLedsageDokumentOpretOType response1 = oioLedsageDocumentClient.invoke2(virksomhedSENummerIdentifikator,
+        OIOLedsageDokumentOpretClient client1 = new OIOLedsageDokumentOpretClient(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
+        OIOLedsageDokumentOpretOType response1 = client1.invoke2(virksomhedSENummerIdentifikator,
                 afgiftOperatoerPunktAfgiftIdentifikator, ie815);
         assertFalse(hasError(response1.getHovedOplysningerSvar()));
 
@@ -51,8 +51,8 @@ public class OIOForsinkelseForklaringOpretClientTest extends BaseClientTest {
         LOGGER.info("----- Step 2: OIOForsinkelseForklaringOpret");
         // Path to where the IE837 document is located
         String ie837 = "ie837.xml";
-        OIOForsinkelseForklaringOpretClient oioForsinkelseForklaringClient = new OIOForsinkelseForklaringOpretClient(getEndpoint(OIO_FORSINKELSE_FORKLARING_OPRET));
-        OIOForsinkelseForklaringOpretOType response2 = oioForsinkelseForklaringClient.invoke(virksomhedSENummerIdentifikator,
+        OIOForsinkelseForklaringOpretClient client2 = new OIOForsinkelseForklaringOpretClient(getEndpoint(OIO_FORSINKELSE_FORKLARING_OPRET));
+        OIOForsinkelseForklaringOpretOType response2 = client2.invoke(virksomhedSENummerIdentifikator,
                 afgiftOperatoerPunktAfgiftIdentifikator, ie837, arc, afgiftOperatoerPunktAfgiftIdentifikator);
         assertFalse(hasError(response2.getHovedOplysningerSvar()));
     }
