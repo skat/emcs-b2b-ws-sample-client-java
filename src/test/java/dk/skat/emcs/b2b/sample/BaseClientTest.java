@@ -7,6 +7,7 @@ import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.FejlStrukturT
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerSvarType;
 import oio.skat.emcs.ws._1_0.SøgeParametreStrukturType;
 
+import javax.xml.datatype.DatatypeConfigurationException;
 import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
@@ -44,7 +45,7 @@ public class BaseClientTest {
     protected static final String OIO_LEDSAGE_DOKUMENT_DESTINATION_SKIFT_SAMLING_HENT = "OIOLedsageDokumentDestinationSkiftSamlingHent";
     protected static final String OIO_LEDSAGE_DOKUMENT_NOTIFIKATION_SAMLING_HENT = "OIOLedsageDokumentNotifikationSamlingHent";
     protected static final String OIO_LEDSAGE_DOKUMENT_DESTINATION_SKIFT_OPRET = "OIOLedsageDokumentDestinationSkiftOpret";
-
+    protected static final String OIO_KVITTERING_AFVIGELSE_BEGRUNDELSE_OPRET = "OIOKvitteringAfvigelseBegrundelseOpret";
     /**
      * Get VAT number
      *
@@ -174,6 +175,23 @@ public class BaseClientTest {
         cal.add(Calendar.MONTH, -interval);
         Date startDate = cal.getTime();
         return SøgeParametreStrukturTypeHelper.getSøgeParametreStrukturType(startDate, new Date());
+    }
+
+    protected void printExplanationIfError491(HovedOplysningerSvarType host,
+                                            String virksomhedSENummerIdentifikator,
+                                            String afgiftOperatoerPunktAfgiftIdentifikator,
+                                            String arc) {
+        if (hasError(host, 491)) {
+            OIOBeskedAfvisningSamlingHentClient client4 = new OIOBeskedAfvisningSamlingHentClient(getEndpoint("OIOBeskedAfvisningSamlingHent"));
+            try {
+                // We just need to output the IE704 to the system out
+                client4.invokeit(virksomhedSENummerIdentifikator,
+                        afgiftOperatoerPunktAfgiftIdentifikator,
+                        SøgeParametreStrukturTypeHelper.getSøgeParametreStrukturType(arc), null);
+            } catch (DatatypeConfigurationException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 }

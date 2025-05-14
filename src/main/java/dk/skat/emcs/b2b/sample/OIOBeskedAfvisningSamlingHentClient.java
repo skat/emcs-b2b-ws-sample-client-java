@@ -49,8 +49,9 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
                                                      Integer interval,
                                                      String txID)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+        SøgeParametreStrukturType spst = getSøgeParametreStrukturType(interval);
 
-        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, interval, txID);
+        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, spst, txID);
 
 
     }
@@ -72,7 +73,8 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
                          Integer interval)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
-        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, interval, null);
+        SøgeParametreStrukturType spst = getSøgeParametreStrukturType(interval);
+        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, spst, null);
 
 
     }
@@ -80,16 +82,17 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
     public OIOBeskedAfvisningSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
                          String afgiftOperatoerPunktAfgiftIdentifikator)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+        SøgeParametreStrukturType spst = getSøgeParametreStrukturType(1);
 
-        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, 1, null);
+        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, spst , null);
 
 
     }
 
-    private OIOBeskedAfvisningSamlingHentOType invokeit(String virksomhedSENummerIdentifikator,
+    public OIOBeskedAfvisningSamlingHentOType invokeit(String virksomhedSENummerIdentifikator,
                             String afgiftOperatoerPunktAfgiftIdentifikator,
-                            Integer interval, String txId)
-            throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+                                                        SøgeParametreStrukturType spst, String txId)
+            throws DatatypeConfigurationException {
 
         OIOBeskedAfvisningSamlingHentIType oioBeskedAfvisningSamlingHentIType = new OIOBeskedAfvisningSamlingHentIType();
         if (txId == null) {
@@ -98,8 +101,7 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
             oioBeskedAfvisningSamlingHentIType.setHovedOplysninger(generateHovedOplysningerType(txId));
         }
         oioBeskedAfvisningSamlingHentIType.setVirksomhedIdentifikationStruktur(generateVirksomhedIdentifikationStrukturType(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator));
-        SøgeParametreStrukturType soegeParametreStrukturType = getSøgeParametreStrukturType(interval);
-        oioBeskedAfvisningSamlingHentIType.setSøgeParametreStruktur(soegeParametreStrukturType);
+        oioBeskedAfvisningSamlingHentIType.setSøgeParametreStruktur(spst);
 
         Bus bus = new SpringBusFactory().createBus("emcs-policy.xml", false);
         BusFactory.setDefaultBus(bus);
@@ -118,8 +120,8 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
                 oioBeskedAfvisningSamlingHentIType.getVirksomhedIdentifikationStruktur().getAfgiftOperatoerPunktAfgiftIdentifikator(),
                 oioBeskedAfvisningSamlingHentIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
         ));
-        sbRequest.append("** Start Date: ").append(oioBeskedAfvisningSamlingHentIType.getSøgeParametreStruktur().getSøgeParametre().getGyldighedPeriodeUdsøgning().getStartDate()).append(NEW_LINE);
-        sbRequest.append("** End Date: ").append(oioBeskedAfvisningSamlingHentIType.getSøgeParametreStruktur().getSøgeParametre().getGyldighedPeriodeUdsøgning().getEndDate()).append(NEW_LINE);
+        //sbRequest.append("** Start Date: ").append(oioBeskedAfvisningSamlingHentIType.getSøgeParametreStruktur().getSøgeParametre().getGyldighedPeriodeUdsøgning().getStartDate()).append(NEW_LINE);
+        //sbRequest.append("** End Date: ").append(oioBeskedAfvisningSamlingHentIType.getSøgeParametreStruktur().getSøgeParametre().getGyldighedPeriodeUdsøgning().getEndDate()).append(NEW_LINE);
         sbRequest.append("*******************************************************************").append(NEW_LINE);
         LOGGER.info(NEW_LINE + sbRequest.toString());
 
