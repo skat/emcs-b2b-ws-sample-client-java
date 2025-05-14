@@ -2,6 +2,7 @@ package dk.skat.emcs.b2b.sample;
 
 import oio.skat.emcs.ws._1_0.OIOForsendelseAfbrydelseBeskedSamlingHentIType;
 import oio.skat.emcs.ws._1_0.OIOForsendelseAfbrydelseBeskedSamlingHentOType;
+import oio.skat.emcs.ws._1_0.SøgeParametreStrukturType;
 import oio.skat.emcs.ws._1_0_1.OIOForsendelseAfbrydelseBeskedSamlingHentService;
 import oio.skat.emcs.ws._1_0_1.OIOForsendelseAfbrydelseBeskedSamlingHentServicePortType;
 import org.apache.cxf.Bus;
@@ -43,12 +44,13 @@ public class OIOForsendelseAfbrydelseBeskedSamlingHentClient extends EMCSBaseCli
      * @throws DatatypeConfigurationException
      */
     public OIOForsendelseAfbrydelseBeskedSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
-                       String afgiftOperatoerPunktAfgiftIdentifikator) throws DatatypeConfigurationException {
+                       String afgiftOperatoerPunktAfgiftIdentifikator,
+                       SøgeParametreStrukturType spst) throws DatatypeConfigurationException {
 
         OIOForsendelseAfbrydelseBeskedSamlingHentIType request = new OIOForsendelseAfbrydelseBeskedSamlingHentIType();
         request.setHovedOplysninger(generateHovedOplysningerType());
         request.setVirksomhedIdentifikationStruktur(generateVirksomhedIdentifikationStrukturType(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator));
-        request.setSøgeParametreStruktur(getSøgeParametreStrukturType(10));
+        request.setSøgeParametreStruktur(spst);
 
         Bus bus = new SpringBusFactory().createBus("emcs-policy.xml", false);
         BusFactory.setDefaultBus(bus);
