@@ -8,6 +8,7 @@ import oio.skat.emcs.ws._1_0_1.OIOLedsageDokumentOpsplitningOpretServicePortType
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.apache.cxf.frontend.ClientProxy;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -59,7 +60,7 @@ public class OIOLedsageDokumentOpsplitningOpretClient extends EMCSBaseClient {
      * @throws IOException N/A
      * @throws SAXException N/A
      */
-    public void invoke(String virksomhedSENummerIdentifikator,
+    public OIOLedsageDokumentOpsplitningOpretOType invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        String ie825, String arc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
@@ -94,6 +95,7 @@ public class OIOLedsageDokumentOpsplitningOpretClient extends EMCSBaseClient {
         // Set endpoint of service.
         BindingProvider bp = (BindingProvider)port;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
+        addCleartextLogging(ClientProxy.getClient(port));
 
         StringBuilder sbRequest = new StringBuilder();
         sbRequest.append(generateConsoleOutput(
@@ -110,6 +112,7 @@ public class OIOLedsageDokumentOpsplitningOpretClient extends EMCSBaseClient {
         sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
 
         LOGGER.info(NEW_LINE + sb.toString());
+        return out;
     }
 
 }

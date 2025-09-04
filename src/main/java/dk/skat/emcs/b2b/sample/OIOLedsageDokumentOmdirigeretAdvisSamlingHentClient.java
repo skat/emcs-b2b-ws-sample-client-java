@@ -6,6 +6,7 @@ import oio.skat.emcs.ws._1_0_1.OIOLedsageDokumentOmdirigeretAdvisSamlingHentServ
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.apache.cxf.frontend.ClientProxy;
 import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -53,13 +54,14 @@ public class OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient extends EMCSBas
      * @throws IOException N/A
      * @throws SAXException N/A
      */
-    public void invoke(String virksomhedSENummerIdentifikator,
-                       String afgiftOperatoerPunktAfgiftIdentifikator) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+    public OIOLedsageDokumentOmdirigeretAdvisSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
+                       String afgiftOperatoerPunktAfgiftIdentifikator,
+                        SøgeParametreStrukturType spst) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
         OIOLedsageDokumentOmdirigeretAdvisSamlingHentIType request = new OIOLedsageDokumentOmdirigeretAdvisSamlingHentIType();
         request.setHovedOplysninger(generateHovedOplysningerType());
         request.setVirksomhedIdentifikationStruktur(generateVirksomhedIdentifikationStrukturType(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator));
-        request.setSøgeParametreStruktur(getSøgeParametreStrukturType(10));
+        request.setSøgeParametreStruktur(spst);
 
         Bus bus = new SpringBusFactory().createBus("emcs-policy.xml", false);
         BusFactory.setDefaultBus(bus);
@@ -70,6 +72,7 @@ public class OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient extends EMCSBas
         // Set endpoint of service.
         BindingProvider bp = (BindingProvider)port;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
+        addCleartextLogging(ClientProxy.getClient(port));
 
         StringBuilder sbRequest = new StringBuilder();
         sbRequest.append(generateConsoleOutput(
@@ -82,16 +85,18 @@ public class OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient extends EMCSBas
         OIOLedsageDokumentOmdirigeretAdvisSamlingHentOType response = port.getOIOLedsageDokumentOmdirigeretAdvisSamlingHent(request);
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(response.getHovedOplysningerSvar()));
-        List<String> list = response.getLedsageDokumentOmdirigeretAdvisSamling().getIE803BeskedTekst();
-        int i = 1;
-        for (String message : list) {
-            sb.append(NEW_LINE + "Message " + i + ":");
-            sb.append(NEW_LINE);
-            sb.append(prettyFormatDocument(message, 2, true)).append(NEW_LINE);
-
-            i++;
+        if (response.getLedsageDokumentOmdirigeretAdvisSamling() != null) {
+            List<String> list = response.getLedsageDokumentOmdirigeretAdvisSamling().getIE803BeskedTekst();
+            int i = 1;
+            for (String message : list) {
+                sb.append(NEW_LINE + "Message " + i + ":");
+                sb.append(NEW_LINE);
+                sb.append(prettyFormatDocument(message, 2, true)).append(NEW_LINE);
+                i++;
+            }
         }
         LOGGER.info(NEW_LINE + sb.toString());
+        return response;
     }
 
 }

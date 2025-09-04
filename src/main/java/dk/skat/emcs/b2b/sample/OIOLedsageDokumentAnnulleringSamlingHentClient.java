@@ -7,6 +7,7 @@ import oio.skat.emcs.ws._1_0_1.OIOLedsageDokumentAnnulleringSamlingHentServicePo
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.apache.cxf.frontend.ClientProxy;
 import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -60,33 +61,33 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClie
      * @throws SAXException                   N/A
      */
 
-    public String invoke(String virksomhedSENummerIdentifikator,
+    OIOLedsageDokumentAnnulleringSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
                          String afgiftOperatoerPunktAfgiftIdentifikator,
                          Integer interval)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
         SøgeParametreStrukturType søgeparameter = getSøgeParametreStrukturType(interval);
 
 
-        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, søgeparameter);
+        return this.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, søgeparameter);
 
 
     }
 
 
-    public String invoke(String virksomhedSENummerIdentifikator,
+    public OIOLedsageDokumentAnnulleringSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
                          String afgiftOperatoerPunktAfgiftIdentifikator,
                          String arcnumber)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
         SøgeParametreStrukturType søgeparameter = getSøgeParametreStrukturType(arcnumber);
-        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, søgeparameter);
+        return this.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, søgeparameter);
 
 
     }
 
 
-    private String invokeit(String virksomhedSENummerIdentifikator,
+    public OIOLedsageDokumentAnnulleringSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
                             String afgiftOperatoerPunktAfgiftIdentifikator,
-                            SøgeParametreStrukturType søgeParametreStrukturType
+                            SøgeParametreStrukturType spst
     )
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
@@ -115,7 +116,7 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClie
         oioLedsageDokumentAnnulleringSamlingHentIType.setHovedOplysninger(hovedOplysningerType);
         oioLedsageDokumentAnnulleringSamlingHentIType.setVirksomhedIdentifikationStruktur(virksomhedIdentifikationStrukturType);
 
-        oioLedsageDokumentAnnulleringSamlingHentIType.setSøgeParametreStruktur(søgeParametreStrukturType);
+        oioLedsageDokumentAnnulleringSamlingHentIType.setSøgeParametreStruktur(spst);
 
         Bus bus = new SpringBusFactory().createBus("emcs-policy.xml", false);
         BusFactory.setDefaultBus(bus);
@@ -126,6 +127,7 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClie
         // Set endpoint of service.
         BindingProvider bp = (BindingProvider) port;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
+        addCleartextLogging(ClientProxy.getClient(port));
 
         StringBuilder sbRequest = new StringBuilder();
         sbRequest.append(generateConsoleOutput(
@@ -158,7 +160,7 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClie
         }
 
         LOGGER.info(NEW_LINE + sb.toString());
-        return sb.toString();
+        return out;
     }
 
 

@@ -2,10 +2,16 @@ package dk.skat.emcs.b2b.sample;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.AdvisStrukturType;
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.FejlStrukturType;
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerSvarType;
+import oio.skat.emcs.ws._1_0.SøgeParametreStrukturType;
 
+import javax.xml.datatype.DatatypeConfigurationException;
 import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Logger;
 
 /**
  * BaseClient - Helper methods for test clients, e.g. we're using the same VAT number for all tests.
@@ -14,6 +20,8 @@ import java.io.File;
  * @since 1.2
  */
 public class BaseClientTest {
+
+    private static final Logger LOGGER = Logger.getLogger(BaseClientTest.class.getName());
 
     protected static final String OIO_PAAMINDELSE_SAMLING_HENT = "OIOPaamindelseSamlingHent";
     protected static final String OIO_EUREFERENCE_DATA_ANMOD = "OIOEUReferenceDataAnmod";
@@ -30,7 +38,14 @@ public class BaseClientTest {
     protected static final String OIO_LEDSAGE_DOKUMENT_OMDIRIGERET_ADVIS_SAMLING_HENT = "OIOLedsageDokumentOmdirigeretAdvisSamlingHent";
     protected static final String OIO_FORSENDELSE_AFBRYDELSE_BESKED_SAMLING_HENT = "OIOForsendelseAfbrydelseBeskedSamlingHent";
     protected static final String OIO_FORSINKELSE_FORKLARING_OPRET = "OIOForsinkelseForklaringOpret";
-
+    protected static final String OIO_EKSPORT_AFVISNING_SAMLING_HENT = "OIOEksportAfvisningSamlingHent";
+    protected static final String OIO_EKSPORT_ANGIVELSE_INVALIDERING_NOTIFIKATION_SAMLING_HENT = "OIOEksportAngivelseInvalideringNotifikationSamlingHent";
+    protected static final String OIO_EKSPORT_GODKENDELSE_SAMLING_HENT = "OIOEksportGodkendelseSamlingHent";
+    protected static final String OIO_HAENDELSE_RAPPORT_SAMLING_HENT = "OIOHaendelseRapportSamlingHent";
+    protected static final String OIO_LEDSAGE_DOKUMENT_DESTINATION_SKIFT_SAMLING_HENT = "OIOLedsageDokumentDestinationSkiftSamlingHent";
+    protected static final String OIO_LEDSAGE_DOKUMENT_NOTIFIKATION_SAMLING_HENT = "OIOLedsageDokumentNotifikationSamlingHent";
+    protected static final String OIO_LEDSAGE_DOKUMENT_DESTINATION_SKIFT_OPRET = "OIOLedsageDokumentDestinationSkiftOpret";
+    protected static final String OIO_KVITTERING_AFVIGELSE_BEGRUNDELSE_OPRET = "OIOKvitteringAfvigelseBegrundelseOpret";
     /**
      * Get VAT number
      *
@@ -74,11 +89,16 @@ public class BaseClientTest {
     }
 
     protected void sleep(int minutes) throws InterruptedException {
-        Thread.sleep(1000 * 60 * minutes);
+        LOGGER.info("Sleeping " + minutes + " minutes.");
+        for (int i = 1; i <= minutes; i++) {
+            LOGGER.info((minutes + 1) - i + " minute(s) remaining...");
+            Thread.sleep(1000 * 60);
+        }
+        LOGGER.info("Awake.");
     }
 
     protected static Config getConfig() {
-        return ConfigFactory.parseFile(new File("app.conf")).withFallback(ConfigFactory.load());
+        return ConfigFactory.parseFile(new File("app.conf")).withFallback(ConfigFactory.load()).resolve();
     }
 
     static {
@@ -119,6 +139,59 @@ public class BaseClientTest {
             }
         }
         return result;
+    }
+
+    protected boolean hasAdvis(HovedOplysningerSvarType hovedOplysningerSvarType, int advisCode) {
+        boolean result = false;
+        if (!hovedOplysningerSvarType.getSvarStruktur().getAdvisStrukturOrFejlStruktur().isEmpty()) {
+            for (Object errorOrAdvis : hovedOplysningerSvarType.getSvarStruktur().getAdvisStrukturOrFejlStruktur()) {
+                if (errorOrAdvis instanceof AdvisStrukturType) {
+                    AdvisStrukturType advisStrukturType = (AdvisStrukturType) errorOrAdvis;
+                    if (advisCode == advisStrukturType.getAdvisIdentifikator().intValue()) {
+                        result = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Generate a search with start and end date im the future
+     * @return
+     */
+    protected SøgeParametreStrukturType getSearchPeriodInFuture() {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH,6);
+        Date startDate = cal.getTime();
+        cal.add(Calendar.MONTH,1);
+        Date endDate = cal.getTime();
+        return SøgeParametreStrukturTypeHelper.getSøgeParametreStrukturType(startDate, endDate);
+    }
+
+    protected SøgeParametreStrukturType getSearchPeriodLastNMonths(Integer interval) {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -interval);
+        Date startDate = cal.getTime();
+        return SøgeParametreStrukturTypeHelper.getSøgeParametreStrukturType(startDate, new Date());
+    }
+
+    protected void printExplanationIfError491(HovedOplysningerSvarType host,
+                                            String virksomhedSENummerIdentifikator,
+                                            String afgiftOperatoerPunktAfgiftIdentifikator,
+                                            String arc) {
+        if (hasError(host, 491)) {
+            OIOBeskedAfvisningSamlingHentClient client4 = new OIOBeskedAfvisningSamlingHentClient(getEndpoint("OIOBeskedAfvisningSamlingHent"));
+            try {
+                // We just need to output the IE704 to the system out
+                client4.invokeit(virksomhedSENummerIdentifikator,
+                        afgiftOperatoerPunktAfgiftIdentifikator,
+                        SøgeParametreStrukturTypeHelper.getSøgeParametreStrukturType(arc), null);
+            } catch (DatatypeConfigurationException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 }

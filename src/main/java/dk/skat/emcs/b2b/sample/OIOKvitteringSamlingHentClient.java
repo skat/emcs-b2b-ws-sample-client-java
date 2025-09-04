@@ -7,6 +7,7 @@ import oio.skat.emcs.ws._1_0_1.OIOKvitteringSamlingHentServicePortType;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.apache.cxf.frontend.ClientProxy;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.ws.BindingProvider;
@@ -61,6 +62,7 @@ public class OIOKvitteringSamlingHentClient extends EMCSBaseClient {
         // Set endpoint of service.
         BindingProvider bp = (BindingProvider) port;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
+        addCleartextLogging(ClientProxy.getClient(port));
 
         StringBuilder sbRequest = new StringBuilder();
         sbRequest.append(generateConsoleOutput(
@@ -74,12 +76,14 @@ public class OIOKvitteringSamlingHentClient extends EMCSBaseClient {
 
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(response.getHovedOplysningerSvar()));
-        List<String> list = response.getKvitteringSamling().getIE818BeskedTekst();
-        int i = 1;
-        for (String message : list) {
-            sb.append(NEW_LINE + "Message " + i + ":");
-            sb.append(NEW_LINE + message);
-            i++;
+        if (response.getKvitteringSamling() != null) {
+            List<String> list = response.getKvitteringSamling().getIE818BeskedTekst();
+            int i = 1;
+            for (String message : list) {
+                sb.append(NEW_LINE + "Message " + i + ":");
+                sb.append(NEW_LINE + message);
+                i++;
+            }
         }
         LOGGER.info(NEW_LINE + sb.toString());
         return response;

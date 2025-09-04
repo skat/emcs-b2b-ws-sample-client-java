@@ -1,10 +1,16 @@
 package dk.skat.emcs.b2b.sample;
 
+import oio.skat.emcs.ws._1_0.OIOKvitteringOpretOType;
+import oio.skat.emcs.ws._1_0.OIOKvitteringSamlingHentOType;
+import oio.skat.emcs.ws._1_0.OIOLedsageDokumentOpretOType;
+import oio.skat.emcs.ws._1_0.OIOLedsageDokumentSamlingHentOType;
 import org.junit.Test;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.io.File;
 import java.util.logging.Logger;
+
+import static org.junit.Assert.*;
 
 public class OIOKvitteringSamlingHentClientTest extends BaseClientTest {
 
@@ -35,46 +41,43 @@ public class OIOKvitteringSamlingHentClientTest extends BaseClientTest {
             // Excise number
             String consignor = getAfgiftOperatoerPunktAfgiftIdentifikator();
 
-            String arc;
+            // Call OIOLedsageDokumentOpret as Consignor
+            File ie815 = new File("ie815.xml");
+            OIOLedsageDokumentOpretClient client1 = new OIOLedsageDokumentOpretClient(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
+            OIOLedsageDokumentOpretOType response1 = client1.invoke2(virksomhedSENummerIdentifikator,
+                    consignor, ie815);
+            String arc = response1.getOutput().getLedsageDokument().getLedsagedokumentARCIdentifikator();
+            assertFalse(hasError(response1.getHovedOplysningerSvar()));
+
+            assertNotNull("Did not receive ARC number. Exiting.", arc);
+            LOGGER.info("Received ARC = " + arc);
+
+            sleep(2);
 
             String consignee = "DK99025875300";
 
-            // Call OIOLedsageDokumentOpret as Consignor
-
-            File ie815 = new File("ie815.xml");
-            OIOLedsageDokumentOpretClient oioLedsageDocumentClient = new OIOLedsageDokumentOpretClient(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
-            arc = oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,
-                    consignor, ie815);
-
-            if (arc == null) {
-                LOGGER.warning("Did not receive ARC number. Exiting");
-                return;
-            }
-            LOGGER.info("Received ARC = " + arc);
-
-            LOGGER.info("Waiting 2 minutes before proceeding...");
-            sleep(2);
-
             // Call OIOLedsageDokumentSamlingHent as Consignee
-            OIOLedsageDokumentSamlingHentClient ledsageDokumentSamlingHentClient = new OIOLedsageDokumentSamlingHentClient(getEndpoint(OIO_LEDSAGE_DOKUMENT_SAMLLING_HENT));
-            ledsageDokumentSamlingHentClient.invoke(virksomhedSENummerIdentifikator,
-                    consignee, arc);
+            OIOLedsageDokumentSamlingHentClient client2 = new OIOLedsageDokumentSamlingHentClient(getEndpoint(OIO_LEDSAGE_DOKUMENT_SAMLLING_HENT));
+            OIOLedsageDokumentSamlingHentOType response2 = client2.invoke(virksomhedSENummerIdentifikator, consignee, arc);
+            assertFalse(hasError(response2.getHovedOplysningerSvar()));
+            assertFalse(response2.getLedsageDokumentStamDataSamling().getIE801BeskedTekst().isEmpty());
+            assertTrue(response2.getLedsageDokumentStamDataSamling().getIE801BeskedTekst().stream().anyMatch(e -> e.contains(arc)));
 
             // Call OIOKvitteringOpret as Consignee
-
             File ie818 = new File ("ie818.xml");
-            OIOKvitteringOpretClient oioKvitteringOpretClient = new OIOKvitteringOpretClient(getEndpoint(OIO_KVITTERING_OPRET));
-            oioKvitteringOpretClient.invoke(virksomhedSENummerIdentifikator,
-                    consignee,ie818, arc);
+            OIOKvitteringOpretClient client3 = new OIOKvitteringOpretClient(getEndpoint(OIO_KVITTERING_OPRET));
+            OIOKvitteringOpretOType response3 = client3.invoke(virksomhedSENummerIdentifikator, consignee,ie818, arc);
+            assertFalse(hasError(response3.getHovedOplysningerSvar()));
 
-            LOGGER.info("Waiting 2 minutes before proceeding...");
             sleep(2);
 
             // Call OIOKvitteringSamlingHent as Consignee
-
-            OIOKvitteringSamlingHentClient client = new OIOKvitteringSamlingHentClient(getEndpoint(OIO_KVITTERING_SAMLIMG_HENT));
-            client.invoke(virksomhedSENummerIdentifikator,
-                    consignee, arc);
+            OIOKvitteringSamlingHentClient client4 = new OIOKvitteringSamlingHentClient(getEndpoint(OIO_KVITTERING_SAMLIMG_HENT));
+            OIOKvitteringSamlingHentOType response4 = client4.invoke(virksomhedSENummerIdentifikator, consignee, arc);
+            assertFalse(hasError(response4.getHovedOplysningerSvar()));
+            assertFalse(hasAdvis(response4.getHovedOplysningerSvar(), 130));
+            assertFalse(response4.getKvitteringSamling().getIE818BeskedTekst().isEmpty());
+            assertTrue(response4.getKvitteringSamling().getIE818BeskedTekst().stream().anyMatch(e -> e.contains(arc)));
         }
     }
 }

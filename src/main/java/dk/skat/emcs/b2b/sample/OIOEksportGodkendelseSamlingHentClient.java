@@ -2,11 +2,13 @@ package dk.skat.emcs.b2b.sample;
 
 import oio.skat.emcs.ws._1_0.OIOEksportGodkendelseSamlingHentIType;
 import oio.skat.emcs.ws._1_0.OIOEksportGodkendelseSamlingHentOType;
+import oio.skat.emcs.ws._1_0.SøgeParametreStrukturType;
 import oio.skat.emcs.ws._1_0_1.OIOEksportGodkendelseSamlingHentService;
 import oio.skat.emcs.ws._1_0_1.OIOEksportGodkendelseSamlingHentServicePortType;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.apache.cxf.frontend.ClientProxy;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.ws.BindingProvider;
@@ -42,12 +44,13 @@ public class OIOEksportGodkendelseSamlingHentClient extends EMCSBaseClient {
      * @throws DatatypeConfigurationException
      */
     public OIOEksportGodkendelseSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
-                                                        String afgiftOperatoerPunktAfgiftIdentifikator) throws DatatypeConfigurationException {
+                                                        String afgiftOperatoerPunktAfgiftIdentifikator,
+                                                        SøgeParametreStrukturType spst) throws DatatypeConfigurationException {
 
         OIOEksportGodkendelseSamlingHentIType request = new OIOEksportGodkendelseSamlingHentIType();
         request.setHovedOplysninger(generateHovedOplysningerType());
         request.setVirksomhedIdentifikationStruktur(generateVirksomhedIdentifikationStrukturType(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator));
-        request.setSøgeParametreStruktur(getSøgeParametreStrukturType(10));
+        request.setSøgeParametreStruktur(spst);
 
         Bus bus = new SpringBusFactory().createBus("emcs-policy.xml", false);
         BusFactory.setDefaultBus(bus);
@@ -57,6 +60,7 @@ public class OIOEksportGodkendelseSamlingHentClient extends EMCSBaseClient {
         // Set endpoint of service.
         BindingProvider bp = (BindingProvider) port;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
+        addCleartextLogging(ClientProxy.getClient(port));
 
         StringBuilder sbRequest = new StringBuilder();
         sbRequest.append(generateConsoleOutput(
@@ -70,14 +74,15 @@ public class OIOEksportGodkendelseSamlingHentClient extends EMCSBaseClient {
 
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(response.getHovedOplysningerSvar()));
-        List<String> list = response.getEksportGodkendelseSamling().getIE829BeskedTekst();
-        int i = 1;
-        for (String message : list) {
-            sb.append(NEW_LINE + "Message " + i + ":");
-            sb.append(NEW_LINE + prettyFormatDocument(message, 2, true));
-            i++;
+        if (response.getEksportGodkendelseSamling() != null) {
+            List<String> list = response.getEksportGodkendelseSamling().getIE829BeskedTekst();
+            int i = 1;
+            for (String message : list) {
+                sb.append(NEW_LINE + "Message " + i + ":");
+                sb.append(NEW_LINE + prettyFormatDocument(message, 2, true));
+                i++;
+            }
         }
-
         LOGGER.info(NEW_LINE + sb.toString());
         return response;
     }

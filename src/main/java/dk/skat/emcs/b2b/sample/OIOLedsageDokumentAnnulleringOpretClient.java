@@ -11,6 +11,7 @@ import oio.skat.emcs.ws._1_0_1.OIOLedsageDokumentAnnulleringOpretServicePortType
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.apache.cxf.frontend.ClientProxy;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -63,7 +64,7 @@ public class OIOLedsageDokumentAnnulleringOpretClient extends EMCSBaseClient {
      * @throws IOException N/A
      * @throws SAXException N/A
      */
-    public String  invoke(String virksomhedSENummerIdentifikator,
+    public OIOLedsageDokumentAnnulleringOpretOType invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        String ie810, String arc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
         Document doc = loadIEDocument(ie810);
@@ -78,7 +79,7 @@ public class OIOLedsageDokumentAnnulleringOpretClient extends EMCSBaseClient {
     }
 
 
-    private String invokeit(String virksomhedSENummerIdentifikator,
+    private OIOLedsageDokumentAnnulleringOpretOType invokeit(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        Document doc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
@@ -122,6 +123,7 @@ public class OIOLedsageDokumentAnnulleringOpretClient extends EMCSBaseClient {
         // Set endpoint of service.
         BindingProvider bp = (BindingProvider)port;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
+        addCleartextLogging(ClientProxy.getClient(port));
 
         StringBuilder sbRequest = new StringBuilder();
         sbRequest.append(generateConsoleOutput(
@@ -137,7 +139,7 @@ public class OIOLedsageDokumentAnnulleringOpretClient extends EMCSBaseClient {
         sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
 
         LOGGER.info(NEW_LINE + sb.toString());
-        return sb.toString();
+        return out;
     }
 
 

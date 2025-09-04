@@ -1,8 +1,15 @@
 package dk.skat.emcs.b2b.sample;
 
+import oio.skat.emcs.ws._1_0.OIOEUReferenceDataAnmodOType;
+import oio.skat.emcs.ws._1_0.OIOEUReferenceDataHentOType;
 import org.junit.Test;
 
 import java.util.UUID;
+import java.util.logging.Logger;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assume.assumeNotNull;
 
 /**
  * OIOEUReferenceDataHent Test (IE733 as response)
@@ -19,27 +26,26 @@ import java.util.UUID;
  */
 public class OIOEUReferenceDataHentClientTest extends BaseClientTest {
 
-    @Test
-    public void invoke() throws Exception {
+    private static final Logger LOGGER = Logger.getLogger(OIOEUReferenceDataHentClientTest.class.getName());
 
-        if (getEndpoint(OIO_EUREFERENCE_DATA_HENT) != null) {
-            final String beskedIdentifikator = UUID.randomUUID().toString();
-            String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
-            String afgiftOperatoerPunktAfgiftIdentifikator = "DK82070486100";
-            // Step 1:
-            // -------
-            {
-                OIOEUReferenceDataAnmodClient client = new OIOEUReferenceDataAnmodClient(getEndpoint(OIO_EUREFERENCE_DATA_ANMOD));
-                client.invoke(virksomhedSENummerIdentifikator,
-                        afgiftOperatoerPunktAfgiftIdentifikator, "ie705.xml", beskedIdentifikator);
-            }
-            // Step 2:
-            // -------
-            {
-                OIOEUReferenceDataHentClient client = new OIOEUReferenceDataHentClient(getEndpoint(OIO_EUREFERENCE_DATA_HENT));
-                client.invoke(virksomhedSENummerIdentifikator,
-                        afgiftOperatoerPunktAfgiftIdentifikator, beskedIdentifikator);
-            }
-        }
+    @Test
+    public void scenario() throws Exception {
+        assumeNotNull(getEndpoint(OIO_EUREFERENCE_DATA_ANMOD));
+        assumeNotNull(getEndpoint(OIO_EUREFERENCE_DATA_HENT));
+        final String beskedIdentifikator = UUID.randomUUID().toString();
+        String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
+        String afgiftOperatoerPunktAfgiftIdentifikator = "DK82070486100";
+        LOGGER.info("----- Step 1: OIOEUReferenceDataAnmod");
+        OIOEUReferenceDataAnmodClient client1 = new OIOEUReferenceDataAnmodClient(getEndpoint(OIO_EUREFERENCE_DATA_ANMOD));
+        OIOEUReferenceDataAnmodOType response1 = client1.invoke(virksomhedSENummerIdentifikator,
+                afgiftOperatoerPunktAfgiftIdentifikator, "ie705.xml", beskedIdentifikator);
+        assertFalse(hasError(response1.getHovedOplysningerSvar()));
+
+        LOGGER.info("----- Step 2: OIOEUReferenceDataHent");
+        OIOEUReferenceDataHentClient client2 = new OIOEUReferenceDataHentClient(getEndpoint(OIO_EUREFERENCE_DATA_HENT));
+        OIOEUReferenceDataHentOType response2 = client2.invoke(virksomhedSENummerIdentifikator,
+                afgiftOperatoerPunktAfgiftIdentifikator, beskedIdentifikator);
+        assertFalse(hasError(response2.getHovedOplysningerSvar()));
+        assertNotNull(response2.getIE733BeskedTekst());
     }
 }

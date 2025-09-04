@@ -1,9 +1,14 @@
 package dk.skat.emcs.b2b.sample;
 
+import oio.skat.emcs.ws._1_0.OIOForsinkelseForklaringOpretOType;
+import oio.skat.emcs.ws._1_0.OIOLedsageDokumentOpretOType;
 import org.junit.Test;
 
 import java.io.File;
 import java.util.logging.Logger;
+
+import static org.junit.Assert.*;
+import static org.junit.Assume.assumeNotNull;
 
 /**
  * OIOForsinkelseForklaringOpret Test
@@ -23,38 +28,33 @@ public class OIOForsinkelseForklaringOpretClientTest extends BaseClientTest {
     private static final Logger LOGGER = Logger.getLogger(OIOForsinkelseForklaringOpretClientTest.class.getName());
 
     @Test
-    public void invoke() throws Exception {
-        String endpointURL =
-                getEndpoint(OIO_FORSINKELSE_FORKLARING_OPRET);
-        if (endpointURL != null) {
+    public void scenario() throws Exception {
+        assumeNotNull(getEndpoint(OIO_FORSINKELSE_FORKLARING_OPRET));
+        assumeNotNull(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
 
-            String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
-            String afgiftOperatoerPunktAfgiftIdentifikator = "DK82065873300";
+        String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
+        String afgiftOperatoerPunktAfgiftIdentifikator = "DK82065873300";
 
-            // Step 1:
-            // -------
-            String arc;
-            File ie815 = new File("ie815.xml");
-            OIOLedsageDokumentOpretClient oioLedsageDocumentClient = new OIOLedsageDokumentOpretClient(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
-            arc = oioLedsageDocumentClient.invoke(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator, ie815);
+        LOGGER.info("----- Step 1: OIOLedsageDokumentOpret");
+        File ie815 = new File("ie815.xml");
+        OIOLedsageDokumentOpretClient client1 = new OIOLedsageDokumentOpretClient(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
+        OIOLedsageDokumentOpretOType response1 = client1.invoke2(virksomhedSENummerIdentifikator,
+                afgiftOperatoerPunktAfgiftIdentifikator, ie815);
+        assertFalse(hasError(response1.getHovedOplysningerSvar()));
 
-            if (arc == null) {
-                LOGGER.warning("Did not receive ARC number. Exiting");
-                return;
-            }
+        String arc = response1.getOutput().getLedsageDokument().getLedsagedokumentARCIdentifikator();
 
-            LOGGER.info("Sleeping 2 minutes to allow EMCS process the IE815.");
-            sleep(2);
+        assertNotNull("Did not receive ARC number. Exiting.", arc);
 
-            // Step 2:
-            // -------
-            // Path to where the IE837 document is located
-            String ie837 = "ie837.xml";
-            OIOForsinkelseForklaringOpretClient oioForsinkelseForklaringClient = new OIOForsinkelseForklaringOpretClient(endpointURL);
-            oioForsinkelseForklaringClient.invoke(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator, ie837, arc, afgiftOperatoerPunktAfgiftIdentifikator);
-        }
+        sleep(2);
+
+        LOGGER.info("----- Step 2: OIOForsinkelseForklaringOpret");
+        // Path to where the IE837 document is located
+        String ie837 = "ie837.xml";
+        OIOForsinkelseForklaringOpretClient client2 = new OIOForsinkelseForklaringOpretClient(getEndpoint(OIO_FORSINKELSE_FORKLARING_OPRET));
+        OIOForsinkelseForklaringOpretOType response2 = client2.invoke(virksomhedSENummerIdentifikator,
+                afgiftOperatoerPunktAfgiftIdentifikator, ie837, arc, afgiftOperatoerPunktAfgiftIdentifikator);
+        assertFalse(hasError(response2.getHovedOplysningerSvar()));
     }
 
 }

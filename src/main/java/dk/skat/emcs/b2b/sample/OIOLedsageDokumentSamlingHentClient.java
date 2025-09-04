@@ -7,6 +7,7 @@ import oio.skat.emcs.ws._1_0_1.OIOLedsageDokumentSamlingHentServicePortType;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.apache.cxf.frontend.ClientProxy;
 import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -59,7 +60,7 @@ public class OIOLedsageDokumentSamlingHentClient extends EMCSBaseClient {
      * @throws IOException N/A
      * @throws SAXException N/A
      */
-    public String invoke(String virksomhedSENummerIdentifikator,
+    public OIOLedsageDokumentSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        String ARCnummer) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
@@ -101,6 +102,7 @@ public class OIOLedsageDokumentSamlingHentClient extends EMCSBaseClient {
         // Set endpoint of service.
         BindingProvider bp = (BindingProvider)port;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
+        addCleartextLogging(ClientProxy.getClient(port));
 
         StringBuilder sbRequest = new StringBuilder();
         sbRequest.append(generateConsoleOutput(
@@ -125,7 +127,7 @@ public class OIOLedsageDokumentSamlingHentClient extends EMCSBaseClient {
         }
 
         LOGGER.info(NEW_LINE + sb.toString());
-        return sb.toString();
+        return out;
     }
 
 }

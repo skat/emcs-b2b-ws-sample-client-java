@@ -6,6 +6,7 @@ import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysnin
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerType;
 import oio.skat.emcs.ws._1_0.SøgeParametreStrukturType;
 import oio.skat.emcs.ws._1_0.VirksomhedIdentifikationStrukturType;
+import org.apache.cxf.endpoint.Client;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
@@ -44,6 +45,13 @@ public class EMCSBaseClient {
 
     protected static final String NEW_LINE = System.getProperty("line.separator");
 
+    protected void addCleartextLogging(Client client) {
+        CleartextLogger clearOutputLogger = new CleartextLogger();
+        CleartextLogger clearInputLogger = new CleartextLogger();
+        client.getOutInterceptors().add(clearOutputLogger);
+        client.getInInterceptors().add(clearInputLogger);
+    }
+
     protected Document loadIEDocument(String path) throws IOException, SAXException, ParserConfigurationException {
         File file = new File(path);
         return loadIEDocument(file);
@@ -59,6 +67,10 @@ public class EMCSBaseClient {
     protected HovedOplysningerType generateHovedOplysningerType() throws DatatypeConfigurationException {
         // Generate Transaction Id
         final String transactionID = TransactionIdGenerator.getTransactionId();
+        return generateHovedOplysningerType(transactionID);
+    }
+
+    protected HovedOplysningerType generateHovedOplysningerType(String transactionID) throws DatatypeConfigurationException {
         // Generate Transaction Time
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
         gregorianCalendar.setTime(new Date());

@@ -7,6 +7,7 @@ import oio.skat.emcs.ws._1_0_1.OIOEksportAngivelseInvalideringNotifikationSamlin
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.apache.cxf.frontend.ClientProxy;
 import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -53,15 +54,15 @@ public class OIOEksportAngivelseInvalideringNotifikationSamlingHentClient extend
      *
      * @param virksomhedSENummerIdentifikator VAT number of entity calling entity
      * @param afgiftOperatoerPunktAfgiftIdentifikator Excise Number of calling entity
-     * @param ARCnummer ARC number
+     * @param spst SøgeParametreStrukturType
      * @throws DatatypeConfigurationException N/A
      * @throws ParserConfigurationException N/A
      * @throws IOException N/A
      * @throws SAXException N/A
      */
-    public String invoke(String virksomhedSENummerIdentifikator,
+    public OIOEksportAngivelseInvalideringNotifikationSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
-                       String ARCnummer) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+                       SøgeParametreStrukturType spst) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
         // Generate Transaction Id
         final String transactionID = TransactionIdGenerator.getTransactionId();
@@ -86,11 +87,7 @@ public class OIOEksportAngivelseInvalideringNotifikationSamlingHentClient extend
         OIOEksportAngivelseInvalideringNotifikationSamlingHentIType oioEksportAngivelseInvalideringNotifikationSamlingHentIType = new OIOEksportAngivelseInvalideringNotifikationSamlingHentIType();
         oioEksportAngivelseInvalideringNotifikationSamlingHentIType.setHovedOplysninger(hovedOplysningerType);
         oioEksportAngivelseInvalideringNotifikationSamlingHentIType.setVirksomhedIdentifikationStruktur(virksomhedIdentifikationStrukturType);
-        SøgeParametreStrukturType soegeParametreStrukturType = new SøgeParametreStrukturType();
-        SøgeParametreStrukturType.SøgeParametre soegeParametre = new SøgeParametreStrukturType.SøgeParametre();
-        soegeParametre.setLedsagedokumentARCIdentifikator(ARCnummer);
-        soegeParametreStrukturType.setSøgeParametre(soegeParametre);
-        oioEksportAngivelseInvalideringNotifikationSamlingHentIType.setSøgeParametreStruktur(soegeParametreStrukturType);
+        oioEksportAngivelseInvalideringNotifikationSamlingHentIType.setSøgeParametreStruktur(spst);
 
         Bus bus = new SpringBusFactory().createBus("emcs-policy.xml", false);
         BusFactory.setDefaultBus(bus);
@@ -101,6 +98,7 @@ public class OIOEksportAngivelseInvalideringNotifikationSamlingHentClient extend
         // Set endpoint of service.
         BindingProvider bp = (BindingProvider)port;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
+        addCleartextLogging(ClientProxy.getClient(port));
 
         StringBuilder sbRequest = new StringBuilder();
         sbRequest.append(generateConsoleOutput(
@@ -125,7 +123,7 @@ public class OIOEksportAngivelseInvalideringNotifikationSamlingHentClient extend
         }
 
         LOGGER.info(NEW_LINE + sb.toString());
-        return sb.toString();
+        return out;
     }
 
 }

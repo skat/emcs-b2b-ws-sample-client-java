@@ -7,6 +7,7 @@ import oio.skat.emcs.ws._1_0_1.OIOEUReferenceDataHentServicePortType;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.apache.cxf.frontend.ClientProxy;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.ws.BindingProvider;
@@ -58,6 +59,7 @@ public class OIOEUReferenceDataHentClient extends EMCSBaseClient {
         // Set endpoint of service.
         BindingProvider bp = (BindingProvider) port;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
+        addCleartextLogging(ClientProxy.getClient(port));
 
         StringBuilder sbRequest = new StringBuilder();
         sbRequest.append(generateConsoleOutput(
@@ -75,9 +77,11 @@ public class OIOEUReferenceDataHentClient extends EMCSBaseClient {
 
 
         LOGGER.info(NEW_LINE + sb.toString());
-        String ie733 = prettyFormatDocument(response.getIE733BeskedTekst(), 2, true);
-        LOGGER.info("IE733:");
-        LOGGER.info(ie733);
+        if (response.getIE733BeskedTekst() != null) {
+            String ie733 = prettyFormatDocument(response.getIE733BeskedTekst(), 2, true);
+            LOGGER.info("IE733:");
+            LOGGER.info(ie733);
+        }
         return response;
     }
 

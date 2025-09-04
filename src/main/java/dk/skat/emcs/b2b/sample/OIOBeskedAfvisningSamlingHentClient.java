@@ -6,6 +6,7 @@ import oio.skat.emcs.ws._1_0_1.OIOBeskedAfvisningSamlingHentServicePortType;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.apache.cxf.frontend.ClientProxy;
 import org.xml.sax.SAXException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -42,6 +43,20 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
         this.endpointURL = endpointURL;
     }
 
+
+    public OIOBeskedAfvisningSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
+                                                     String afgiftOperatoerPunktAfgiftIdentifikator,
+                                                     Integer interval,
+                                                     String txID)
+            throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+        SøgeParametreStrukturType spst = getSøgeParametreStrukturType(interval);
+
+        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, spst, txID);
+
+
+    }
+
+
     /**
      * Call OIOBeskedAfvisningSamlingHent service
      *
@@ -58,7 +73,8 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
                          Integer interval)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
-        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, interval);
+        SøgeParametreStrukturType spst = getSøgeParametreStrukturType(interval);
+        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, spst, null);
 
 
     }
@@ -66,22 +82,26 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
     public OIOBeskedAfvisningSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
                          String afgiftOperatoerPunktAfgiftIdentifikator)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+        SøgeParametreStrukturType spst = getSøgeParametreStrukturType(1);
 
-        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, 1);
+        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, spst , null);
 
 
     }
 
-    private OIOBeskedAfvisningSamlingHentOType invokeit(String virksomhedSENummerIdentifikator,
+    public OIOBeskedAfvisningSamlingHentOType invokeit(String virksomhedSENummerIdentifikator,
                             String afgiftOperatoerPunktAfgiftIdentifikator,
-                            Integer interval)
-            throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+                                                        SøgeParametreStrukturType spst, String txId)
+            throws DatatypeConfigurationException {
 
         OIOBeskedAfvisningSamlingHentIType oioBeskedAfvisningSamlingHentIType = new OIOBeskedAfvisningSamlingHentIType();
-        oioBeskedAfvisningSamlingHentIType.setHovedOplysninger(generateHovedOplysningerType());
+        if (txId == null) {
+            oioBeskedAfvisningSamlingHentIType.setHovedOplysninger(generateHovedOplysningerType());
+        } else {
+            oioBeskedAfvisningSamlingHentIType.setHovedOplysninger(generateHovedOplysningerType(txId));
+        }
         oioBeskedAfvisningSamlingHentIType.setVirksomhedIdentifikationStruktur(generateVirksomhedIdentifikationStrukturType(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator));
-        SøgeParametreStrukturType soegeParametreStrukturType = getSøgeParametreStrukturType(interval);
-        oioBeskedAfvisningSamlingHentIType.setSøgeParametreStruktur(soegeParametreStrukturType);
+        oioBeskedAfvisningSamlingHentIType.setSøgeParametreStruktur(spst);
 
         Bus bus = new SpringBusFactory().createBus("emcs-policy.xml", false);
         BusFactory.setDefaultBus(bus);
@@ -92,6 +112,7 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
         // Set endpoint of service.
         BindingProvider bp = (BindingProvider) port;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
+        addCleartextLogging(ClientProxy.getClient(port));
 
         StringBuilder sbRequest = new StringBuilder();
         sbRequest.append(generateConsoleOutput(
@@ -99,8 +120,8 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
                 oioBeskedAfvisningSamlingHentIType.getVirksomhedIdentifikationStruktur().getAfgiftOperatoerPunktAfgiftIdentifikator(),
                 oioBeskedAfvisningSamlingHentIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
         ));
-        sbRequest.append("** Start Date: ").append(oioBeskedAfvisningSamlingHentIType.getSøgeParametreStruktur().getSøgeParametre().getGyldighedPeriodeUdsøgning().getStartDate()).append(NEW_LINE);
-        sbRequest.append("** End Date: ").append(oioBeskedAfvisningSamlingHentIType.getSøgeParametreStruktur().getSøgeParametre().getGyldighedPeriodeUdsøgning().getEndDate()).append(NEW_LINE);
+        //sbRequest.append("** Start Date: ").append(oioBeskedAfvisningSamlingHentIType.getSøgeParametreStruktur().getSøgeParametre().getGyldighedPeriodeUdsøgning().getStartDate()).append(NEW_LINE);
+        //sbRequest.append("** End Date: ").append(oioBeskedAfvisningSamlingHentIType.getSøgeParametreStruktur().getSøgeParametre().getGyldighedPeriodeUdsøgning().getEndDate()).append(NEW_LINE);
         sbRequest.append("*******************************************************************").append(NEW_LINE);
         LOGGER.info(NEW_LINE + sbRequest.toString());
 

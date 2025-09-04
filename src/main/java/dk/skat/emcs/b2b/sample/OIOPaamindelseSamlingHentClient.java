@@ -6,6 +6,7 @@ import oio.skat.emcs.ws._1_0_1.OIOPåmindelseSamlingHentServicePortType;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.apache.cxf.frontend.ClientProxy;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.ws.BindingProvider;
@@ -33,6 +34,11 @@ public class OIOPaamindelseSamlingHentClient extends EMCSBaseClient {
         this.endpointURL = endpointURL;
     }
 
+    public OIOPåmindelseSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
+                                                String afgiftOperatoerPunktAfgiftIdentifikator) throws DatatypeConfigurationException {
+        return invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, getSøgeParametreStrukturType(10));
+    }
+
     /**
      *
      * @param virksomhedSENummerIdentifikator VAT number of entity calling entity
@@ -41,12 +47,13 @@ public class OIOPaamindelseSamlingHentClient extends EMCSBaseClient {
      * @throws DatatypeConfigurationException
      */
     public OIOPåmindelseSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
-                                                String afgiftOperatoerPunktAfgiftIdentifikator) throws DatatypeConfigurationException {
+                                                String afgiftOperatoerPunktAfgiftIdentifikator,
+                                                SøgeParametreStrukturType spst) throws DatatypeConfigurationException {
 
         OIOPåmindelseSamlingHentIType request = new OIOPåmindelseSamlingHentIType();
         request.setHovedOplysninger(generateHovedOplysningerType());
         request.setVirksomhedIdentifikationStruktur(generateVirksomhedIdentifikationStrukturType(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator));
-        request.setSøgeParametreStruktur(getSøgeParametreStrukturType(10));
+        request.setSøgeParametreStruktur(spst);
 
         Bus bus = new SpringBusFactory().createBus("emcs-policy.xml", false);
         BusFactory.setDefaultBus(bus);
@@ -56,6 +63,7 @@ public class OIOPaamindelseSamlingHentClient extends EMCSBaseClient {
         // Set endpoint of service.
         BindingProvider bp = (BindingProvider) port;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
+        addCleartextLogging(ClientProxy.getClient(port));
 
         StringBuilder sbRequest = new StringBuilder();
         sbRequest.append(generateConsoleOutput(
@@ -69,12 +77,14 @@ public class OIOPaamindelseSamlingHentClient extends EMCSBaseClient {
 
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(response.getHovedOplysningerSvar()));
-        List<String> list = response.getPåmindelseSamling().getIE802BeskedTekst();
-        int i = 1;
-        for (String message : list) {
-            sb.append(NEW_LINE + "Message " + i + ":");
-            sb.append(NEW_LINE + prettyFormatDocument(message, 2, true));
-            i++;
+        if (response.getPåmindelseSamling() != null) {
+            List<String> list = response.getPåmindelseSamling().getIE802BeskedTekst();
+            int i = 1;
+            for (String message : list) {
+                sb.append(NEW_LINE + "Message " + i + ":");
+                sb.append(NEW_LINE + prettyFormatDocument(message, 2, true));
+                i++;
+            }
         }
 
         LOGGER.info(NEW_LINE + sb.toString());
