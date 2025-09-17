@@ -89,6 +89,13 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
 
     }
 
+    public OIOBeskedAfvisningSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
+                                                     String afgiftOperatoerPunktAfgiftIdentifikator,
+                                                     SøgeParametreStrukturType spst)
+            throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+        return this.invokeit(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, spst , null);
+    }
+
     public OIOBeskedAfvisningSamlingHentOType invokeit(String virksomhedSENummerIdentifikator,
                             String afgiftOperatoerPunktAfgiftIdentifikator,
                                                         SøgeParametreStrukturType spst, String txId)

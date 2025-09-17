@@ -2,6 +2,7 @@ package dk.skat.emcs.b2b.sample;
 
 import oio.skat.emcs.ws._1_0.OIOKvitteringSamlingHentIType;
 import oio.skat.emcs.ws._1_0.OIOKvitteringSamlingHentOType;
+import oio.skat.emcs.ws._1_0.SøgeParametreStrukturType;
 import oio.skat.emcs.ws._1_0_1.OIOKvitteringSamlingHentService;
 import oio.skat.emcs.ws._1_0_1.OIOKvitteringSamlingHentServicePortType;
 import org.apache.cxf.Bus;
@@ -36,24 +37,38 @@ public class OIOKvitteringSamlingHentClient extends EMCSBaseClient {
     }
 
     /**
-     *
-     * @param virksomhedSENummerIdentifikator VAT number of entity calling entity
+     * @param virksomhedSENummerIdentifikator         VAT number of entity calling entity
      * @param afgiftOperatoerPunktAfgiftIdentifikator Excise Number of calling entity
      * @return
      * @throws DatatypeConfigurationException
      */
     public OIOKvitteringSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
-                       String afgiftOperatoerPunktAfgiftIdentifikator,
-                       String arc) throws DatatypeConfigurationException {
+                                                String afgiftOperatoerPunktAfgiftIdentifikator,
+                                                String arc) throws DatatypeConfigurationException {
+        SøgeParametreStrukturType spst;
+        if (arc != null) {
+            spst = getSøgeParametreStrukturType(arc);
+        } else {
+            spst = getSøgeParametreStrukturType(10);
+        }
+        return invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, spst);
+
+    }
+
+    /**
+     * @param virksomhedSENummerIdentifikator         VAT number of entity calling entity
+     * @param afgiftOperatoerPunktAfgiftIdentifikator Excise Number of calling entity
+     * @return
+     * @throws DatatypeConfigurationException
+     */
+    public OIOKvitteringSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
+                                                String afgiftOperatoerPunktAfgiftIdentifikator,
+                                                SøgeParametreStrukturType spst) throws DatatypeConfigurationException {
 
         OIOKvitteringSamlingHentIType request = new OIOKvitteringSamlingHentIType();
         request.setHovedOplysninger(generateHovedOplysningerType());
         request.setVirksomhedIdentifikationStruktur(generateVirksomhedIdentifikationStrukturType(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator));
-        if (arc != null) {
-            request.setSøgeParametreStruktur(getSøgeParametreStrukturType(arc));
-        } else {
-            request.setSøgeParametreStruktur(getSøgeParametreStrukturType(10));
-        }
+        request.setSøgeParametreStruktur(spst);
         Bus bus = new SpringBusFactory().createBus("emcs-policy.xml", false);
         BusFactory.setDefaultBus(bus);
         OIOKvitteringSamlingHentService service = new OIOKvitteringSamlingHentService();

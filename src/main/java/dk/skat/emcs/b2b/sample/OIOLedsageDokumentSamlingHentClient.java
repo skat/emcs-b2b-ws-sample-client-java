@@ -24,7 +24,6 @@ import java.util.logging.Logger;
 /**
  * OIOLedsageDokumentSamlingHentClient
  *
- *
  * @author SKAT
  * @since 1.2
  */
@@ -52,17 +51,38 @@ public class OIOLedsageDokumentSamlingHentClient extends EMCSBaseClient {
     /**
      * Call OIOLedsageDokumentSamlingHent service
      *
-     * @param virksomhedSENummerIdentifikator VAT number of entity calling entity
+     * @param virksomhedSENummerIdentifikator         VAT number of entity calling entity
      * @param afgiftOperatoerPunktAfgiftIdentifikator Excise Number of calling entity
-     * @param ARCnummer ARC number
+     * @param ARCnummer                               ARC number
      * @throws DatatypeConfigurationException N/A
-     * @throws ParserConfigurationException N/A
-     * @throws IOException N/A
-     * @throws SAXException N/A
+     * @throws ParserConfigurationException   N/A
+     * @throws IOException                    N/A
+     * @throws SAXException                   N/A
      */
     public OIOLedsageDokumentSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
-                       String afgiftOperatoerPunktAfgiftIdentifikator,
-                       String ARCnummer) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+                                                     String afgiftOperatoerPunktAfgiftIdentifikator,
+                                                     String ARCnummer) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+        SøgeParametreStrukturType soegeParametreStrukturType = new SøgeParametreStrukturType();
+        SøgeParametreStrukturType.SøgeParametre soegeParametre = new SøgeParametreStrukturType.SøgeParametre();
+        soegeParametre.setLedsagedokumentARCIdentifikator(ARCnummer);
+        soegeParametreStrukturType.setSøgeParametre(soegeParametre);
+        return invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, soegeParametreStrukturType);
+    }
+
+    /**
+     * Call OIOLedsageDokumentSamlingHent service
+     *
+     * @param virksomhedSENummerIdentifikator         VAT number of entity calling entity
+     * @param afgiftOperatoerPunktAfgiftIdentifikator Excise Number of calling entity
+     * @param spst                                    SøgeParametreStrukturType
+     * @throws DatatypeConfigurationException N/A
+     * @throws ParserConfigurationException   N/A
+     * @throws IOException                    N/A
+     * @throws SAXException                   N/A
+     */
+    public OIOLedsageDokumentSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
+                                                     String afgiftOperatoerPunktAfgiftIdentifikator,
+                                                     SøgeParametreStrukturType spst) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
         // Generate Transaction Id
         final String transactionID = TransactionIdGenerator.getTransactionId();
@@ -87,11 +107,7 @@ public class OIOLedsageDokumentSamlingHentClient extends EMCSBaseClient {
         OIOLedsageDokumentSamlingHentIType oioLedsageDokumentSamlingHentIType = new OIOLedsageDokumentSamlingHentIType();
         oioLedsageDokumentSamlingHentIType.setHovedOplysninger(hovedOplysningerType);
         oioLedsageDokumentSamlingHentIType.setVirksomhedIdentifikationStruktur(virksomhedIdentifikationStrukturType);
-        SøgeParametreStrukturType soegeParametreStrukturType = new SøgeParametreStrukturType();
-        SøgeParametreStrukturType.SøgeParametre soegeParametre = new SøgeParametreStrukturType.SøgeParametre();
-        soegeParametre.setLedsagedokumentARCIdentifikator(ARCnummer);
-        soegeParametreStrukturType.setSøgeParametre(soegeParametre);
-        oioLedsageDokumentSamlingHentIType.setSøgeParametreStruktur(soegeParametreStrukturType);
+        oioLedsageDokumentSamlingHentIType.setSøgeParametreStruktur(spst);
 
         Bus bus = new SpringBusFactory().createBus("emcs-policy.xml", false);
         BusFactory.setDefaultBus(bus);
@@ -100,7 +116,7 @@ public class OIOLedsageDokumentSamlingHentClient extends EMCSBaseClient {
         OIOLedsageDokumentSamlingHentServicePortType port = service.getOIOLedsageDokumentSamlingHentServicePort();
 
         // Set endpoint of service.
-        BindingProvider bp = (BindingProvider)port;
+        BindingProvider bp = (BindingProvider) port;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
         addCleartextLogging(ClientProxy.getClient(port));
 

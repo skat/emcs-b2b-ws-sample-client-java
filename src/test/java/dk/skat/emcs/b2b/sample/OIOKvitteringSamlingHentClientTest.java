@@ -10,6 +10,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import java.io.File;
 import java.util.logging.Logger;
 
+import static dk.skat.emcs.b2b.sample.SøgeParametreStrukturTypeHelper.getSøgeParametreStrukturType;
 import static org.junit.Assert.*;
 
 public class OIOKvitteringSamlingHentClientTest extends BaseClientTest {
@@ -28,7 +29,7 @@ public class OIOKvitteringSamlingHentClientTest extends BaseClientTest {
 
             OIOKvitteringSamlingHentClient client = new OIOKvitteringSamlingHentClient(endpointURL);
             client.invoke(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator, null);
+                    afgiftOperatoerPunktAfgiftIdentifikator, getSøgeParametreStrukturType(10));
         }
     }
 
