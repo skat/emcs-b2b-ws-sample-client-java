@@ -14,7 +14,7 @@ import static org.junit.Assume.assumeNotNull;
  * OIOGenericIE917ResponseTest
  *
  * Test that sends invalid document to all OIO*Opret services and checks that
- * the response contains reasponse in IE917BeskedTekst field.
+ * the response contains a value in the IE917BeskedTekst field.
  *
  * @author UFST
  */
