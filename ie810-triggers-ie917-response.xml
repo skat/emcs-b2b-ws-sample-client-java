@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ie:IE810 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE810:V3.13">
+    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.13">
+        <tms:MessageSender>NDEA.DK</tms:MessageSender>
+        <tms:MessageRecipient>NDEA.DK</tms:MessageRecipient>
+        <tms:DateOfPreparation>2011-10-26</tms:DateOfPreparation>
+        <tms:TimeOfPreparation>21:34:42.641</tms:TimeOfPreparation>
+        <tms:MessageIdentifier>bf66abeb-451f-4c74-a4e8aa174cf91a35</tms:MessageIdentifier>
+    </ie:Header>
+    <ie:Body>
+        <ie:CancellationOfEAD>
+            <ie:Attributes>
+                <ie:DateAndTimeOfValidationOfCancellation>2022-11-03T11:34:42.000
+                </ie:DateAndTimeOfValidationOfCancellation>
+            </ie:Attributes>
+            <ie:ExciseMovementEad>
+                <ie:AdministrativeReferenceCode>22DK6DLFYP30NP784L367</ie:AdministrativeReferenceCode>
+            </ie:ExciseMovementEad>
+            <!-- Make document invalid -->
+            <ie:CancellationInvalid>
+                <ie:CancellationReasonCode>2</ie:CancellationReasonCode>
+            </ie:CancellationInvalid>
+        </ie:CancellationOfEAD>
+    </ie:Body>
+</ie:IE810>

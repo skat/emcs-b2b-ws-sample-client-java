@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ie:IE837 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE837:V3.13">
+    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.13">
+        <tms:MessageSender>NDEA.DK</tms:MessageSender>
+        <tms:MessageRecipient>NDEA.DK</tms:MessageRecipient>
+        <tms:DateOfPreparation>2011-05-03</tms:DateOfPreparation>
+        <tms:TimeOfPreparation>15:38:50.749</tms:TimeOfPreparation>
+        <tms:MessageIdentifier>873ef66b-f397-473b-bc9c-48daa43e3e7e</tms:MessageIdentifier>
+    </ie:Header>
+    <ie:Body>
+        <ie:ExplanationOnDelayForDelivery>
+            <ie:Attributes>
+                <ie:SubmitterIdentification>DK82000801300</ie:SubmitterIdentification>
+                <ie:SubmitterType>1</ie:SubmitterType>
+                <ie:ExplanationCode>0</ie:ExplanationCode>
+                <!-- Make document invalid -->
+                <ie:ComplementaryInformationInvalid language="da">Lorem ipsum</ie:ComplementaryInformationInvalid>
+                <ie:MessageRoleInvalid>1</ie:MessageRoleInvalid>
+                <ie:DateAndTimeOfValidationOfExplanationOnDelay>2011-05-03T13:39:01.000</ie:DateAndTimeOfValidationOfExplanationOnDelay>
+            </ie:Attributes>
+            <ie:ExciseMovement>
+                <ie:AdministrativeReferenceCode>11DKWT71BMB8AWEY9BHP2</ie:AdministrativeReferenceCode>
+                <ie:SequenceNumber>1</ie:SequenceNumber>
+            </ie:ExciseMovement>
+        </ie:ExplanationOnDelayForDelivery>
+    </ie:Body>
+</ie:IE837>
