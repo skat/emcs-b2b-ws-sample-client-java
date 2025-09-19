@@ -19,8 +19,6 @@ import static org.junit.Assume.assumeNotNull;
  */
 public class OIOEksportGodkendelseSamlingHentClientTest extends BaseClientTest {
 
-    // getSøgeParametreStrukturType(10)
-
     @Test
     public void searchByARC() throws DatatypeConfigurationException {
         assumeNotNull(getEndpoint(OIO_EKSPORT_GODKENDELSE_SAMLING_HENT));
