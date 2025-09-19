@@ -182,10 +182,10 @@ public class BaseClientTest {
                                             String afgiftOperatoerPunktAfgiftIdentifikator,
                                             String arc) {
         if (hasError(host, 491)) {
-            OIOBeskedAfvisningSamlingHentClient client4 = new OIOBeskedAfvisningSamlingHentClient(getEndpoint("OIOBeskedAfvisningSamlingHent"));
+            OIOBeskedAfvisningSamlingHentClient client = new OIOBeskedAfvisningSamlingHentClient(getEndpoint("OIOBeskedAfvisningSamlingHent"));
             try {
                 // We just need to output the IE704 to the system out
-                client4.invokeit(virksomhedSENummerIdentifikator,
+                client.invokeit(virksomhedSENummerIdentifikator,
                         afgiftOperatoerPunktAfgiftIdentifikator,
                         SøgeParametreStrukturTypeHelper.getSøgeParametreStrukturType(arc), null);
             } catch (DatatypeConfigurationException e) {
