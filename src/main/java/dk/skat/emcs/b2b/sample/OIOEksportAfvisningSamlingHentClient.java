@@ -10,7 +10,6 @@ import org.apache.cxf.frontend.ClientProxy;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.ws.BindingProvider;
-import java.util.List;
 import java.util.logging.Logger;
 
 public class OIOEksportAfvisningSamlingHentClient extends EMCSBaseClient {
@@ -89,13 +88,7 @@ public class OIOEksportAfvisningSamlingHentClient extends EMCSBaseClient {
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(response.getHovedOplysningerSvar()));
         if (response.getEksportAfvisningSamling() != null) {
-            List<String> list = response.getEksportAfvisningSamling().getIE839BeskedTekst();
-            int i = 1;
-            for (String message : list) {
-                sb.append(NEW_LINE + "Message " + i + ":");
-                sb.append(NEW_LINE + prettyFormatDocument(message, 2, true));
-                i++;
-            }
+            sb.append(generateConsoleOutput(response.getEksportAfvisningSamling().getIE839BeskedTekst(), "IE839"));
         }
         LOGGER.info(NEW_LINE + sb.toString());
         return response;

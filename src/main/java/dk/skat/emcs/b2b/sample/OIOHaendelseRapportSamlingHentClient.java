@@ -12,7 +12,6 @@ import org.apache.cxf.frontend.ClientProxy;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.ws.BindingProvider;
-import java.util.List;
 import java.util.logging.Logger;
 
 public class OIOHaendelseRapportSamlingHentClient extends EMCSBaseClient {
@@ -76,13 +75,7 @@ public class OIOHaendelseRapportSamlingHentClient extends EMCSBaseClient {
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(response.getHovedOplysningerSvar()));
         if (response.getHændelseRapportSamling() != null) {
-            List<String> list = response.getHændelseRapportSamling().getIE840BeskedTekst();
-            int i = 1;
-            for (String message : list) {
-                sb.append(NEW_LINE + "Message " + i + ":");
-                sb.append(NEW_LINE + message);
-                i++;
-            }
+            sb.append(generateConsoleOutput(response.getHændelseRapportSamling().getIE840BeskedTekst(), "IE840"));
         }
         LOGGER.info(NEW_LINE + sb.toString());
         return response;

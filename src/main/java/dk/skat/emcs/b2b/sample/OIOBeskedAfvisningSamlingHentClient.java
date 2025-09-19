@@ -13,7 +13,6 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.ws.BindingProvider;
 import java.io.IOException;
-import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -131,20 +130,11 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
         LOGGER.info(NEW_LINE + sbRequest.toString());
 
         OIOBeskedAfvisningSamlingHentOType out = port.getOIOBeskedAfvisningSamlingHent(oioBeskedAfvisningSamlingHentIType);
+
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
         if (!hasError(out.getHovedOplysningerSvar())) {
-            sb.append("** IE704 Messages: ").append(NEW_LINE);
-            List<String> ie704Messages = out.getBeskedAfvisningSamling().getIE704BeskedTekst();
-            if (ie704Messages != null && ie704Messages.size() > 0) {
-                for (String message : ie704Messages) {
-                    sb.append(prettyFormatDocument(message, 2, true)).append(NEW_LINE);
-                    sb.append("*******************************************************************").append(NEW_LINE);
-                }
-            } else {
-                sb.append("There are no IE 704 messages!").append(NEW_LINE);
-                sb.append("*******************************************************************").append(NEW_LINE);
-            }
+            sb.append(generateConsoleOutput(out.getBeskedAfvisningSamling().getIE704BeskedTekst(), "IE704"));
         }
         LOGGER.info(NEW_LINE + sb.toString());
         return out;

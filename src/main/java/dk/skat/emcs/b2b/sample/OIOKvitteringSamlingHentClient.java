@@ -12,7 +12,6 @@ import org.apache.cxf.frontend.ClientProxy;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.ws.BindingProvider;
-import java.util.List;
 import java.util.logging.Logger;
 
 public class OIOKvitteringSamlingHentClient extends EMCSBaseClient {
@@ -93,13 +92,7 @@ public class OIOKvitteringSamlingHentClient extends EMCSBaseClient {
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(response.getHovedOplysningerSvar()));
         if (response.getKvitteringSamling() != null) {
-            List<String> list = response.getKvitteringSamling().getIE818BeskedTekst();
-            int i = 1;
-            for (String message : list) {
-                sb.append(NEW_LINE + "Message " + i + ":");
-                sb.append(NEW_LINE + message);
-                i++;
-            }
+            sb.append(generateConsoleOutput(response.getKvitteringSamling().getIE818BeskedTekst(), "IE818"));
         }
         LOGGER.info(NEW_LINE + sb.toString());
         return response;

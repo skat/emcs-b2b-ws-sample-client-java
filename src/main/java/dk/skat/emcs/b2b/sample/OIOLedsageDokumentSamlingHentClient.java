@@ -132,15 +132,9 @@ public class OIOLedsageDokumentSamlingHentClient extends EMCSBaseClient {
         OIOLedsageDokumentSamlingHentOType out = port.getOIOLedsageDokumentSamlingHent(oioLedsageDokumentSamlingHentIType);
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
-        if (!hasError(out.getHovedOplysningerSvar())) {
-            sb.append("** IE801 Messages: ").append(NEW_LINE);
-            List<String> ie801Messages = out.getLedsageDokumentStamDataSamling().getIE801BeskedTekst();
-            for (String message : ie801Messages) {
-                sb.append(message).append(NEW_LINE);
-                sb.append("*******************************************************************").append(NEW_LINE);
-            }
+        if (out.getLedsageDokumentStamDataSamling() != null) {
+            sb.append(generateConsoleOutput(out.getLedsageDokumentStamDataSamling().getIE801BeskedTekst(), "IE801"));
         }
-
         LOGGER.info(NEW_LINE + sb.toString());
         return out;
     }
