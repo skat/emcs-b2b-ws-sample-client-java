@@ -104,10 +104,9 @@ public class OIOEksportAngivelseInvalideringNotifikationSamlingHentClient extend
         sbRequest.append(generateConsoleOutput(
                 oioEksportAngivelseInvalideringNotifikationSamlingHentIType.getHovedOplysninger(),
                 oioEksportAngivelseInvalideringNotifikationSamlingHentIType.getVirksomhedIdentifikationStruktur().getAfgiftOperatoerPunktAfgiftIdentifikator(),
-                oioEksportAngivelseInvalideringNotifikationSamlingHentIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
+                oioEksportAngivelseInvalideringNotifikationSamlingHentIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator(),
+                spst
         ));
-        sbRequest.append("** LedsagedokumentARCIdentifikator: ").append(oioEksportAngivelseInvalideringNotifikationSamlingHentIType.getSøgeParametreStruktur().getSøgeParametre().getLedsagedokumentARCIdentifikator()).append(NEW_LINE);
-        sbRequest.append("*******************************************************************").append(NEW_LINE);
         LOGGER.info(NEW_LINE + sbRequest.toString());
 
         OIOEksportAngivelseInvalideringNotifikationSamlingHentOType out = port.getOIOEksportAngivelseInvalideringNotifikationSamlingHent(oioEksportAngivelseInvalideringNotifikationSamlingHentIType);

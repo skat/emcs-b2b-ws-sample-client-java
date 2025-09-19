@@ -125,11 +125,9 @@ public class OIOBeskedAfvisningSamlingHentClient extends EMCSBaseClient {
         sbRequest.append(generateConsoleOutput(
                 oioBeskedAfvisningSamlingHentIType.getHovedOplysninger(),
                 oioBeskedAfvisningSamlingHentIType.getVirksomhedIdentifikationStruktur().getAfgiftOperatoerPunktAfgiftIdentifikator(),
-                oioBeskedAfvisningSamlingHentIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
+                oioBeskedAfvisningSamlingHentIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator(),
+                spst
         ));
-        //sbRequest.append("** Start Date: ").append(oioBeskedAfvisningSamlingHentIType.getSøgeParametreStruktur().getSøgeParametre().getGyldighedPeriodeUdsøgning().getStartDate()).append(NEW_LINE);
-        //sbRequest.append("** End Date: ").append(oioBeskedAfvisningSamlingHentIType.getSøgeParametreStruktur().getSøgeParametre().getGyldighedPeriodeUdsøgning().getEndDate()).append(NEW_LINE);
-        sbRequest.append("*******************************************************************").append(NEW_LINE);
         LOGGER.info(NEW_LINE + sbRequest.toString());
 
         OIOBeskedAfvisningSamlingHentOType out = port.getOIOBeskedAfvisningSamlingHent(oioBeskedAfvisningSamlingHentIType);

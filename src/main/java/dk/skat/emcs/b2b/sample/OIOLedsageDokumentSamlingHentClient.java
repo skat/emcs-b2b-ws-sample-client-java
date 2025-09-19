@@ -124,10 +124,9 @@ public class OIOLedsageDokumentSamlingHentClient extends EMCSBaseClient {
         sbRequest.append(generateConsoleOutput(
                 oioLedsageDokumentSamlingHentIType.getHovedOplysninger(),
                 oioLedsageDokumentSamlingHentIType.getVirksomhedIdentifikationStruktur().getAfgiftOperatoerPunktAfgiftIdentifikator(),
-                oioLedsageDokumentSamlingHentIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
+                oioLedsageDokumentSamlingHentIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator(),
+                spst
         ));
-        sbRequest.append("** LedsagedokumentARCIdentifikator: ").append(oioLedsageDokumentSamlingHentIType.getSøgeParametreStruktur().getSøgeParametre().getLedsagedokumentARCIdentifikator()).append(NEW_LINE);
-        sbRequest.append("*******************************************************************").append(NEW_LINE);
         LOGGER.info(NEW_LINE + sbRequest.toString());
 
         OIOLedsageDokumentSamlingHentOType out = port.getOIOLedsageDokumentSamlingHent(oioLedsageDokumentSamlingHentIType);

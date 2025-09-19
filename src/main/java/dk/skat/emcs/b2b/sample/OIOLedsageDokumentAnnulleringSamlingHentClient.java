@@ -133,11 +133,9 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClie
         sbRequest.append(generateConsoleOutput(
                 oioLedsageDokumentAnnulleringSamlingHentIType.getHovedOplysninger(),
                 oioLedsageDokumentAnnulleringSamlingHentIType.getVirksomhedIdentifikationStruktur().getAfgiftOperatoerPunktAfgiftIdentifikator(),
-                oioLedsageDokumentAnnulleringSamlingHentIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
+                oioLedsageDokumentAnnulleringSamlingHentIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator(),
+                spst
         ));
-//        sbRequest.append("** Start Date: ").append(oioLedsageDokumentAnnulleringSamlingHentIType.getSøgeParametreStruktur().getSøgeParametre().getGyldighedPeriodeUdsøgning().getStartDate()).append(NEW_LINE);
-//        sbRequest.append("** End Date: ").append(oioLedsageDokumentAnnulleringSamlingHentIType.getSøgeParametreStruktur().getSøgeParametre().getGyldighedPeriodeUdsøgning().getEndDate()).append(NEW_LINE);
-        sbRequest.append("*******************************************************************").append(NEW_LINE);
         LOGGER.info(NEW_LINE + sbRequest.toString());
 
 

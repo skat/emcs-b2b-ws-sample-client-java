@@ -66,7 +66,8 @@ public class OIOEksportGodkendelseSamlingHentClient extends EMCSBaseClient {
         sbRequest.append(generateConsoleOutput(
                 request.getHovedOplysninger(),
                 request.getVirksomhedIdentifikationStruktur().getAfgiftOperatoerPunktAfgiftIdentifikator(),
-                request.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
+                request.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator(),
+                spst
         ));
         LOGGER.info(NEW_LINE + sbRequest.toString());
 

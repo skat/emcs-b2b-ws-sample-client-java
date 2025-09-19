@@ -155,14 +155,33 @@ public class EMCSBaseClient {
      */
     protected String generateConsoleOutput(HovedOplysningerType hovedOplysningerType,
                                            String afgiftOperatoerPunktAfgiftIdentifikator,
-                                           String virksomhedSENummerIdentifikator) {
+                                           String virksomhedSENummerIdentifikator,
+                                           SøgeParametreStrukturType spst) {
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(hovedOplysningerType));
         sb.append("** VirksomhedIdentifikationStruktur").append(NEW_LINE);
         sb.append("**** AfgiftOperatoerPunktAfgiftIdentifikator: ").append(afgiftOperatoerPunktAfgiftIdentifikator).append(NEW_LINE);
         sb.append("**** VirksomhedSENummerIdentifikator: ").append(virksomhedSENummerIdentifikator).append(NEW_LINE);
         sb.append("*******************************************************************").append(NEW_LINE);
+        if (spst != null) {
+            boolean isSearchByArc = spst.getSøgeParametre().getLedsagedokumentARCIdentifikator() != null;
+            if (!isSearchByArc){
+                sb.append("** Start Date: ").append(spst.getSøgeParametre().getGyldighedPeriodeUdsøgning().getStartDate()).append(NEW_LINE);
+                sb.append("** End Date: ").append(spst.getSøgeParametre().getGyldighedPeriodeUdsøgning().getEndDate()).append(NEW_LINE);
+                sb.append("*******************************************************************").append(NEW_LINE);
+            } else {
+                sb.append("** ARC: ").append(spst.getSøgeParametre().getLedsagedokumentARCIdentifikator()).append(NEW_LINE);
+                sb.append("*******************************************************************").append(NEW_LINE);
+            }
+
+        }
         return sb.toString();
+    }
+
+    protected String generateConsoleOutput(HovedOplysningerType hovedOplysningerType,
+                                           String afgiftOperatoerPunktAfgiftIdentifikator,
+                                           String virksomhedSENummerIdentifikator) {
+        return generateConsoleOutput(hovedOplysningerType, afgiftOperatoerPunktAfgiftIdentifikator, virksomhedSENummerIdentifikator, null);
     }
 
     /**
