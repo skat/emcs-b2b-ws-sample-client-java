@@ -8,7 +8,7 @@ import oio.skat.emcs.ws._1_0.VirksomhedIdentifikationStrukturType;
 import oio.skat.emcs.ws._1_0.VirksomhedIdentifikationStrukturType.Indberetter;
 import oio.skat.emcs.ws._1_0_1.OIOKvitteringOpretService;
 import oio.skat.emcs.ws._1_0_1.OIOKvitteringOpretServicePortType;
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
