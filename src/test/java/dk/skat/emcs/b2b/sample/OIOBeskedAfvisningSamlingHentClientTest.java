@@ -4,6 +4,7 @@ import oio.skat.emcs.ws._1_0.OIOBeskedAfvisningSamlingHentOType;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assume.assumeNotNull;
 
 /**
  * OIOBeskedAfvisningSamlingHentClientTest
@@ -127,29 +128,24 @@ public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClientTest {
     }
 
     @Test
-    public void transactionIDReuse() throws Exception { // 7
-        String endpointURL = getEndpoint("OIOBeskedAfvisningSamlingHent");
-        if (endpointURL != null) {
-            // Generate transaction id
-            final String transactionID = TransactionIdGenerator.getTransactionId();
-            // First call
-            OIOBeskedAfvisningSamlingHentClient oioBeskedAfvisningSamlingHentClient = new OIOBeskedAfvisningSamlingHentClient(endpointURL);
-            OIOBeskedAfvisningSamlingHentOType response = oioBeskedAfvisningSamlingHentClient.invoke(getVirksomhedSENummerIdentifikator(), getAfgiftOperatoerPunktAfgiftIdentifikator(), 1, transactionID);
-            assertFalse(hasError(response.getHovedOplysningerSvar()));
-            // Now try again
-            OIOBeskedAfvisningSamlingHentOType response2 = oioBeskedAfvisningSamlingHentClient.invoke(getVirksomhedSENummerIdentifikator(), getAfgiftOperatoerPunktAfgiftIdentifikator(), 1, transactionID);
-            assertTrue(hasError(response2.getHovedOplysningerSvar(), 500));
-        }
+    public void transactionIDReuse() throws Exception {
+        assumeNotNull(getEndpoint(OIO_BESKED_AFVISNING_SAMLING_HENT));
+        // Generate transaction id
+        final String transactionID = TransactionIdGenerator.getTransactionId();
+        // First call
+        OIOBeskedAfvisningSamlingHentClient oioBeskedAfvisningSamlingHentClient = new OIOBeskedAfvisningSamlingHentClient(getEndpoint(OIO_BESKED_AFVISNING_SAMLING_HENT));
+        OIOBeskedAfvisningSamlingHentOType response = oioBeskedAfvisningSamlingHentClient.invoke(getVirksomhedSENummerIdentifikator(), getAfgiftOperatoerPunktAfgiftIdentifikator(), 1, transactionID);
+        assertFalse(hasError(response.getHovedOplysningerSvar()));
+        // Now try again
+        OIOBeskedAfvisningSamlingHentOType response2 = oioBeskedAfvisningSamlingHentClient.invoke(getVirksomhedSENummerIdentifikator(), getAfgiftOperatoerPunktAfgiftIdentifikator(), 1, transactionID);
+        assertTrue(hasError(response2.getHovedOplysningerSvar(), 500));
     }
 
     public OIOBeskedAfvisningSamlingHentOType doCall(String virksomhedSENummerIdentifikator, String afgiftOperatoerPunktAfgiftIdentifikator) throws Exception {
-        String endpointURL = getEndpoint("OIOBeskedAfvisningSamlingHent");
-        if (endpointURL != null) {
-            OIOBeskedAfvisningSamlingHentClient oioBeskedAfvisningSamlingHentClient = new OIOBeskedAfvisningSamlingHentClient(endpointURL);
-            return oioBeskedAfvisningSamlingHentClient.invoke(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator);
-        }
-        return null;
+        assumeNotNull(getEndpoint(OIO_BESKED_AFVISNING_SAMLING_HENT));
+        OIOBeskedAfvisningSamlingHentClient oioBeskedAfvisningSamlingHentClient = new OIOBeskedAfvisningSamlingHentClient(getEndpoint(OIO_BESKED_AFVISNING_SAMLING_HENT));
+        return oioBeskedAfvisningSamlingHentClient.invoke(virksomhedSENummerIdentifikator,
+                afgiftOperatoerPunktAfgiftIdentifikator);
     }
 
 }
