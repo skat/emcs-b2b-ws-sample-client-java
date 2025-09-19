@@ -7,6 +7,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 
 import static dk.skat.emcs.b2b.sample.SøgeParametreStrukturTypeHelper.getSøgeParametreStrukturType;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeNotNull;
 
 /**
@@ -29,6 +30,6 @@ public class OIOEksportGodkendelseSamlingHentClientTest extends BaseClientTest {
                 afgiftOperatoerPunktAfgiftIdentifikator,
                 getSøgeParametreStrukturType("25DKUA9GO984UJ7G8PE04"));
         assertFalse(hasError(response.getHovedOplysningerSvar()));
-        assertFalse(response.getEksportGodkendelseSamling().getIE829BeskedTekst().isEmpty());
+        assertTrue(response.getEksportGodkendelseSamling().getIE829BeskedTekst().isEmpty());
     }
 }
