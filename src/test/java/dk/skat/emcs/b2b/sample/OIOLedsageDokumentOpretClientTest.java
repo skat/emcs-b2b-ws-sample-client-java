@@ -15,7 +15,7 @@ import static org.junit.Assume.assumeNotNull;
  * @author SKAT
  * @since 1.2
  */
-public class OIOLedsageDocumentOpretClientTest extends BaseClientTest {
+public class OIOLedsageDokumentOpretClientTest extends BaseClientTest {
 
     /**
      * Test submit of ie815 - no delegation

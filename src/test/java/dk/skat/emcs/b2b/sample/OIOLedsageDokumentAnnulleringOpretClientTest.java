@@ -15,9 +15,9 @@ import static org.junit.Assume.assumeNotNull;
  * @author SKAT
  * @since 1.2
  */
-public class OIOLedsageDocumentAnnuleringOpretClientTest extends BaseClientTest {
+public class OIOLedsageDokumentAnnulleringOpretClientTest extends BaseClientTest {
 
-    private static final Logger LOGGER = Logger.getLogger(OIOLedsageDocumentAnnuleringOpretClientTest.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(OIOLedsageDokumentAnnulleringOpretClientTest.class.getName());
 
     /**
      * OIOLedsageDokumentAnnulleringOpret Test (IE810 as request)
