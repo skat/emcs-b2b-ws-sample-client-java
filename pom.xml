@@ -8,8 +8,8 @@
     <name>emcs-b2b-ws-sample-client-java</name>
     <url>http://www.skat.dk/emcs</url>
     <properties>
-        <cxf.version>3.3.5</cxf.version>
-        <cxf.spring.version>5.2.22.RELEASE</cxf.spring.version>
+        <cxf.version>3.5.11</cxf.version>
+        <cxf.spring.version>5.3.39</cxf.spring.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -95,7 +95,7 @@
             <plugin>
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-codegen-plugin</artifactId>
-                <version>3.1.9</version>
+                <version>3.5.11</version>
                 <executions>
                     <execution>
                         <id>generate-sources</id>
