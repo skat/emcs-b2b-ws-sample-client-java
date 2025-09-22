@@ -8,7 +8,6 @@ import oio.skat.emcs.ws._1_0.VirksomhedIdentifikationStrukturType;
 import oio.skat.emcs.ws._1_0.VirksomhedIdentifikationStrukturType.Indberetter;
 import oio.skat.emcs.ws._1_0_1.OIOKvitteringOpretService;
 import oio.skat.emcs.ws._1_0_1.OIOKvitteringOpretServicePortType;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
@@ -66,31 +65,6 @@ public class OIOKvitteringOpretClient extends EMCSBaseClient {
      * @throws IOException                    N/A
      * @throws SAXException                   N/A
      */
-
-    public OIOKvitteringOpretOType invoke(String virksomhedSENummerIdentifikator,
-                         String afgiftOperatoerPunktAfgiftIdentifikator,
-                         String ie818,boolean override) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
-
-
-        Document doc = loadIEDocument(ie818);
-        String result = RandomStringUtils.random(7, false, true);
-        if(override){
-            replaceValue(doc, "/IE818/Body/AcceptedOrRejectedReportOfReceiptExport/DestinationOffice/ReferenceNumber", result);
-        }
-        return this.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
-
-
-    }
-
-
-
-    public void invoke(String virksomhedSENummerIdentifikator,
-                       String afgiftOperatoerPunktAfgiftIdentifikator,
-                       File ie818) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
-        Document doc = loadIEDocument(ie818);
-        this.invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, doc);
-    }
-
     public OIOKvitteringOpretOType invoke(String virksomhedSENummerIdentifikator,
                        String afgiftOperatoerPunktAfgiftIdentifikator,
                        File ie818,

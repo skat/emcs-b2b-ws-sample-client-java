@@ -1,15 +1,17 @@
 package dk.skat.emcs.b2b.sample;
 
+import oio.skat.emcs.ws._1_0.OIOKvitteringOpretOType;
 import org.junit.Test;
 
 import java.io.File;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assume.assumeNotNull;
 
 /**
  * OIOKvitteringOpretClient Test
- *
- * IMPORTANT: OIOLedsageDokumentSamlingHent is also tested as part of {@link OIOKvitteringSamlingHentClientTest#testScenario()}}
+ * <p>
+ * NOTE: OIOKvitteringOpretClientTest is also tested as part of {@link OIOKvitteringSamlingHentClientTest#testScenario()}}
  *
  * @author SKAT
  * @since 1.2
@@ -22,9 +24,10 @@ public class OIOKvitteringOpretClientTest extends BaseClientTest {
         File ie818 = new File("ie818.xml");
         String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
         String afgiftOperatoerPunktAfgiftIdentifikator = getAfgiftOperatoerPunktAfgiftIdentifikator();
-        OIOKvitteringOpretClient oioKvitteringOpretClient = new OIOKvitteringOpretClient(getEndpoint(OIO_KVITTERING_OPRET));
-        oioKvitteringOpretClient.invoke(virksomhedSENummerIdentifikator,
-                afgiftOperatoerPunktAfgiftIdentifikator, ie818);
+        OIOKvitteringOpretClient client = new OIOKvitteringOpretClient(getEndpoint(OIO_KVITTERING_OPRET));
+        OIOKvitteringOpretOType response = client.invoke(virksomhedSENummerIdentifikator,
+                afgiftOperatoerPunktAfgiftIdentifikator, ie818, "17DKK1KHPMQH2W23ABI62");
+        assertFalse(hasError(response.getHovedOplysningerSvar()));
     }
 
 }
