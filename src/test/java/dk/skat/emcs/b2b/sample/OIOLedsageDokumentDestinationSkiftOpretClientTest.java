@@ -9,7 +9,7 @@ import static org.junit.Assume.assumeNotNull;
 /**
  * OIOLedsageDokumentDestinationSkiftOpret Test
  *
- * NOTE: OIOLedsageDokumentDestinationSkiftOpret is also tested as part of {@link OIOLedsageDokumentDestinationSkiftSamlingHentClientTest#invoke()}
+ * NOTE: OIOLedsageDokumentDestinationSkiftOpret is also tested as part of {@link OIOLedsageDokumentDestinationSkiftSamlingHentClientTest#scenario()}
  *
  * @author SKAT
  * @since 1.2

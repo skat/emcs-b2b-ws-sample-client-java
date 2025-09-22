@@ -20,7 +20,7 @@ import static org.junit.Assume.assumeNotNull;
  * <p>
  * Step 1: Fetch list of IE803s (using OIOEUReferenceDataAnmod)
  * <p>
- * IMPORTANT: OIOLedsageDokumentOmdirigeretAdvisSamlingHent is also tested as part of {@link OIOLedsageDokumentOpsplitningOpretClientTest#invoke()}
+ * IMPORTANT: OIOLedsageDokumentOmdirigeretAdvisSamlingHent is also tested as part of {@link OIOLedsageDokumentOpsplitningOpretClientTest#scenario()}
  *
  * @author SKAT
  * @since 1.2
