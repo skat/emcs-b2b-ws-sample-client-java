@@ -18,7 +18,6 @@ import javax.xml.ws.BindingProvider;
 import java.io.IOException;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -104,24 +103,18 @@ public class OIOEksportAngivelseInvalideringNotifikationSamlingHentClient extend
         sbRequest.append(generateConsoleOutput(
                 oioEksportAngivelseInvalideringNotifikationSamlingHentIType.getHovedOplysninger(),
                 oioEksportAngivelseInvalideringNotifikationSamlingHentIType.getVirksomhedIdentifikationStruktur().getAfgiftOperatoerPunktAfgiftIdentifikator(),
-                oioEksportAngivelseInvalideringNotifikationSamlingHentIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
+                oioEksportAngivelseInvalideringNotifikationSamlingHentIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator(),
+                spst
         ));
-        sbRequest.append("** LedsagedokumentARCIdentifikator: ").append(oioEksportAngivelseInvalideringNotifikationSamlingHentIType.getSøgeParametreStruktur().getSøgeParametre().getLedsagedokumentARCIdentifikator()).append(NEW_LINE);
-        sbRequest.append("*******************************************************************").append(NEW_LINE);
         LOGGER.info(NEW_LINE + sbRequest.toString());
 
         OIOEksportAngivelseInvalideringNotifikationSamlingHentOType out = port.getOIOEksportAngivelseInvalideringNotifikationSamlingHent(oioEksportAngivelseInvalideringNotifikationSamlingHentIType);
+
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
-        if (!hasError(out.getHovedOplysningerSvar())) {
-            sb.append("** IE836 Messages: ").append(NEW_LINE);
-            List<String> ie801Messages = out.getEksportAngivelseInvalideringNotifikationListe().getIE836BeskedTekst();
-            for (String message : ie801Messages) {
-                sb.append(message).append(NEW_LINE);
-                sb.append("*******************************************************************").append(NEW_LINE);
-            }
+        if (out.getEksportAngivelseInvalideringNotifikationListe() != null) {
+            sb.append(generateConsoleOutput(out.getEksportAngivelseInvalideringNotifikationListe().getIE836BeskedTekst(), "IE836"));
         }
-
         LOGGER.info(NEW_LINE + sb.toString());
         return out;
     }

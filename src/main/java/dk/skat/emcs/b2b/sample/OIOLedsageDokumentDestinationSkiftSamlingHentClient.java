@@ -66,7 +66,8 @@ public class OIOLedsageDokumentDestinationSkiftSamlingHentClient extends EMCSBas
         sbRequest.append(generateConsoleOutput(
                 request.getHovedOplysninger(),
                 request.getVirksomhedIdentifikationStruktur().getAfgiftOperatoerPunktAfgiftIdentifikator(),
-                request.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
+                request.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator(),
+                spst
         ));
         LOGGER.info(NEW_LINE + sbRequest.toString());
 
@@ -75,13 +76,7 @@ public class OIOLedsageDokumentDestinationSkiftSamlingHentClient extends EMCSBas
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(response.getHovedOplysningerSvar()));
         if (response.getLedsageDokumentDestinationSkiftSamling() != null) {
-            List<String> list = response.getLedsageDokumentDestinationSkiftSamling().getIE813BeskedTekst();
-            int i = 1;
-            for (String message : list) {
-                sb.append(NEW_LINE + "Message " + i + ":");
-                sb.append(NEW_LINE + message);
-                i++;
-            }
+            sb.append(generateConsoleOutput(response.getLedsageDokumentDestinationSkiftSamling().getIE813BeskedTekst(), "IE813"));
         }
         LOGGER.info(NEW_LINE + sb.toString());
         return response;

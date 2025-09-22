@@ -31,7 +31,6 @@ import java.util.logging.Logger;
 /**
  * OIOLedsageDokumentNotifikationOpretClient
  *
- *
  * @author SKAT
  * @since 1.2
  */
@@ -60,37 +59,19 @@ public class OIOLedsageDokumentNotifikationOpretClient extends EMCSBaseClient {
     /**
      * Call OIOLedsageDokumentNotifikationOpret service
      *
-     * @param virksomhedSENummerIdentifikator VAT number of entity calling entity
+     * @param virksomhedSENummerIdentifikator         VAT number of entity calling entity
      * @param afgiftOperatoerPunktAfgiftIdentifikator Excise Number of calling entity
-     * @param ie819 IE819 document file path.
+     * @param ie819                                   IE819 document file path.
+     * @param arc                                     Reference no.
      * @throws DatatypeConfigurationException N/A
-     * @throws ParserConfigurationException N/A
-     * @throws IOException N/A
-     * @throws SAXException N/A
+     * @throws ParserConfigurationException   N/A
+     * @throws IOException                    N/A
+     * @throws SAXException                   N/A
      */
-    public void invoke(String virksomhedSENummerIdentifikator,
-                       String afgiftOperatoerPunktAfgiftIdentifikator,
-                       String ie819) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
-        invoke(virksomhedSENummerIdentifikator, afgiftOperatoerPunktAfgiftIdentifikator, ie819, null);
-    }
-
-
-        /**
-         * Call OIOLedsageDokumentNotifikationOpret service
-         *
-         * @param virksomhedSENummerIdentifikator VAT number of entity calling entity
-         * @param afgiftOperatoerPunktAfgiftIdentifikator Excise Number of calling entity
-         * @param ie819 IE819 document file path.
-         * @param arc Reference no.
-         * @throws DatatypeConfigurationException N/A
-         * @throws ParserConfigurationException N/A
-         * @throws IOException N/A
-         * @throws SAXException N/A
-         */
     public OIOLedsageDokumentNotifikationOpretOType invoke(String virksomhedSENummerIdentifikator,
-                       String afgiftOperatoerPunktAfgiftIdentifikator,
-                       String ie819,
-                       String arc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
+                                                           String afgiftOperatoerPunktAfgiftIdentifikator,
+                                                           String ie819,
+                                                           String arc) throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
 
         // Generate Transaction Id
         final String transactionID = TransactionIdGenerator.getTransactionId();
@@ -124,8 +105,8 @@ public class OIOLedsageDokumentNotifikationOpretClient extends EMCSBaseClient {
         if (arc != null) {
             replaceValue(doc, "/IE819/Body/AlertOrRejectionOfEADESAD/ExciseMovement/AdministrativeReferenceCode", arc);
         }
-        resetDateAndTimeOfValidationOfCancellation(doc,"/IE819/Body/AlertOrRejectionOfEADESAD/Attributes/DateAndTimeOfValidationOfAlertRejection" );
-        resetDateOfPreparation(doc,"/IE819/Body/AlertOrRejectionOfEADESAD/AlertOrRejection/DateOfAlertOrRejection" );
+        resetDateAndTimeOfValidationOfCancellation(doc, "/IE819/Body/AlertOrRejectionOfEADESAD/Attributes/DateAndTimeOfValidationOfAlertRejection");
+        resetDateOfPreparation(doc, "/IE819/Body/AlertOrRejectionOfEADESAD/AlertOrRejection/DateOfAlertOrRejection");
 
         // Build IE819InputStrukturType
         IE819InputStrukturType IE819InputStrukturType = new IE819InputStrukturType();
@@ -144,7 +125,7 @@ public class OIOLedsageDokumentNotifikationOpretClient extends EMCSBaseClient {
         OIOLedsageDokumentNotifikationOpretServicePortType port = service.getOIOLedsageDokumentNotifikationOpretServicePort();
 
         // Set endpoint of service.
-        BindingProvider bp = (BindingProvider)port;
+        BindingProvider bp = (BindingProvider) port;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
         addCleartextLogging(ClientProxy.getClient(port));
 

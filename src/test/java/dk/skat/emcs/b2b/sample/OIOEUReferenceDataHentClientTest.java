@@ -7,8 +7,7 @@ import org.junit.Test;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.junit.Assume.assumeNotNull;
 
 /**
@@ -47,5 +46,16 @@ public class OIOEUReferenceDataHentClientTest extends BaseClientTest {
                 afgiftOperatoerPunktAfgiftIdentifikator, beskedIdentifikator);
         assertFalse(hasError(response2.getHovedOplysningerSvar()));
         assertNotNull(response2.getIE733BeskedTekst());
+    }
+
+    @Test
+    public void testUnknownId() throws Exception {
+        String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
+        String afgiftOperatoerPunktAfgiftIdentifikator = "DK82070486100";
+        OIOEUReferenceDataHentClient client1 = new OIOEUReferenceDataHentClient(getEndpoint(OIO_EUREFERENCE_DATA_HENT));
+        OIOEUReferenceDataHentOType response1 = client1.invoke(virksomhedSENummerIdentifikator,
+                afgiftOperatoerPunktAfgiftIdentifikator, "DKEMCS19170000000255107");
+        assertTrue(hasAdvis(response1.getHovedOplysningerSvar(), 130));
+        assertNull(response1.getIE733BeskedTekst());
     }
 }

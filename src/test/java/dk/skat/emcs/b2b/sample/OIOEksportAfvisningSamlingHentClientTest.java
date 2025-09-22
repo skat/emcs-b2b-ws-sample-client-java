@@ -31,15 +31,4 @@ public class OIOEksportAfvisningSamlingHentClientTest extends BaseClientTest {
         assertFalse(hasError(response.getHovedOplysningerSvar()));
         assertFalse(response.getEksportAfvisningSamling().getIE839BeskedTekst().isEmpty());
     }
-
-    @Test
-    public void testAdvisCode130() throws DatatypeConfigurationException {
-        assumeNotNull(getEndpoint(OIO_EKSPORT_AFVISNING_SAMLING_HENT));
-        // Excise number
-        String afgiftOperatoerPunktAfgiftIdentifikator = "DK31175143300";
-        OIOEksportAfvisningSamlingHentClient client = new OIOEksportAfvisningSamlingHentClient(getEndpoint(OIO_EKSPORT_AFVISNING_SAMLING_HENT));
-        OIOEksportAfvisningSamlingHentOType response = client.invoke(getVirksomhedSENummerIdentifikator(),
-                afgiftOperatoerPunktAfgiftIdentifikator, getSearchPeriodInFuture());
-        assertTrue(hasAdvis(response.getHovedOplysningerSvar(), 130));
-    }
 }

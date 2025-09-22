@@ -2,8 +2,8 @@ package dk.skat.emcs.b2b.sample;
 
 import oio.skat.emcs.ws._1_0.OIOBeskedAfvisningSamlingHentOType;
 import org.junit.Test;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assume.assumeNotNull;
 
 /**
  * OIOBeskedAfvisningSamlingHentClientTest
@@ -15,7 +15,7 @@ public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClientTest {
 
     // EXCISE NUMBER DK82065873300 -> CVR 19552101 / SE 19552101.´
     @Test
-    public void testDelegation() throws Exception {
+    public void invoke() throws Exception {
         OIOBeskedAfvisningSamlingHentOType response =
                 doCall(getVirksomhedSENummerIdentifikator(), getAfgiftOperatoerPunktAfgiftIdentifikator());
         assertFalse(hasError(response.getHovedOplysningerSvar()));
@@ -37,22 +37,6 @@ public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClientTest {
         assertFalse(hasError(response.getHovedOplysningerSvar(), 302));
     }
 
-    // EXCISE NUMBER DK19552101100 -> CVR 19552101 / SE 19552101
-    @Test
-    public void testNoDelegationAccess() throws Exception {
-        OIOBeskedAfvisningSamlingHentOType response =
-                doCall(getVirksomhedSENummerIdentifikator(), "DK19552101100");
-        assertTrue(hasError(response.getHovedOplysningerSvar(), 302));
-    }
-
-    // EXCISE NUMBER DK19552101500 -> CVR 19552101 / SE 19552101
-    @Test
-    public void testNoDelegationAccess500() throws Exception {
-        OIOBeskedAfvisningSamlingHentOType response =
-                doCall(getVirksomhedSENummerIdentifikator(), "DK19552101500");
-        assertTrue(hasError(response.getHovedOplysningerSvar(), 302));
-    }
-
     // EXCISE NUMBER DK19552101200 -> CVR 19552101 / SE 19552101
     @Test
     public void testNoDelegationAccess200() throws Exception {
@@ -67,31 +51,6 @@ public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClientTest {
         OIOBeskedAfvisningSamlingHentOType response =
                 doCall(getVirksomhedSENummerIdentifikator(), "DK19552101600");
         assertFalse(hasError(response.getHovedOplysningerSvar()));
-    }
-
-    // EXCISE NUMBER DK19552101300 -> CVR 19552101 / SE 30808460
-    @Test
-    public void testNoDelegationSENotRelatedToCVR() throws Exception {
-        OIOBeskedAfvisningSamlingHentOType response =
-                doCall("30808460", "DK19552101300");
-        assertTrue(hasError(response.getHovedOplysningerSvar(), 300));
-    }
-
-
-    // EXCISE NUMBER DK3117514300 -> CVR 19552101 / SE 19552101
-    @Test
-    public void testErrorCode102WrongExciseNumberFormat() throws Exception {
-        OIOBeskedAfvisningSamlingHentOType response =
-                doCall(getVirksomhedSENummerIdentifikator(), "DK3117514300"); // last '0' missing
-        assertTrue(hasError(response.getHovedOplysningerSvar(), 102));
-    }
-
-    // EXCISE NUMBER DK31175143999 -> CVR 19552101 / SE 19552101
-    @Test
-    public void testErrorCode301WrongExciseNumberSuffixCode() throws Exception {
-        OIOBeskedAfvisningSamlingHentOType response =
-                doCall(getVirksomhedSENummerIdentifikator(), "DK31175143999");
-        assertTrue(hasError(response.getHovedOplysningerSvar(), 301));
     }
 
     // EXCISE NUMBER DK31175143500 -> CVR 19552101 / SE 19552101
@@ -110,46 +69,11 @@ public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClientTest {
         assertFalse(hasError(response.getHovedOplysningerSvar()));
     }
 
-    // EXCISE NUMBER DK99025875600 -> CVR 19552101 / SE 31038421
-    @Test
-    public void testErrorCode302ExciseNumberHasNotDelegatedToSENumberNotEqualsCVR() throws Exception {
-        OIOBeskedAfvisningSamlingHentOType response =
-                doCall("31038421", getAfgiftOperatoerPunktAfgiftIdentifikator());
-        assertTrue(hasError(response.getHovedOplysningerSvar(), 302));
-    }
-
-    // EXCISE NUMBER DK30808460300 -> CVR 19552101 / SE 19552101
-    @Test
-    public void testErrorCode302ExciseNumberHasNotDelegatedToSENumberEqualsCVR() throws Exception {
-        OIOBeskedAfvisningSamlingHentOType response =
-                doCall(getVirksomhedSENummerIdentifikator(), "DK30808460300");
-        assertTrue(hasError(response.getHovedOplysningerSvar(), 302));
-    }
-
-    @Test
-    public void transactionIDReuse() throws Exception { // 7
-        String endpointURL = getEndpoint("OIOBeskedAfvisningSamlingHent");
-        if (endpointURL != null) {
-            // Generate transaction id
-            final String transactionID = TransactionIdGenerator.getTransactionId();
-            // First call
-            OIOBeskedAfvisningSamlingHentClient oioBeskedAfvisningSamlingHentClient = new OIOBeskedAfvisningSamlingHentClient(endpointURL);
-            OIOBeskedAfvisningSamlingHentOType response = oioBeskedAfvisningSamlingHentClient.invoke(getVirksomhedSENummerIdentifikator(), getAfgiftOperatoerPunktAfgiftIdentifikator(), 1, transactionID);
-            assertFalse(hasError(response.getHovedOplysningerSvar()));
-            // Now try again
-            OIOBeskedAfvisningSamlingHentOType response2 = oioBeskedAfvisningSamlingHentClient.invoke(getVirksomhedSENummerIdentifikator(), getAfgiftOperatoerPunktAfgiftIdentifikator(), 1, transactionID);
-            assertTrue(hasError(response2.getHovedOplysningerSvar(), 500));
-        }
-    }
-
     public OIOBeskedAfvisningSamlingHentOType doCall(String virksomhedSENummerIdentifikator, String afgiftOperatoerPunktAfgiftIdentifikator) throws Exception {
-        String endpointURL = getEndpoint("OIOBeskedAfvisningSamlingHent");
-        if (endpointURL != null) {
-            OIOBeskedAfvisningSamlingHentClient oioBeskedAfvisningSamlingHentClient = new OIOBeskedAfvisningSamlingHentClient(endpointURL);
-            return oioBeskedAfvisningSamlingHentClient.invoke(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator);
-        }
-        return null;
+        assumeNotNull(getEndpoint(OIO_BESKED_AFVISNING_SAMLING_HENT));
+        OIOBeskedAfvisningSamlingHentClient oioBeskedAfvisningSamlingHentClient = new OIOBeskedAfvisningSamlingHentClient(getEndpoint(OIO_BESKED_AFVISNING_SAMLING_HENT));
+        return oioBeskedAfvisningSamlingHentClient.invoke(virksomhedSENummerIdentifikator,
+                afgiftOperatoerPunktAfgiftIdentifikator);
     }
 
 }

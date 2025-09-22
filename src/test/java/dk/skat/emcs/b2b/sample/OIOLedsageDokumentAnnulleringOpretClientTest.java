@@ -15,9 +15,9 @@ import static org.junit.Assume.assumeNotNull;
  * @author SKAT
  * @since 1.2
  */
-public class OIOLedsageDocumentAnnuleringOpretClientTest extends BaseClientTest {
+public class OIOLedsageDokumentAnnulleringOpretClientTest extends BaseClientTest {
 
-    private static final Logger LOGGER = Logger.getLogger(OIOLedsageDocumentAnnuleringOpretClientTest.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(OIOLedsageDokumentAnnulleringOpretClientTest.class.getName());
 
     /**
      * OIOLedsageDokumentAnnulleringOpret Test (IE810 as request)
@@ -28,7 +28,7 @@ public class OIOLedsageDocumentAnnuleringOpretClientTest extends BaseClientTest 
      * <p>
      * Step 1: Submit IE810 (using OIOLedsageDokumentAnnulleringOpret)
      * <p>
-     * IMPORTANT: OIOLedsageDokumentAnnulleringOpret is also tested as part of {@link OIOLedsageDokumentAnnulleringSamlingHentClientTest#invoke()}
+     * IMPORTANT: OIOLedsageDokumentAnnulleringOpret is also tested as part of {@link OIOLedsageDokumentAnnulleringSamlingHentClientTest#scenario()}
      *
      * @author SKAT
      * @since 1.2

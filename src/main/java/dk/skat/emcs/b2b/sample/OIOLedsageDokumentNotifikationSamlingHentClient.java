@@ -65,7 +65,8 @@ public class OIOLedsageDokumentNotifikationSamlingHentClient extends EMCSBaseCli
         sbRequest.append(generateConsoleOutput(
                 request.getHovedOplysninger(),
                 request.getVirksomhedIdentifikationStruktur().getAfgiftOperatoerPunktAfgiftIdentifikator(),
-                request.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
+                request.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator(),
+                spst
         ));
         LOGGER.info(NEW_LINE + sbRequest.toString());
 
@@ -74,13 +75,7 @@ public class OIOLedsageDokumentNotifikationSamlingHentClient extends EMCSBaseCli
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(response.getHovedOplysningerSvar()));
         if (response.getLedsageDokumentNotifikationSamling() != null) {
-            List<String> list = response.getLedsageDokumentNotifikationSamling().getIE819BeskedTekst();
-            int i = 1;
-            for (String message : list) {
-                sb.append(NEW_LINE + "Message " + i + ":");
-                sb.append(NEW_LINE + message);
-                i++;
-            }
+            sb.append(generateConsoleOutput(response.getLedsageDokumentNotifikationSamling().getIE819BeskedTekst(), "IE819"));
         }
         LOGGER.info(NEW_LINE + sb.toString());
         return response;

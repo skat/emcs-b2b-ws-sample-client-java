@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ie:IE819 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE819:V3.13">
+    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.13">
+        <tms:MessageSender>NDEA.DK</tms:MessageSender>
+        <tms:MessageRecipient>NDEA.DK</tms:MessageRecipient>
+        <tms:DateOfPreparation>2011-10-26</tms:DateOfPreparation>
+        <tms:TimeOfPreparation>12:41:48.627</tms:TimeOfPreparation>
+        <tms:MessageIdentifier>29bed650-cf58-4d9f-88b4c0d7cf78c700</tms:MessageIdentifier>
+    </ie:Header>
+    <ns25:Body
+            xmlns:ns25="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE819:V3.13">
+        <ns25:AlertOrRejectionOfEADESAD>
+            <ns25:Attributes>
+                <ns25:DateAndTimeOfValidationOfAlertRejection>2011-10-26T11:40:48.000
+                </ns25:DateAndTimeOfValidationOfAlertRejection>
+            </ns25:Attributes>
+            <ns25:ConsigneeTrader language="da">
+                <ns25:Traderid>DK30808460300</ns25:Traderid>
+                <ns25:TraderName>SEED selskab 1 test 2</ns25:TraderName>
+                <ns25:StreetName>Kirkegade</ns25:StreetName>
+                <ns25:StreetNumber>1</ns25:StreetNumber>
+                <ns25:Postcode>6840</ns25:Postcode>
+                <ns25:City>Oksbøl</ns25:City>
+            </ns25:ConsigneeTrader>
+            <ns25:ExciseMovement>
+                <ns25:AdministrativeReferenceCode>17DKK1KHPMQH2W23ABI62</ns25:AdministrativeReferenceCode>
+                <ns25:SequenceNumber>1</ns25:SequenceNumber>
+            </ns25:ExciseMovement>
+            <!-- Nake document invalid -->
+            <ns25:DestinationOfficeInvalid>
+                <ns25:ReferenceNumber>DK008047</ns25:ReferenceNumber>
+            </ns25:DestinationOfficeInvalid>
+            <ns25:AlertOrRejection>
+                <ns25:DateOfAlertOrRejection>2011-10-26</ns25:DateOfAlertOrRejection>
+                <ns25:EadEsadRejectedFlag>0</ns25:EadEsadRejectedFlag>
+            </ns25:AlertOrRejection>
+            <ns25:AlertOrRejectionOfEadEsadReason>
+                <ns25:AlertOrRejectionOfMovementReasonCode>2</ns25:AlertOrRejectionOfMovementReasonCode>
+            </ns25:AlertOrRejectionOfEadEsadReason>
+        </ns25:AlertOrRejectionOfEADESAD>
+    </ns25:Body>
+</ie:IE819>

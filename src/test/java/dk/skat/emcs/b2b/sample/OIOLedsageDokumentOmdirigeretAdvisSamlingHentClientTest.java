@@ -9,6 +9,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assume.assumeNotNull;
 
 /**
  * OIOLedsageDokumentOmdirigeretAdvisSamlingHent Test (IE803 as response)
@@ -19,7 +20,7 @@ import static org.junit.Assert.assertFalse;
  * <p>
  * Step 1: Fetch list of IE803s (using OIOEUReferenceDataAnmod)
  * <p>
- * IMPORTANT: OIOLedsageDokumentOmdirigeretAdvisSamlingHent is also tested as part of {@link OIOLedsageDokumentOpsplitningOpretClientTest#invoke()}
+ * IMPORTANT: OIOLedsageDokumentOmdirigeretAdvisSamlingHent is also tested as part of {@link OIOLedsageDokumentOpsplitningOpretClientTest#scenario()}
  *
  * @author SKAT
  * @since 1.2
@@ -28,13 +29,12 @@ public class OIOLedsageDokumentOmdirigeretAdvisSamlingHentClientTest extends Bas
 
     @Test
     public void invoke() throws DatatypeConfigurationException, ParserConfigurationException, SAXException, IOException {
-        if (getEndpoint(OIO_LEDSAGE_DOKUMENT_OMDIRIGERET_ADVIS_SAMLING_HENT) != null) {
-            String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
-            String afgiftOperatoerPunktAfgiftIdentifikator = "DK31175143300";
-            OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient client = new OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient(getEndpoint(OIO_LEDSAGE_DOKUMENT_OMDIRIGERET_ADVIS_SAMLING_HENT));
-            OIOLedsageDokumentOmdirigeretAdvisSamlingHentOType response = client.invoke(virksomhedSENummerIdentifikator,
-                    afgiftOperatoerPunktAfgiftIdentifikator, SøgeParametreStrukturTypeHelper.getSøgeParametreStrukturType(10));
-            assertFalse(hasError(response.getHovedOplysningerSvar()));
-        }
+        assumeNotNull(getEndpoint(OIO_LEDSAGE_DOKUMENT_OMDIRIGERET_ADVIS_SAMLING_HENT));
+        String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
+        String afgiftOperatoerPunktAfgiftIdentifikator = "DK31175143300";
+        OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient client = new OIOLedsageDokumentOmdirigeretAdvisSamlingHentClient(getEndpoint(OIO_LEDSAGE_DOKUMENT_OMDIRIGERET_ADVIS_SAMLING_HENT));
+        OIOLedsageDokumentOmdirigeretAdvisSamlingHentOType response = client.invoke(virksomhedSENummerIdentifikator,
+                afgiftOperatoerPunktAfgiftIdentifikator, SøgeParametreStrukturTypeHelper.getSøgeParametreStrukturType(10));
+        assertFalse(hasError(response.getHovedOplysningerSvar()));
     }
 }

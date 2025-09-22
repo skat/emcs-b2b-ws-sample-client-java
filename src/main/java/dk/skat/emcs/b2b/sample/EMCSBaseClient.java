@@ -30,10 +30,7 @@ import javax.xml.xpath.XPathFactory;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * EMCSBaseClient
@@ -155,14 +152,33 @@ public class EMCSBaseClient {
      */
     protected String generateConsoleOutput(HovedOplysningerType hovedOplysningerType,
                                            String afgiftOperatoerPunktAfgiftIdentifikator,
-                                           String virksomhedSENummerIdentifikator) {
+                                           String virksomhedSENummerIdentifikator,
+                                           SøgeParametreStrukturType spst) {
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(hovedOplysningerType));
         sb.append("** VirksomhedIdentifikationStruktur").append(NEW_LINE);
         sb.append("**** AfgiftOperatoerPunktAfgiftIdentifikator: ").append(afgiftOperatoerPunktAfgiftIdentifikator).append(NEW_LINE);
         sb.append("**** VirksomhedSENummerIdentifikator: ").append(virksomhedSENummerIdentifikator).append(NEW_LINE);
         sb.append("*******************************************************************").append(NEW_LINE);
+        if (spst != null) {
+            boolean isSearchByArc = spst.getSøgeParametre().getLedsagedokumentARCIdentifikator() != null;
+            if (!isSearchByArc){
+                sb.append("** Start Date: ").append(spst.getSøgeParametre().getGyldighedPeriodeUdsøgning().getStartDate()).append(NEW_LINE);
+                sb.append("** End Date: ").append(spst.getSøgeParametre().getGyldighedPeriodeUdsøgning().getEndDate()).append(NEW_LINE);
+                sb.append("*******************************************************************").append(NEW_LINE);
+            } else {
+                sb.append("** ARC: ").append(spst.getSøgeParametre().getLedsagedokumentARCIdentifikator()).append(NEW_LINE);
+                sb.append("*******************************************************************").append(NEW_LINE);
+            }
+
+        }
         return sb.toString();
+    }
+
+    protected String generateConsoleOutput(HovedOplysningerType hovedOplysningerType,
+                                           String afgiftOperatoerPunktAfgiftIdentifikator,
+                                           String virksomhedSENummerIdentifikator) {
+        return generateConsoleOutput(hovedOplysningerType, afgiftOperatoerPunktAfgiftIdentifikator, virksomhedSENummerIdentifikator, null);
     }
 
     /**
@@ -194,6 +210,24 @@ public class EMCSBaseClient {
                     sb.append("****** Advis Text: ").append(advisStrukturType.getAdvisTekst()).append(NEW_LINE);
                 }
             }
+            sb.append("*******************************************************************").append(NEW_LINE);
+        }
+        return sb.toString();
+    }
+
+    protected String generateConsoleOutput(List<String> messages, String messageId) {
+        StringBuilder sb = new StringBuilder();
+        if (messages != null && !messages.isEmpty()) {
+            sb.append("** ").append(messageId).append(" messages:").append(NEW_LINE);
+            int i = 1;
+            for (String message : messages) {
+                sb.append("Message ").append(i).append(":").append(NEW_LINE);
+                sb.append(prettyFormatDocument(message, 2, true)).append(NEW_LINE);
+                sb.append("*******************************************************************").append(NEW_LINE);
+                i++;
+            }
+        } else {
+            sb.append("There are no ").append(messageId).append(" messages!").append(NEW_LINE);
             sb.append("*******************************************************************").append(NEW_LINE);
         }
         return sb.toString();

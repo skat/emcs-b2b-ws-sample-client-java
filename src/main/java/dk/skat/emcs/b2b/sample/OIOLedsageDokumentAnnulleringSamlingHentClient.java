@@ -18,7 +18,6 @@ import javax.xml.ws.BindingProvider;
 import java.io.IOException;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.logging.Logger;
 
 
@@ -61,9 +60,9 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClie
      * @throws SAXException                   N/A
      */
 
-    OIOLedsageDokumentAnnulleringSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
-                         String afgiftOperatoerPunktAfgiftIdentifikator,
-                         Integer interval)
+    public OIOLedsageDokumentAnnulleringSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
+                                                                String afgiftOperatoerPunktAfgiftIdentifikator,
+                                                                Integer interval)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
         SøgeParametreStrukturType søgeparameter = getSøgeParametreStrukturType(interval);
 
@@ -133,11 +132,9 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClie
         sbRequest.append(generateConsoleOutput(
                 oioLedsageDokumentAnnulleringSamlingHentIType.getHovedOplysninger(),
                 oioLedsageDokumentAnnulleringSamlingHentIType.getVirksomhedIdentifikationStruktur().getAfgiftOperatoerPunktAfgiftIdentifikator(),
-                oioLedsageDokumentAnnulleringSamlingHentIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator()
+                oioLedsageDokumentAnnulleringSamlingHentIType.getVirksomhedIdentifikationStruktur().getIndberetter().getVirksomhedSENummerIdentifikator(),
+                spst
         ));
-//        sbRequest.append("** Start Date: ").append(oioLedsageDokumentAnnulleringSamlingHentIType.getSøgeParametreStruktur().getSøgeParametre().getGyldighedPeriodeUdsøgning().getStartDate()).append(NEW_LINE);
-//        sbRequest.append("** End Date: ").append(oioLedsageDokumentAnnulleringSamlingHentIType.getSøgeParametreStruktur().getSøgeParametre().getGyldighedPeriodeUdsøgning().getEndDate()).append(NEW_LINE);
-        sbRequest.append("*******************************************************************").append(NEW_LINE);
         LOGGER.info(NEW_LINE + sbRequest.toString());
 
 
@@ -145,20 +142,9 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClie
 
         StringBuilder sb = new StringBuilder();
         sb.append(generateConsoleOutput(out.getHovedOplysningerSvar()));
-        if (!hasError(out.getHovedOplysningerSvar())) {
-            sb.append("** IE810 Messages: ").append(NEW_LINE);
-            List<String> ie810Messages = out.getLedsageDokumentAnnulleringSamling().getIE810BeskedTekst();
-            if (ie810Messages != null && ie810Messages.size() > 0) {
-                for (String message : ie810Messages) {
-                    sb.append(message).append(NEW_LINE);
-                    sb.append("*******************************************************************").append(NEW_LINE);
-                }
-            } else {
-                sb.append("There are no IE 810 messages!").append(NEW_LINE);
-                sb.append("*******************************************************************").append(NEW_LINE);
-            }
+        if (out.getLedsageDokumentAnnulleringSamling() != null) {
+            sb.append(generateConsoleOutput(out.getLedsageDokumentAnnulleringSamling().getIE810BeskedTekst(), "IE810"));
         }
-
         LOGGER.info(NEW_LINE + sb.toString());
         return out;
     }

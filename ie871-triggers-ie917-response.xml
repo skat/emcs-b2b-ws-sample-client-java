@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ie:IE871 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE871:V3.13">
+    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.13">
+        <tms:MessageSender>NDEA.DK</tms:MessageSender>
+        <tms:MessageRecipient>NDEA.DK</tms:MessageRecipient>
+        <tms:DateOfPreparation>2011-10-26</tms:DateOfPreparation>
+        <tms:TimeOfPreparation>11:51:09.062</tms:TimeOfPreparation>
+        <tms:MessageIdentifier>bff1b0f0-4d80-4a85-b545-372b378f86a2</tms:MessageIdentifier>
+    </ie:Header>
+    <ie:Body>
+        <ie:ExplanationOnReasonForShortage>
+            <ie:Attributes>
+                <ie:SubmitterType>1</ie:SubmitterType>
+                <ie:DateAndTimeOfValidationOfExplanationOnShortage>2011-10-26T11:51:09.000
+                </ie:DateAndTimeOfValidationOfExplanationOnShortage>
+            </ie:Attributes>
+            <ie:ExciseMovement>
+                <ie:AdministrativeReferenceCode>11DKOGTSCLHCUM6VMT5M0</ie:AdministrativeReferenceCode>
+                <ie:SequenceNumber>1</ie:SequenceNumber>
+            </ie:ExciseMovement>
+            <ie:ConsignorTrader language="da">
+                <ie:TraderExciseNumber>DK82065873300</ie:TraderExciseNumber>
+                <ie:TraderName>Test af KS-1, testsitnr. 3.1.3.22</ie:TraderName>
+                <ie:StreetName>Borupvej</ie:StreetName>
+                <ie:StreetNumber>1</ie:StreetNumber>
+                <ie:Postcode>3320</ie:Postcode>
+                <ie:City>Skævinge</ie:City>
+            </ie:ConsignorTrader>
+            <ie:Analysis>
+                <ie:DateOfAnalysis>2011-10-26</ie:DateOfAnalysis>
+                <ie:GlobalExplanation language="da">Nogle af varen gik i stykker på vejen.</ie:GlobalExplanation>
+            </ie:Analysis>
+            <!-- Make document invalid -->
+            <ie:BodyAnalysisInvalid>
+                <ie:ExciseProductCode>W200</ie:ExciseProductCode>
+                <ie:BodyRecordUniqueReference>1</ie:BodyRecordUniqueReference>
+                <ie:Explanation language="da">Nogle af varen gik i stykker på vejen.</ie:Explanation>
+                <ie:ActualQuantity>50</ie:ActualQuantity>
+            </ie:BodyAnalysisInvalid>
+        </ie:ExplanationOnReasonForShortage>
+    </ie:Body>
+</ie:IE871>

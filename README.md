@@ -25,7 +25,7 @@ the current versions of the mentioned frameworks in use.
  
 The sample clients currently implements calls to the services:
  
-* **OIOLedsageDocumentOpret** : Submit IE815 document
+* **OIOLedsageDokumentOpret** : Submit IE815 document
 * **OIOLedsageDokumentSamlingHent** : Fetch IE801 document related to ARC number
 * **OIOBeskedAfvisningSamlingHent** : Search for IE704 documents within the last month
 
@@ -63,7 +63,7 @@ command:
 
 ```sh
 $ mvn clean install \
-  -Dtest="OIOLedsageDocumentOpretClientTest#invoke" \
+  -Dtest="OIOLedsageDokumentOpretClientTest#invoke" \
   -Ddk.skat.emcs.b2b.sample.ClientCertAlias='<CHANGE_THIS>' \
   -DskipTests=false
 ```

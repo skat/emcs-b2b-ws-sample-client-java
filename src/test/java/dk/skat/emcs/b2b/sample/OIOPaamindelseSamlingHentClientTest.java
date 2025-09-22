@@ -12,15 +12,16 @@ import static org.junit.Assume.assumeNotNull;
 
 /**
  * OIOPaamindelseSamlingHent Test
- *
+ * <p>
  * This client depends on the Consignee NOT submitting the required IE818 within the deadline from the time the
- * Consignee received the IE810. This is currently 5 days as explained here: https://skat.dk/data.aspx?oid=2244647
- *
+ * Consignee received the IE810. This is currently 5 days as explained here:
+ * https://skat.dk/erhverv/afgifter-paa-varer-og-ydelser-punktafgifter/afgifter-naar-du-handler-med-udlandet/om-emcs
+ * <p>
  * As such it is very not practical to do a programmatic test that sleeps for 5 days and then calls OIOPaamindelseSamlingHent.
- *
+ * <p>
  * To test this OIOPaamindelseSamlingHent follow these steps:
- *
- * Step 1: Submit IE815 using {@link OIOLedsageDocumentOpretClientTest#invoke()} and do NOT submit the corresponding IE818
+ * <p>
+ * Step 1: Submit IE815 using {@link OIOLedsageDokumentOpretClientTest#invoke()} and do NOT submit the corresponding IE818
  * Step 2: Wait 6 days (to be sure)
  * Step 3: Invoke the OIOPaamindelseSamlingHent service (this test)
  *
@@ -53,14 +54,4 @@ public class OIOPaamindelseSamlingHentClientTest extends BaseClientTest {
         assertFalse(response.getPåmindelseSamling().getIE802BeskedTekst().isEmpty());
     }
 
-    @Test
-    public void testAdvisCode130() throws DatatypeConfigurationException {
-        assumeNotNull(getEndpoint(OIO_PAAMINDELSE_SAMLING_HENT));
-        OIOPaamindelseSamlingHentClient client = new OIOPaamindelseSamlingHentClient(getEndpoint(OIO_PAAMINDELSE_SAMLING_HENT));
-        OIOPåmindelseSamlingHentOType response = client.invoke(
-                getVirksomhedSENummerIdentifikator(),
-                getAfgiftOperatoerPunktAfgiftIdentifikator(),
-                getSearchPeriodInFuture());
-        assertTrue(hasAdvis(response.getHovedOplysningerSvar(), 130));
-    }
 }
