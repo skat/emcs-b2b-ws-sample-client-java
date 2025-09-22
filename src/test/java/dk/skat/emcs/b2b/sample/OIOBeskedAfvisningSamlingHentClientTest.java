@@ -15,7 +15,7 @@ public class OIOBeskedAfvisningSamlingHentClientTest extends BaseClientTest {
 
     // EXCISE NUMBER DK82065873300 -> CVR 19552101 / SE 19552101.´
     @Test
-    public void testDelegation() throws Exception {
+    public void invoke() throws Exception {
         OIOBeskedAfvisningSamlingHentOType response =
                 doCall(getVirksomhedSENummerIdentifikator(), getAfgiftOperatoerPunktAfgiftIdentifikator());
         assertFalse(hasError(response.getHovedOplysningerSvar()));

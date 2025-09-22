@@ -7,7 +7,6 @@ import org.xml.sax.SAXException;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import static org.junit.Assert.*;
 import static org.junit.Assume.assumeNotNull;
@@ -18,8 +17,6 @@ import static org.junit.Assume.assumeNotNull;
  * Contact help desk and request test data for the service: OIOForsendelseAfbrydelseBeskedSamlingHent
  */
 public class OIOForsendelseAfbrydelseBeskedSamlingHentClientTest extends BaseClientTest {
-
-    private static final Logger LOGGER = Logger.getLogger(OIOForsendelseAfbrydelseBeskedSamlingHentClientTest.class.getName());
 
     @Test
     public void invoke() throws DatatypeConfigurationException, ParserConfigurationException, SAXException, IOException {
