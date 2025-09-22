@@ -1,5 +1,6 @@
-package dk.skat.emcs.b2b.sample;
+package dk.skat.emcs.b2b.sample.errorcodes;
 
+import dk.skat.emcs.b2b.sample.*;
 import oio.skat.emcs.ws._1_0.*;
 import org.junit.Test;
 
