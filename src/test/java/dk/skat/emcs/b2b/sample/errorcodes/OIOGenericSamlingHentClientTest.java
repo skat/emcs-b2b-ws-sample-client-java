@@ -1,6 +1,7 @@
-package dk.skat.emcs.b2b.sample;
+package dk.skat.emcs.b2b.sample.errorcodes;
 
 import dk.oio.rep.skat_dk.basis.kontekst.xml.schemas._2006._09._01.HovedOplysningerSvarType;
+import dk.skat.emcs.b2b.sample.*;
 import oio.skat.emcs.ws._1_0.SøgeParametreStrukturType;
 import org.junit.Test;
 
@@ -106,7 +107,7 @@ public class OIOGenericSamlingHentClientTest extends BaseClientTest {
     }
 
     @Test
-    public void testSearchInFuture() throws Exception { // 1
+    public void testSearchInFuture() throws Exception {
         SøgeParametreStrukturType spst = getSearchPeriodInFuture();
         setUp(spst);
         for (ErrorCodeClientTest errorCodeClientTest : clients) {

@@ -60,9 +60,9 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClient extends EMCSBaseClie
      * @throws SAXException                   N/A
      */
 
-    OIOLedsageDokumentAnnulleringSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
-                         String afgiftOperatoerPunktAfgiftIdentifikator,
-                         Integer interval)
+    public OIOLedsageDokumentAnnulleringSamlingHentOType invoke(String virksomhedSENummerIdentifikator,
+                                                                String afgiftOperatoerPunktAfgiftIdentifikator,
+                                                                Integer interval)
             throws DatatypeConfigurationException, ParserConfigurationException, IOException, SAXException {
         SøgeParametreStrukturType søgeparameter = getSøgeParametreStrukturType(interval);
 
