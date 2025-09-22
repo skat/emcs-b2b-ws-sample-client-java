@@ -32,7 +32,7 @@ public class OIOLedsageDokumentOpsplitningOpretClientTest extends BaseClientTest
     private static final Logger LOGGER = Logger.getLogger(OIOLedsageDokumentOpsplitningOpretClientTest.class.getName());
 
     @Test
-    public void invoke() throws Exception {
+    public void scenario() throws Exception {
         assumeNotNull(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
         assumeNotNull(getEndpoint(OIO_LEDSAGE_DOKUMENT_OPSPLITNING_OPRET));
         assumeNotNull(getEndpoint(OIO_LEDSAGE_DOKUMENT_OMDIRIGERET_ADVIS_SAMLING_HENT));
