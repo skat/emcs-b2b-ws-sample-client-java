@@ -18,6 +18,12 @@ public class OIOKvitteringSamlingHentClientTest extends BaseClientTest {
 
     private static final Logger LOGGER = Logger.getLogger(OIOKvitteringSamlingHentClientTest.class.getName());
 
+    /**
+     * NOTE: Use this unit test method to manually test fetching IE801 documents.
+     * <p>
+     * OIOKvitteringSamlingHentClient is also tested as part of scenario {@link OIOKvitteringSamlingHentClientTest#scenario()}}
+     * where prerequisite documents are submitted as part of the unit test.
+     */
     @Test
     public void invoke() throws DatatypeConfigurationException {
         String virksomhedSENummerIdentifikator = getVirksomhedSENummerIdentifikator();
@@ -29,7 +35,11 @@ public class OIOKvitteringSamlingHentClientTest extends BaseClientTest {
     }
 
     @Test
-    public void testScenario() throws Exception {
+    public void scenario() throws Exception {
+        // Services tested in this scenario:
+        assumeNotNull(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
+        assumeNotNull(getEndpoint(OIO_LEDSAGE_DOKUMENT_SAMLLING_HENT));
+        assumeNotNull(getEndpoint(OIO_KVITTERING_OPRET));
         assumeNotNull(getEndpoint(OIO_KVITTERING_SAMLIMG_HENT));
         // VAT Number of the entity sending. Rule of thumb: this number matches
         // this CVR number present in the certificate.

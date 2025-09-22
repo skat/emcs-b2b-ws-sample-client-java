@@ -8,15 +8,18 @@ import static org.junit.Assume.assumeNotNull;
 
 /**
  * OIOLedsageDokumentSamlingHent Test
- * <p>
- * IMPORTANT: OIOLedsageDokumentSamlingHent is also tested as part of {@link OIOKvitteringSamlingHentClientTest#testScenario()}
  *
  * @author SKAT
  * @since 1.2
  */
 public class OIOLedsageDokumentSamlingHentClientTest extends BaseClientTest {
 
-    // This tests assumes knowledge of existing ARC.
+    /**
+     * NOTE: Use this unit test method to manually test fetching IE801 documents.
+     * <p>
+     * OIOLedsageDokumentSamlingHentClient is also tested as part of scenario {@link OIOKvitteringSamlingHentClientTest#scenario()}}
+     * where prerequisite documents are submitted as part of the unit test.
+     */
     @Test
     public void invoke() throws Exception {
         assumeNotNull(getEndpoint(OIO_LEDSAGE_DOKUMENT_SAMLLING_HENT));

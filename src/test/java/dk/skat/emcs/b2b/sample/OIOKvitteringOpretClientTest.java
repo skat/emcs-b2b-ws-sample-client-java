@@ -10,14 +10,18 @@ import static org.junit.Assume.assumeNotNull;
 
 /**
  * OIOKvitteringOpretClient Test
- * <p>
- * NOTE: OIOKvitteringOpretClientTest is also tested as part of {@link OIOKvitteringSamlingHentClientTest#testScenario()}}
  *
  * @author SKAT
  * @since 1.2
  */
 public class OIOKvitteringOpretClientTest extends BaseClientTest {
 
+    /**
+     * NOTE: Use this unit test method to manually test submitting IE818 documents manually.
+     * <p>
+     * OIOKvitteringOpretClient is also tested as part of scenario {@link OIOKvitteringSamlingHentClientTest#scenario()}}
+     * where prerequisite documents are submitted as part of the unit test.
+     */
     @Test
     public void invoke() throws Exception {
         assumeNotNull(getEndpoint(OIO_KVITTERING_OPRET));

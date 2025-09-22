@@ -14,7 +14,8 @@ import static org.junit.Assume.assumeNotNull;
  * OIOPaamindelseSamlingHent Test
  *
  * This client depends on the Consignee NOT submitting the required IE818 within the deadline from the time the
- * Consignee received the IE810. This is currently 5 days as explained here: https://skat.dk/data.aspx?oid=2244647
+ * Consignee received the IE810. This is currently 5 days as explained here:
+ * https://skat.dk/erhverv/afgifter-paa-varer-og-ydelser-punktafgifter/afgifter-naar-du-handler-med-udlandet/om-emcs
  *
  * As such it is very not practical to do a programmatic test that sleeps for 5 days and then calls OIOPaamindelseSamlingHent.
  *

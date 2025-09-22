@@ -34,7 +34,7 @@ public class OIOLedsageDokumentAnnulleringSamlingHentClientTest extends BaseClie
     private static final Logger LOGGER = Logger.getLogger(OIOLedsageDokumentAnnulleringSamlingHentClientTest.class.getName());
 
     @Test
-    public void invoke() throws DatatypeConfigurationException, ParserConfigurationException, SAXException, IOException, InterruptedException {
+    public void scenario() throws DatatypeConfigurationException, ParserConfigurationException, SAXException, IOException, InterruptedException {
         assumeNotNull(getEndpoint(OIO_LEDSAGEDOCUMENT_OPRET));
         assumeNotNull(getEndpoint(OIO_LEDSAGEDOKUMENT_ANNULLERING_OPRET));
         assumeNotNull(getEndpoint(OIO_BESKED_AFVISNING_SAMLING_HENT));

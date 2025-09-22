@@ -28,7 +28,7 @@ public class OIOLedsageDokumentAnnulleringOpretClientTest extends BaseClientTest
      * <p>
      * Step 1: Submit IE810 (using OIOLedsageDokumentAnnulleringOpret)
      * <p>
-     * IMPORTANT: OIOLedsageDokumentAnnulleringOpret is also tested as part of {@link OIOLedsageDokumentAnnulleringSamlingHentClientTest#invoke()}
+     * IMPORTANT: OIOLedsageDokumentAnnulleringOpret is also tested as part of {@link OIOLedsageDokumentAnnulleringSamlingHentClientTest#scenario()}
      *
      * @author SKAT
      * @since 1.2
