@@ -11,6 +11,7 @@
         <cxf.version>4.0.9</cxf.version>
         <cxf.spring.version>6.2.10</cxf.spring.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>25</java.version>
         <maven.compiler.target>25</maven.compiler.target>
         <maven.compiler.source>25</maven.compiler.source>
         <slf4j.version>1.7.2</slf4j.version>
