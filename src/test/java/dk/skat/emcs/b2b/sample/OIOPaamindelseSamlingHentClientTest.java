@@ -53,14 +53,4 @@ public class OIOPaamindelseSamlingHentClientTest extends BaseClientTest {
         assertFalse(response.getPåmindelseSamling().getIE802BeskedTekst().isEmpty());
     }
 
-    @Test
-    public void testAdvisCode130() throws DatatypeConfigurationException {
-        assumeNotNull(getEndpoint(OIO_PAAMINDELSE_SAMLING_HENT));
-        OIOPaamindelseSamlingHentClient client = new OIOPaamindelseSamlingHentClient(getEndpoint(OIO_PAAMINDELSE_SAMLING_HENT));
-        OIOPåmindelseSamlingHentOType response = client.invoke(
-                getVirksomhedSENummerIdentifikator(),
-                getAfgiftOperatoerPunktAfgiftIdentifikator(),
-                getSearchPeriodInFuture());
-        assertTrue(hasAdvis(response.getHovedOplysningerSvar(), 130));
-    }
 }

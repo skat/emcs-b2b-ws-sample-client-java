@@ -12,13 +12,13 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeNotNull;
 
 /**
- * OIOGenericSamlingHentClientTest
+ * AdvisCode130Test
  *
- * Test error code 130 for services that get documents (*SamlingHent)
+ * Test advis code 130 for all services that get documents (*SamlingHent)
  *
  * @author UFST
  */
-public class OIOGenericSamlingHentClientTest extends BaseClientTest {
+public class AdvisCode130Test extends BaseClientTest {
 
     private void setUp(SøgeParametreStrukturType spst) {
         clients.clear();
