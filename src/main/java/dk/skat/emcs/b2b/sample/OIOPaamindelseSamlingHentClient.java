@@ -9,7 +9,7 @@ import org.apache.cxf.bus.spring.SpringBusFactory;
 import org.apache.cxf.frontend.ClientProxy;
 
 import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.ws.BindingProvider;
+import jakarta.xml.ws.BindingProvider;
 import java.util.logging.Logger;
 
 public class OIOPaamindelseSamlingHentClient extends EMCSBaseClient {

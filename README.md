@@ -1,5 +1,6 @@
 # EMCS B2B Sample Web Service Client written in Java
 
+![JDK17](https://img.shields.io/badge/Java-17-green.svg) ![JDK25](https://img.shields.io/badge/Java-25-green.svg)
 
 Sample clients for the EMCS B2B Web Service Gateway developed in Java and using open source libraries.
 
@@ -20,7 +21,7 @@ anvender klienten eller dele af denne i deres egne systemer.
 ## About the client
 
 The sample clients are implemented based on the [Apache CXF](http://cxf.apache.org/) framework,
-the Spring Framework, and Java 8. See `pom.xml` file in this repo for details regarding 
+the Spring Framework. Tested on Java 17 and Java 25. See `pom.xml` file in this repo for details regarding 
 the current versions of the mentioned frameworks in use.
  
 The sample clients currently implements calls to the services:
