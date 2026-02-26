@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ie:IE819 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE819:V3.13">
-    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.13">
+<ie:IE819 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE819:V3.23">
+    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.23">
         <tms:MessageSender>NDEA.DK</tms:MessageSender>
         <tms:MessageRecipient>NDEA.DK</tms:MessageRecipient>
         <tms:DateOfPreparation>2011-10-26</tms:DateOfPreparation>
@@ -8,7 +8,7 @@
         <tms:MessageIdentifier>29bed650-cf58-4d9f-88b4c0d7cf78c700</tms:MessageIdentifier>
     </ie:Header>
     <ns25:Body
-            xmlns:ns25="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE819:V3.13">
+            xmlns:ns25="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE819:V3.23">
         <ns25:AlertOrRejectionOfEADESAD>
             <ns25:Attributes>
                 <ns25:DateAndTimeOfValidationOfAlertRejection>2011-10-26T11:40:48.000

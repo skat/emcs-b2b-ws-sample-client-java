@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ns0:IE815 xmlns:ns0="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE815:V3.13">
-    <ns7:Header xmlns:ns7="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE815:V3.13">
-        <ns8:MessageSender xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.13">NDEA.DK</ns8:MessageSender>
-        <ns8:MessageRecipient xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.13">NDEA.DK</ns8:MessageRecipient>
-        <ns8:DateOfPreparation xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.13">2023-01-13</ns8:DateOfPreparation>
-        <ns8:TimeOfPreparation xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.13">12:13:26.789</ns8:TimeOfPreparation>
-        <ns8:MessageIdentifier xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.13">DKEMCS20230000000345130</ns8:MessageIdentifier>
+<ns0:IE815 xmlns:ns0="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE815:V3.23">
+    <ns7:Header xmlns:ns7="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE815:V3.23">
+        <ns8:MessageSender xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.23">NDEA.DK</ns8:MessageSender>
+        <ns8:MessageRecipient xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.23">NDEA.DK</ns8:MessageRecipient>
+        <ns8:DateOfPreparation xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.23">2023-01-13</ns8:DateOfPreparation>
+        <ns8:TimeOfPreparation xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.23">12:13:26.789</ns8:TimeOfPreparation>
+        <ns8:MessageIdentifier xmlns:ns8="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.23">DKEMCS20230000000345130</ns8:MessageIdentifier>
     </ns7:Header>
-    <ns7:Body xmlns:ns7="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE815:V3.13">
+    <ns7:Body xmlns:ns7="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE815:V3.23">
         <ns7:SubmittedDraftOfEADESAD>
             <ns7:Attributes>
                 <ns7:SubmissionMessageType>1</ns7:SubmissionMessageType>

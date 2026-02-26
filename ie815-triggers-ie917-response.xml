@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ie:IE815 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE815:V3.13">
-    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.13">
+<ie:IE815 xmlns:ie="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE815:V3.23">
+    <ie:Header xmlns:tms="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:TMS:V3.23">
         <tms:MessageSender>NDEA.DK</tms:MessageSender>
         <tms:MessageRecipient>NDEA.DK</tms:MessageRecipient>
         <tms:DateOfPreparation>2011-10-26</tms:DateOfPreparation>
         <tms:TimeOfPreparation>11:23:00.803</tms:TimeOfPreparation>
         <tms:MessageIdentifier>9e1e74a5-aaae-41d6-8280-c3892246e613</tms:MessageIdentifier>
     </ie:Header>
-    <ns26:Body xmlns:ns26="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE815:V3.13">
+    <ns26:Body xmlns:ns26="urn:publicid:-:EC:DGTAXUD:EMCS:PHASE4:IE815:V3.23">
         <ns26:SubmittedDraftOfEADESAD>
             <ns26:Attributes>
                 <ns26:SubmissionMessageType>1</ns26:SubmissionMessageType>
