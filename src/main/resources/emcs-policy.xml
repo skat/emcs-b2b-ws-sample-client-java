@@ -80,14 +80,10 @@
             <bean id="ResponseWSPolicyFulfillment" class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
                 <constructor-arg>
                     <map>
-                        <entry key="action" value="Timestamp Signature Encrypt"/>
+                        <entry key="action" value="Timestamp Signature"/>
                         <entry key="passwordCallbackClass" value="dk.skat.emcs.b2b.sample.UTPasswordCallback"/>
-                        <!-- Encryption Configuration -->
-                        <entry key="decryptionPropFile" value="etc/Client_Sign.properties"/>
-                        <entry key="encryptionKeyIdentifier" value="SKIKeyIdentifier"/>
-                        <entry key="encryptionKeyTransportAlgorithm" value="http://www.w3.org/2001/04/xmlenc#rsa-1_5"/>
                         <!-- Signature Configuration -->
-                        <entry key="signaturePropFile" value="etc/Client_Encrypt.properties"/>
+                        <entry key="signaturePropFile" value="etc/Client_Trust.properties"/>
                         <entry key="signatureKeyIdentifier" value="DirectReference"/>
                         <entry key="signatureAlgorithm" value="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
                     </map>
@@ -99,17 +95,9 @@
             <bean id="RequestWSPolicyFulfillment" class="org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor">
                 <constructor-arg>
                     <map>
-                        <entry key="action" value="Timestamp Signature Encrypt"/>
+                        <entry key="action" value="Timestamp Signature"/>
                         <entry key="signatureUser" value="#{systemProperties['dk.skat.emcs.b2b.sample.ClientCertAlias']}"/>
                         <entry key="passwordCallbackClass" value="dk.skat.emcs.b2b.sample.UTPasswordCallback"/>
-                        <!-- Encryption Configuration -->
-                        <!-- Depends on alias defined in client-truststore.jks -->
-                        <entry key="encryptionUser" value="skatserver"/>
-                        <entry key="encryptionPropFile" value="etc/Client_Encrypt.properties"/>
-                        <entry key="encryptionKeyIdentifier" value="SKIKeyIdentifier"/>
-                        <entry key="encryptionParts" value="{Content}{http://schemas.xmlsoap.org/soap/envelope/}Body"/>
-                        <entry key="encryptionKeyTransportAlgorithm" value="http://www.w3.org/2001/04/xmlenc#rsa-1_5"/>
-                        <entry key="encryptionSymAlgorithm" value="http://www.w3.org/2001/04/xmlenc#tripledes-cbc"/>
                         <!-- General Configuration -->
                         <entry key="addInclusivePrefixes" value="false"/>
                         <!-- Signature Configuration -->
