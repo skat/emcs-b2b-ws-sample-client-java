@@ -73,13 +73,9 @@
         </http:tlsClientParameters>
     </http:conduit>
 
-    <!-- 1. Konfigurer LoggingFeature som en bean -->
     <bean id="loggingFeature" class="org.apache.cxf.ext.logging.LoggingFeature">
-        <!-- Formaterer XML/JSON pænt -->
         <property name="prettyLogging" value="true" />
-        <!-- Grænse for beskedstørrelse i bytes (standard er 102400, -1 betyder uendelig) -->
-        <property name="limit" value="500000" />
-        <!-- Logger kun hvis der sker en fejl (valgfri) -->
+        <property name="limit" value="-1" />
         <property name="logBinary" value="false" />
     </bean>
 
@@ -88,7 +84,6 @@
             <ref bean="loggingFeature" />
         </cxf:features>
         <cxf:inInterceptors>
-            <!-- bean id="logInbound" class="org.apache.cxf.interceptor.LoggingInInterceptor"/-->
             <!-- Configure WS-Security for RESPONSE -->
             <bean id="ResponseWSPolicyFulfillment" class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
                 <constructor-arg>
@@ -121,7 +116,6 @@
                     </map>
                 </constructor-arg>
             </bean>
-            <!--bean id="logOutbound" class="org.apache.cxf.interceptor.LoggingOutInterceptor"/-->
         </cxf:outInterceptors>
     </cxf:bus>
 

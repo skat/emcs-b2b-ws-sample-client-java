@@ -42,13 +42,6 @@ public class EMCSBaseClient {
 
     protected static final String NEW_LINE = System.getProperty("line.separator");
 
-    protected void addCleartextLogging(Client client) {
-        //CleartextLogger clearOutputLogger = new CleartextLogger();
-        //CleartextLogger clearInputLogger = new CleartextLogger();
-        //client.getOutInterceptors().add(clearOutputLogger);
-        //client.getInInterceptors().add(clearInputLogger);
-    }
-
     protected Document loadIEDocument(String path) throws IOException, SAXException, ParserConfigurationException {
         File file = new File(path);
         return loadIEDocument(file);
