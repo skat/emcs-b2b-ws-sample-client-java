@@ -30,6 +30,6 @@ public class OIOEksportGodkendelseSamlingHentClientTest extends BaseClientTest {
                 afgiftOperatoerPunktAfgiftIdentifikator,
                 getSøgeParametreStrukturType("25DKUA9GO984UJ7G8PE04"));
         assertFalse(hasError(response.getHovedOplysningerSvar()));
-        assertTrue(response.getEksportGodkendelseSamling().getIE829BeskedTekst().isEmpty());
+        assertFalse(response.getEksportGodkendelseSamling().getIE829BeskedTekst().isEmpty());
     }
 }
