@@ -4,12 +4,12 @@
     <groupId>dk.skat.emcs.b2b.sample</groupId>
     <artifactId>emcs-b2b-ws-sample-client-java</artifactId>
     <packaging>jar</packaging>
-    <version>1.4</version>
+    <version>1.5</version>
     <name>emcs-b2b-ws-sample-client-java</name>
     <url>http://www.skat.dk/emcs</url>
     <properties>
-        <cxf.version>4.0.9</cxf.version>
-        <cxf.spring.version>6.2.10</cxf.spring.version>
+        <cxf.version>4.2.4</cxf.version>
+        <cxf.spring.version>7.0.10</cxf.spring.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version>
         <maven.compiler.release>17</maven.compiler.release>
