@@ -95,7 +95,6 @@ public class OIOLedsageDokumentOpsplitningOpretClient extends EMCSBaseClient {
         // Set endpoint of service.
         BindingProvider bp = (BindingProvider)port;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, this.endpointURL);
-        addCleartextLogging(ClientProxy.getClient(port));
 
         StringBuilder sbRequest = new StringBuilder();
         sbRequest.append(generateConsoleOutput(

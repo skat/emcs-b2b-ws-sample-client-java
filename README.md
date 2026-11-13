@@ -49,7 +49,7 @@ The fulfillment of policies required to invoke EMCS B2B Web Services is configur
 [emcs-policy.xml](src/main/resources/emcs-policy.xml)
 
 Fulfillment of WS Policy requirements is achieved using CXF's in and out interceptor framework and 
-the `emcs-policy.xml` file details which parts are to be signed and encrypted, and how to present 
+the `emcs-policy.xml` file details which parts are to be signed, and how to present 
 certificate for authentication on the server side. This configuration file also demonstrates how
 secure transport (https) is enabled client side.
  
